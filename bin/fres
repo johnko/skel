@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141202-072908
+SCRIPTVERSION=141202-074055
 
 ######################################################################
 # Functions
@@ -76,7 +76,7 @@ git_clone_fzg() {
   fi
   repo=freebsd-install-script
   if [ ! -d ${prefix}/${repo} ]; then
-    git clone git@github.com:johnko/${repo}.git /tmp/${repo}
+    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
     install -d -m 700 ${prefix}/bin
     for i in /tmp/${repo}/bin/* ; do
       install -m 700 ${i} ${prefix}/bin/
@@ -91,7 +91,7 @@ git_clone_gdf() {
   fi
   repo=freebsd-pf-script
   if [ ! -d ${prefix}/${repo} ]; then
-    git clone git@github.com:johnko/${repo}.git /tmp/${repo}
+    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
     install -d -m 700 ${prefix}/bin
     for i in /tmp/${repo}/bin/* ; do
       install -m 700 ${i} ${prefix}/bin/
