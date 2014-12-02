@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141202-084120
+SCRIPTVERSION=141202-104138
 
 ######################################################################
 # Functions
@@ -76,16 +76,16 @@ git_clone_skel() {
     prefix=$HOME
   fi
   repo=skel
-  if [ ! -d ${prefix}/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
-    install -d -m 700 ${prefix}/bin
-    for i in /tmp/${repo}/bin/* ; do
-      install -m 700 ${i} ${prefix}/bin/
-    done
-    for i in /tmp/${repo}/.csh* ; do
-      install -m 644 ${i} ${prefix}/
-    done
+  if [ ! -d /tmp/git/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
   fi
+  install -d -m 700 ${prefix}/bin
+  for i in /tmp/git/${repo}/bin/* ; do
+    install -m 700 ${i} ${prefix}/bin/
+  done
+  for i in /tmp/git/${repo}/.csh* ; do
+    install -m 644 ${i} ${prefix}/
+  done
 }
 
 git_clone_fzg() {
@@ -94,13 +94,13 @@ git_clone_fzg() {
     prefix=$HOME
   fi
   repo=freebsd-install-script
-  if [ ! -d ${prefix}/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
-    install -d -m 700 ${prefix}/bin
-    for i in /tmp/${repo}/bin/* ; do
-      install -m 700 ${i} ${prefix}/bin/
-    done
+  if [ ! -d /tmp/git/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
   fi
+  install -d -m 700 ${prefix}/bin
+  for i in /tmp/git/${repo}/bin/* ; do
+    install -m 700 ${i} ${prefix}/bin/
+  done
 }
 
 git_clone_gdf() {
@@ -109,13 +109,13 @@ git_clone_gdf() {
     prefix=$HOME
   fi
   repo=freebsd-pf-script
-  if [ ! -d ${prefix}/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
-    install -d -m 700 ${prefix}/bin
-    for i in /tmp/${repo}/bin/* ; do
-      install -m 700 ${i} ${prefix}/bin/
-    done
+  if [ ! -d /tmp/git/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
   fi
+  install -d -m 700 ${prefix}/bin
+  for i in /tmp/git/${repo}/bin/* ; do
+    install -m 700 ${i} ${prefix}/bin/
+  done
 }
 
 git_clone_mount_iso() {
@@ -124,13 +124,13 @@ git_clone_mount_iso() {
     prefix=$HOME
   fi
   repo=mount_iso
-  if [ ! -d ${prefix}/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
-    install -d -m 700 ${prefix}/bin
-    for i in /tmp/${repo}/bin/* ; do
-      install -m 700 ${i} ${prefix}/bin/
-    done
+  if [ ! -d /tmp/git/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
   fi
+  install -d -m 700 ${prefix}/bin
+  for i in /tmp/git/${repo}/bin/* ; do
+    install -m 700 ${i} ${prefix}/bin/
+  done
 }
 
 git_clone_netconn() {
@@ -139,13 +139,13 @@ git_clone_netconn() {
     prefix=$HOME
   fi
   repo=netconn
-  if [ ! -d ${prefix}/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
-    install -d -m 700 ${prefix}/bin
-    for i in /tmp/${repo}/bin/* ; do
-      install -m 700 ${i} ${prefix}/bin/
-    done
+  if [ ! -d /tmp/git/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
   fi
+  install -d -m 700 ${prefix}/bin
+  for i in /tmp/git/${repo}/bin/* ; do
+    install -m 700 ${i} ${prefix}/bin/
+  done
 }
 
 upgrade_to_ten_one() {
@@ -258,10 +258,13 @@ EOF
 install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
-git_clone_skel
-git_clone_fzg
-git_clone_gdf
-git_clone_netconn
-git_clone_mount_iso
+
+install -d -m 700 /tmp/git
+  git_clone_skel
+  git_clone_fzg
+  git_clone_gdf
+  git_clone_netconn
+  git_clone_mount_iso
+
 which pf-sshinvaliduserip
 which gdf && gdf
