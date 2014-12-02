@@ -1,0 +1,174 @@
+#!/bin/sh
+######################################################################
+# LICENSE pulled in with, cat LICENSE  | awk '{print "# "$0}'
+######################################################################
+
+# Copyright (c) 2014, John Ko
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+######################################################################
+# Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
+######################################################################
+SCRIPTVERSION=141202-063521
+
+######################################################################
+# Functions
+######################################################################
+
+install_ssh_auth_keys() {
+  prefix=$1
+  if [ -z "$prefix" ]; then
+    prefix=/root
+  fi
+  install -d -m 700 ${prefix}/.ssh
+  cat >${prefix}/.ssh/authorized_keys <<EOF
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCVFa6ppe1CpTM6KIuSVV32d/fyz1E7XC6w6HkROSp7oLYC5PFeQRHtJQfNLW5JmCsEVogPJmUS/6e801Q8IKMajlTFpUzR9I+qGutmqBZNo6cmTLgTn3SVMueZb20GsYcBOhJRgsbgKbPdwQM/PKfnJYQzhzU6iOcrU+HCBQaTkMGT5HLsPO0FrVo3KnFdv1uGBAwxqyddztnuCrgxm/WbOy8fcHkReTOeLtGJsQu8fqWtBSzaAGlo2Rk/O4jEYX0uMV9Eq+yuZkHQP6tGNHDp4hPGEnnXhubhLYKmCH47Olq7CFqyUEeE74TmqZVNeY1dr7XunhsOO1RMLvYu4NYz chill
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDY+s7s+bs27WQV0gWZzwiRSZxALgnTBxtqb1ed39sZGzxcO0s1v9KoGtRaaisSIkMP+WSgzE1DIYBoW2FUGiD+lQXNlQSiIzw7oQCbR+EMuHO6+LW93hjix3c1rbrnhJfQST7Mwi/GfoFefxyW77/CO2Xkh2OkruNPUoBAXv/CvujF1ZXdL8D0tViXfpp/18tYx5feuLQMtq9Oi6A4N0021ICfAmUtGcpkQ8STldeVFxgBuVI3xtLmPqc8v45kB5EcNh9hvtaPznpKQCwQ6NTAv4NXRSVhApCKU1uY+TCNiHmnNwSnZ/PgKFmYlsh9vJr0CZbX6wbB++9Uwh3j51Xd dip
+EOF
+  chmod 600 ${prefix}/.ssh/authorized_keys
+}
+
+install_resolv_overwrite() {
+  cat >/boot/resolv.conf.overwrite <<EOF
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+EOF
+}
+
+install_hosts_overwrite() {
+  cat >/boot/hosts.overwrite <<EOF
+::1			localhost localhost.my.domain
+127.0.0.1		localhost localhost.my.domain
+192.168.255.120 a
+192.168.255.140 b
+192.168.255.160 s
+192.168.255.180 m
+69.28.67.126 z
+EOF
+}
+
+upgrade_to_ten_one() {
+  freebsd-update upgrade -r 10.1-RELEASE
+}
+
+update_to_latest_patch() {
+  freebsd-update fetch
+  freebsd-update install
+}
+
+unset_setuid() {
+  ########## prevents a periodic job from searching for suid in large dataset
+  zfs set setuid=off tank/largebackupdataset
+}
+
+mfsbsd_install() {
+  ########## if using mfsbsd special edition
+  mount_cd9660 /dev/cd0 /cdrom || mount -o ro /dev/da0a /cdrom
+  zfsinstall -d $DISK -u /cdrom/10.1-RELEASE-amd64 -p $POOLNAME -s 2G -z 2G -c
+}
+
+fzg_mirror() {
+  fzg -d ada0 -d ada1 -z 2g -m -p $POOLNAME
+}
+
+fzg_single() {
+  fzg -d ada0 -z 2g -m -p $POOLNAME
+}
+
+fzg_attach_disk() {
+  fzg -e ada0 -z 2g -p $POOLNAME -d ada1
+}
+
+fzg_usb() {
+  fzg -d da0 -z 2g -m -n -p usb
+}
+
+fzg_data_mirror() {
+  fzg -i -d ada0 -d ada1 -r mirror -p tank
+}
+
+fzg_data_lock() {
+  fzg -l -p tank
+}
+
+fzg_data_unlock() {
+  fzg -u -d ada0p5 -d ada1p5
+}
+
+ezjail_setup() {
+  cat >/usr/local/etc/ezjail.conf <<EOF
+ezjail_jaildir=/usr/jails
+ezjail_use_zfs="YES"
+ezjail_use_zfs_for_jails="YES"
+ezjail_jailzfs="tank/ezjail"
+EOF
+  ezjail-admin install -h file:///boot/../10.1-RELEASE
+}
+
+btcluster_init(){
+  ########## for testing bittorrent-for-clusters
+  git clone https://github.com/jk-bt/bittorrent-for-clusters.git btcluster
+  btcluster/setup.sh
+  mkdir -p /mnt/tank/sync
+  btcluster/bin/btinit.sh /mnt/tank/sync
+}
+
+things_to_sync() {
+  cat <<EOF
+########## Things that are similar globally
+  /boot/loader.conf
+  /boot/hosts.overwrite
+  /etc/hosts
+  /etc/rc.conf
+  /etc/ssh/sshd_config
+  /root/.ssh/authorized_keys
+  /root/bin/
+  /usr/home/urep/
+########## Things that are similar per DC across mfs types
+  /boot/../mfsroot
+  /boot/packages/
+  /boot/resolv.conf.append
+  /boot/resolv.conf.overwrite
+  /boot/periodic.conf.append
+  /boot/periodic.conf.overwrite
+  /boot/sysctl.conf.overwrite
+  /boot/sysctl.conf.append
+  /boot/hosts.append
+########## Things that are unique per system/jail
+  /boot/loader.conf.local
+  /etc/rc.conf.local
+  /root/.ssh/authorized_keys2
+EOF
+}
+
+######################################################################
+# Main
+######################################################################
+
+install_ssh_auth_keys
+install_resolv_overwrite
+install_hosts_overwrite
+which pf-sshinvaliduserip && pf-sshinvaliduserip
+which gdf && gdf
