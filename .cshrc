@@ -6,11 +6,7 @@
 # more examples available at /usr/share/examples/csh/
 #
 
-alias h		history 25
-alias j		jobs -l
-alias la	ls -aF
-alias lf	ls -FA
-alias ll	ls -lAF
+source ~/.cshalias
 
 # A righteous umask
 umask 22
