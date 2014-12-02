@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141202-063521
+SCRIPTVERSION=141202-072908
 
 ######################################################################
 # Functions
@@ -40,7 +40,7 @@ SCRIPTVERSION=141202-063521
 install_ssh_auth_keys() {
   prefix=$1
   if [ -z "$prefix" ]; then
-    prefix=/root
+    prefix=$HOME
   fi
   install -d -m 700 ${prefix}/.ssh
   cat >${prefix}/.ssh/authorized_keys <<EOF
@@ -67,6 +67,36 @@ install_hosts_overwrite() {
 192.168.255.180 m
 69.28.67.126 z
 EOF
+}
+
+git_clone_fzg() {
+  prefix=$1
+  if [ -z "$prefix" ]; then
+    prefix=$HOME
+  fi
+  repo=freebsd-install-script
+  if [ ! -d ${prefix}/${repo} ]; then
+    git clone git@github.com:johnko/${repo}.git /tmp/${repo}
+    install -d -m 700 ${prefix}/bin
+    for i in /tmp/${repo}/bin/* ; do
+      install -m 700 ${i} ${prefix}/bin/
+    done
+  fi
+}
+
+git_clone_gdf() {
+  prefix=$1
+  if [ -z "$prefix" ]; then
+    prefix=$HOME
+  fi
+  repo=freebsd-pf-script
+  if [ ! -d ${prefix}/${repo} ]; then
+    git clone git@github.com:johnko/${repo}.git /tmp/${repo}
+    install -d -m 700 ${prefix}/bin
+    for i in /tmp/${repo}/bin/* ; do
+      install -m 700 ${i} ${prefix}/bin/
+    done
+  fi
 }
 
 upgrade_to_ten_one() {
@@ -170,5 +200,7 @@ EOF
 install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
+git_clone_fzg
+git_clone_gdf
 which pf-sshinvaliduserip && pf-sshinvaliduserip
 which gdf && gdf
