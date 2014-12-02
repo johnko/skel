@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141202-074307
+SCRIPTVERSION=141202-082938
 
 ######################################################################
 # Functions
@@ -91,6 +91,36 @@ git_clone_gdf() {
     prefix=$HOME
   fi
   repo=freebsd-pf-script
+  if [ ! -d ${prefix}/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
+    install -d -m 700 ${prefix}/bin
+    for i in /tmp/${repo}/bin/* ; do
+      install -m 700 ${i} ${prefix}/bin/
+    done
+  fi
+}
+
+git_clone_mount_iso() {
+  prefix=$1
+  if [ -z "$prefix" ]; then
+    prefix=$HOME
+  fi
+  repo=mount_iso
+  if [ ! -d ${prefix}/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
+    install -d -m 700 ${prefix}/bin
+    for i in /tmp/${repo}/bin/* ; do
+      install -m 700 ${i} ${prefix}/bin/
+    done
+  fi
+}
+
+git_clone_netconn() {
+  prefix=$1
+  if [ -z "$prefix" ]; then
+    prefix=$HOME
+  fi
+  repo=netconn
   if [ ! -d ${prefix}/${repo} ]; then
     git clone https://github.com/johnko/${repo}.git /tmp/${repo}
     install -d -m 700 ${prefix}/bin
@@ -212,5 +242,7 @@ install_resolv_overwrite
 install_hosts_overwrite
 git_clone_fzg
 git_clone_gdf
+git_clone_netconn
+git_clone_mount_iso
 which pf-sshinvaliduserip
 which gdf && gdf
