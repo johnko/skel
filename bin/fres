@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141202-082938
+SCRIPTVERSION=141202-084120
 
 ######################################################################
 # Functions
@@ -68,6 +68,24 @@ install_hosts_overwrite() {
 192.168.255.180 m
 69.28.67.126 z
 EOF
+}
+
+git_clone_skel() {
+  prefix=$1
+  if [ -z "$prefix" ]; then
+    prefix=$HOME
+  fi
+  repo=skel
+  if [ ! -d ${prefix}/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/${repo}
+    install -d -m 700 ${prefix}/bin
+    for i in /tmp/${repo}/bin/* ; do
+      install -m 700 ${i} ${prefix}/bin/
+    done
+    for i in /tmp/${repo}/.csh* ; do
+      install -m 644 ${i} ${prefix}/
+    doneg
+  fi
 }
 
 git_clone_fzg() {
@@ -240,6 +258,7 @@ EOF
 install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
+git_clone_skel
 git_clone_fzg
 git_clone_gdf
 git_clone_netconn
