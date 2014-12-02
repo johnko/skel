@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141202-104138
+SCRIPTVERSION=141202-173113
 
 ######################################################################
 # Functions
@@ -71,11 +71,10 @@ EOF
 }
 
 git_clone_skel() {
-  prefix=$1
-  if [ -z "$prefix" ]; then
-    prefix=$HOME
-  fi
   repo=skel
+  [ -z "$repo" ] && exit 1
+  prefix=$1
+  [ -z "$prefix" ] && prefix=$HOME
   if [ ! -d /tmp/git/${repo} ]; then
     git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
   fi
@@ -88,57 +87,11 @@ git_clone_skel() {
   done
 }
 
-git_clone_fzg() {
-  prefix=$1
-  if [ -z "$prefix" ]; then
-    prefix=$HOME
-  fi
-  repo=freebsd-install-script
-  if [ ! -d /tmp/git/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
-  fi
-  install -d -m 700 ${prefix}/bin
-  for i in /tmp/git/${repo}/bin/* ; do
-    install -m 700 ${i} ${prefix}/bin/
-  done
-}
-
-git_clone_gdf() {
-  prefix=$1
-  if [ -z "$prefix" ]; then
-    prefix=$HOME
-  fi
-  repo=freebsd-pf-script
-  if [ ! -d /tmp/git/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
-  fi
-  install -d -m 700 ${prefix}/bin
-  for i in /tmp/git/${repo}/bin/* ; do
-    install -m 700 ${i} ${prefix}/bin/
-  done
-}
-
-git_clone_mount_iso() {
-  prefix=$1
-  if [ -z "$prefix" ]; then
-    prefix=$HOME
-  fi
-  repo=mount_iso
-  if [ ! -d /tmp/git/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
-  fi
-  install -d -m 700 ${prefix}/bin
-  for i in /tmp/git/${repo}/bin/* ; do
-    install -m 700 ${i} ${prefix}/bin/
-  done
-}
-
-git_clone_netconn() {
-  prefix=$1
-  if [ -z "$prefix" ]; then
-    prefix=$HOME
-  fi
-  repo=netconn
+git_deploy() {
+  repo=$1
+  [ -z "$repo" ] && exit 1
+  prefix=$2
+  [ -z "$prefix" ] && prefix=$HOME
   if [ ! -d /tmp/git/${repo} ]; then
     git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
   fi
@@ -261,10 +214,10 @@ install_hosts_overwrite
 
 install -d -m 700 /tmp/git
   git_clone_skel
-  git_clone_fzg
-  git_clone_gdf
-  git_clone_netconn
-  git_clone_mount_iso
+  git_deploy freebsd-install-script
+  git_deploy freebsd-pf-script
+  git_deploy netconn
+  git_deploy mount_iso
 
 which pf-sshinvaliduserip
 which gdf && gdf
