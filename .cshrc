@@ -14,7 +14,7 @@ umask 22
 set path = (/sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin /usr/local/bin $HOME/bin)
 
 setenv	EDITOR	vi
-setenv	PAGER		"/usr/bin/less -erX"
+setenv	PAGER		"less -erX"
 setenv	BLOCKSIZE	K
 
 setenv	RED			"%{\033[0;31m%}"
