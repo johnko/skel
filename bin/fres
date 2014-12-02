@@ -84,7 +84,7 @@ git_clone_skel() {
     done
     for i in /tmp/${repo}/.csh* ; do
       install -m 644 ${i} ${prefix}/
-    doneg
+    done
   fi
 }
 
