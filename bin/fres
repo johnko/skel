@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141202-173113
+SCRIPTVERSION=141204-082336
 
 ######################################################################
 # Functions
@@ -218,6 +218,12 @@ install -d -m 700 /tmp/git
   git_deploy freebsd-pf-script
   git_deploy netconn
   git_deploy mount_iso
+  git_deploy btfc
+  if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
+    install -d -m 700 /usr/local/etc/btfc
+    install -m 600 /tmp/git/btfc/etc/btfc/btfc.conf \
+                  /usr/local/etc/btfc/btfc.conf
+  fi
 
 which pf-sshinvaliduserip
 which gdf && gdf
