@@ -2,10 +2,9 @@ cmdwatch
 ezjail
 git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
   p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Mozilla-CA p5-Net-SSLeay
-  p5-Socket p5-IO-Socket-IP python27 libffi indexinfo gettext p5-Error
-  curl ca_root_nss cvsps p5-MIME-Base64
-gnupg1 gettext indexinfo
-  curl ca_root_nss
+  p5-Socket p5-IO-Socket-IP python27 libffi indexinfo gettext-runtime
+  p5-Error curl ca_root_nss cvsps p5-MIME-Base64
+gnupg1 indexinfo curl ca_root_nss gettext-runtime
 iftop
 nginx pcre
 openntpd
@@ -14,6 +13,6 @@ pkg
 rsync
 tmux libevent2
 ucarp
-wget indexinfo libidn gettext
-########## subversion serf apr expat gdbm indexinfo gettext db5 sqlite3 \
+wget indexinfo libidn gettext-runtime
+########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
 ########## yes '' | p install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0"\\"}'
