@@ -157,6 +157,8 @@ ezjail_use_zfs_for_jails="YES"
 ezjail_jailzfs="tank/ezjail"
 EOF
   ezjail-admin install -h file:///boot/../10.1-RELEASE
+  # ezjail-admin create testjail 'em0|192.168.0.211'
+  # ezjail-admin onestart testjail
 }
 
 btcluster_init(){
