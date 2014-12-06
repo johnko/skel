@@ -171,7 +171,8 @@ fzg_data_unlock() {
 }
 
 ezjail_setup() {
-  cat >/usr/local/etc/ezjail.conf <<EOF
+  if [ -d /usr/local/etc ]; then
+    cat >/usr/local/etc/ezjail.conf <<EOF
 ezjail_jaildir=/usr/jails
 ezjail_use_zfs="YES"
 ezjail_use_zfs_for_jails="YES"
@@ -180,8 +181,9 @@ ezjail_fdescfs_enable="NO"
 ezjail_procfs_enable="NO"
 ezjail_default_flavour="example"
 EOF
-  eza install -h file:///boot/../10.1-RELEASE
-  # eza create -f example testjail 'em0|192.168.0.211'
+  fi
+  # eza install -h file:///boot/../10.1-RELEASE
+  # eza create -f flavour testjail 'em0|192.168.0.211'
   # eza config -r norun testjail
   # eza start testjail
 }
@@ -258,6 +260,8 @@ install -d -m 700 /tmp/git
     install -m 600 /tmp/git/btfc/etc/btfc/btfc.conf \
                   /usr/local/etc/btfc/btfc.conf
   fi
+
+ezjail_setup
 
 which pf-sshinvaliduserip
 which gdf && gdf
