@@ -107,12 +107,17 @@ wget indexinfo libidn gettext \
 pkg
 " # end of PKGLIST
   fi
-  if [ ! -f /usr/sbin/p ]; then
-    test -e /usr/local/sbin/pkg-static || pkg bootstrap
-  fi
-  if [ ! -f /usr/sbin/p ] && \
-    [ -f /usr/local/sbin/pkg-static ]; then
-    install -m 755 -o root -g wheel /usr/local/sbin/pkg-static /usr/sbin/p
+  if [ ! -f /usr/sbin/p ] && [ ! -f "$HOME/bin/p" ]; then
+    [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
+    if sysctl -n security.jail.jailed | grep 1 ; then
+      destination="$HOME/bin/p"
+      install -d -m 700 $HOME/bin
+    else
+      destination="/usr/sbin/p"
+    fi
+    [ -e /usr/local/sbin/pkg-static ] && \
+      install -m 755 -o root -g wheel \
+        /usr/local/sbin/pkg-static "$destination"
   fi
   p install -y $PKGLIST
 }
