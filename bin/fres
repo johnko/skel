@@ -158,13 +158,11 @@ things_to_sync() {
   /boot/loader.conf
   /boot/hosts.overwrite
   /etc/hosts
-  /etc/rc.conf
   /etc/ssh/sshd_config
   /root/.ssh/authorized_keys
   /root/bin/
   /usr/home/urep/
 ########## Things that are similar per DC across mfs types
-  /boot/../mfsroot
   /boot/packages/
   /boot/resolv.conf.append
   /boot/resolv.conf.overwrite
@@ -174,6 +172,7 @@ things_to_sync() {
   /boot/sysctl.conf.append
   /boot/hosts.append
 ########## Things that are unique per system/jail
+  /boot/../mfsroot    #because of /boot is symlink to POOLNAME/boot
   /boot/*eli
   /boot/*key
   /boot/fstab.append
@@ -183,7 +182,7 @@ things_to_sync() {
   /etc/*passwd
   /etc/group
   /etc/pf/
-  /etc/rc.conf.local
+  /etc/rc.conf.d/
   /etc/shells
   /root/.ssh/authorized_keys2
 EOF
