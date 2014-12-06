@@ -70,23 +70,6 @@ install_hosts_overwrite() {
 EOF
 }
 
-git_clone_skel() {
-  repo=skel
-  [ -z "$repo" ] && exit 1
-  prefix=$1
-  [ -z "$prefix" ] && prefix=$HOME
-  if [ ! -d /tmp/git/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
-  fi
-  install -d -m 700 ${prefix}/bin
-  for i in /tmp/git/${repo}/bin/* ; do
-    install -m 700 ${i} ${prefix}/bin/
-  done
-  for i in /tmp/git/${repo}/.csh* ; do
-    install -m 644 ${i} ${prefix}/
-  done
-}
-
 git_deploy() {
   repo=$1
   [ -z "$repo" ] && exit 1
@@ -215,11 +198,17 @@ install_resolv_overwrite
 install_hosts_overwrite
 
 install -d -m 700 /tmp/git
-  git_clone_skel
+  git_deploy skel
+  if ls /tmp/git/skel/.csh* >/dev/null 2>&1 ; then
+    for i in /tmp/git/skel/.csh* ; do
+      install -m 644 ${i} /root/
+    done
+  fi
   git_deploy freebsd-install-script
   git_deploy freebsd-pf-script
   git_deploy netconn
   git_deploy mount_iso
+  git_deploy eza
   git_deploy btfc
   if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
     install -d -m 700 /usr/local/etc/btfc
