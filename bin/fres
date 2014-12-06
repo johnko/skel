@@ -84,6 +84,32 @@ git_deploy() {
   done
 }
 
+pkg_initial_install() {
+  if [ -e $HOME/.pkglist ]; then
+    PKGLIST="`cat $HOME/.pkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+  else
+    PKGLIST="
+cmdwatch \
+ezjail \
+git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC \
+  p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Mozilla-CA p5-Net-SSLeay \
+  p5-Socket p5-IO-Socket-IP python27 libffi indexinfo gettext p5-Error \
+  curl ca_root_nss cvsps p5-MIME-Base64 \
+gnupg1 gettext indexinfo \
+  curl ca_root_nss \
+iftop \
+openntpd \
+openssl \
+rsync \
+tmux libevent2 \
+ucarp \
+wget indexinfo libidn gettext \
+pkg
+" # end of PKGLIST
+  fi
+  p install -y $PKGLIST
+}
+
 upgrade_to_ten_one() {
   freebsd-update upgrade -r 10.1-RELEASE
 }
@@ -199,6 +225,8 @@ EOF
 install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
+
+pkg_initial_install
 
 install -d -m 700 /tmp/git
   git_deploy skel
