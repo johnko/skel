@@ -15,3 +15,5 @@ rsync
 tmux libevent2
 ucarp
 wget indexinfo libidn gettext
+########## subversion serf apr expat gdbm indexinfo gettext db5 sqlite3 \
+########## yes '' | p install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0"\\"}'
