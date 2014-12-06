@@ -202,9 +202,9 @@ install_hosts_overwrite
 
 install -d -m 700 /tmp/git
   git_deploy skel
-  if ls /tmp/git/skel/.csh* >/dev/null 2>&1 ; then
-    for i in /tmp/git/skel/.csh* ; do
-      install -m 644 ${i} /root/
+  if ls -A1 /tmp/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
+    for i in `ls -A1 /tmp/git/skel/ | egrep -v '^\.git$' | grep '^\.'` ; do
+      install -m 644 "/tmp/git/skel/${i}" /root/
     done
   fi
   git_deploy freebsd-install-script
