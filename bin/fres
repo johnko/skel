@@ -186,6 +186,10 @@ EOF
   # eza create -f flavour testjail 'em0|192.168.0.211'
   # eza config -r norun testjail
   # eza start testjail
+  ########## force archive
+  # eza archive -f ripp
+  ########## create based on archive
+  # eza create -a /usr/jails/ezjail_archives/ripp-201412061053.13.tar.gz ripp 'bge0|192.168.0.248'
 }
 
 btcluster_init(){
