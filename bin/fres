@@ -31,7 +31,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141209-161659
+SCRIPTVERSION=141210-013307
 
 ######################################################################
 # Functions
@@ -257,6 +257,7 @@ install -d -m 700 /tmp/git
   git_deploy freebsd-pf-script
   git_deploy netconn
   git_deploy mount_iso
+  git_deploy hddid
   git_deploy eza
   git_deploy btfc
   if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
