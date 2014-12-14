@@ -85,8 +85,8 @@ git_deploy() {
 }
 
 pkg_initial_install() {
-  if [ -e $HOME/.pkglist ]; then
-    PKGLIST="`cat $HOME/.pkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+  if [ -e $HOME/.cshpkglist ]; then
+    PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
   else
     PKGLIST="
 cmdwatch
