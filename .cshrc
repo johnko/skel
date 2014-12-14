@@ -13,20 +13,21 @@ umask 22
 
 set path = (/sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin /usr/local/bin $HOME/bin)
 
-setenv	EDITOR	vi
-setenv	PAGER		"less -erX"
-setenv	BLOCKSIZE	K
+setenv	EDITOR      vi
+setenv	PAGER	    more
+setenv  MANPAGER    "less -erX"
+setenv	BLOCKSIZE   K
 
-setenv	RED			"%{\033[0;31m%}"
-setenv	GREEN		"%{\033[0;32m%}"
-setenv	YELLOW	"%{\033[0;33m%}"
-setenv	BLUE		"%{\033[0;34m%}"
-setenv	PURPLE	"%{\033[0;35m%}"
-setenv	CYAN		"%{\033[0;36m%}"
-setenv	WHITE		"%{\033[0;37m%}"
-setenv	BOLD		""
-setenv	RESET		"%{\033[0m%}"
-setenv	ROOTC		"%{\033[0;32m%}"
+setenv	RED     "%{\033[0;31m%}"
+setenv	GREEN   "%{\033[0;32m%}"
+setenv	YELLOW  "%{\033[0;33m%}"
+setenv	BLUE    "%{\033[0;34m%}"
+setenv	PURPLE  "%{\033[0;35m%}"
+setenv	CYAN    "%{\033[0;36m%}"
+setenv	WHITE   "%{\033[0;37m%}"
+setenv	BOLD    ""
+setenv	RESET   "%{\033[0m%}"
+setenv	ROOTC   "%{\033[0;32m%}"
 
 if ( ! $?MANPATH ) then
 	setenv MANPATH /usr/local/man:/usr/man:/usr/share/man:/usr/X11R6/man
