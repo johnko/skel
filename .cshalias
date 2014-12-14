@@ -4,14 +4,15 @@ alias la  ls -aF
 alias lf  ls -FA
 alias ll  ls -lAF
 alias nr  netstat -nr
-alias egrep   /usr/bin/egrep --color
-alias grep    egrep
+alias p   pkg-static
+alias pg  pgrep -lf
+alias egrep   egrep --color
+alias grep    grep --color
 alias iftop   iftop -Bn
+alias top     top -CazHits1
 alias findd     'find . -type d -exec ls -ld {} \; | egrep -v "(drwx--S---)"'
 alias findf     'find . -type f -exec ls -ld {} \; | egrep -v "(-rw.------)"'
 alias findport  'find /usr/ports/ -maxdepth 2 -type d | egrep -i'
-alias p     pkg-static
-alias pg    pgrep -lf
 alias zio   zpool iostat
 alias zs    zpool status -v
 alias zl    zfs list -o name,used,available,refer,usedbychildren,usedbysnapshots,quota,mounted,mountpoint,creation
