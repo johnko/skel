@@ -1,14 +1,15 @@
-alias h		history 25
-alias j		jobs -l
-alias la	ls -aF
-alias lf	ls -FA
-alias ll	ls -lAF
+alias h   history 25
+alias j   jobs -l
+alias la  ls -aF
+alias lf  ls -FA
+alias ll  ls -lAF
 alias egrep   '/usr/bin/egrep --color'
 alias grep    'egrep'
+alias iftop   'iftop -Bn'
 alias findd     'find . -type d -exec ls -ld {} \; | egrep -v "(drwx--S---)"'
 alias findf     'find . -type f -exec ls -ld {} \; | egrep -v "(-rw.------)"'
 alias findport  'find /usr/ports/ -maxdepth 2 -type d | egrep -i'
-alias p     'pkg-static'
+alias p     pkg-static
 alias zs    'zpool status -v'
 alias zl    'zfs list -o name,used,available,refer,usedbychildren,usedbysnapshots,quota,mounted,mountpoint,creation'
 alias zls   'zfs list -t snapshot -o name,used,refer,creation -s creation'
