@@ -2,7 +2,6 @@
 ######################################################################
 # LICENSE pulled in with, cat LICENSE  | awk '{print "# "$0}'
 ######################################################################
-
 # Copyright (c) 2014, John Ko
 # All rights reserved.
 #
@@ -27,11 +26,10 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141214-033217
+SCRIPTVERSION=141214-045552
 
 ######################################################################
 # Functions
@@ -259,6 +257,7 @@ install -d -m 700 /tmp/git
   git_deploy mount_iso
   git_deploy hddid
   git_deploy eza
+  git_deploy freebsd-system-info
   git_deploy btfc
   if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
     install -d -m 700 /usr/local/etc/btfc
