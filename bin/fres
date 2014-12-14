@@ -259,6 +259,7 @@ install -d -m 700 /tmp/git
   git_deploy hddid
   git_deploy mount_iso
   git_deploy netconn
+  git_deploy pwgen
   git_deploy randomword
   git_deploy ssh-tools
 
