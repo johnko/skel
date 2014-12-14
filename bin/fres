@@ -258,6 +258,7 @@ install -d -m 700 /tmp/git
   git_deploy hddid
   git_deploy eza
   git_deploy freebsd-system-info
+  git_deploy ssh-tools
   git_deploy btfc
   if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
     install -d -m 700 /usr/local/etc/btfc
