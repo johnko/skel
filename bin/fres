@@ -251,14 +251,17 @@ install -d -m 700 /tmp/git
       install -m 644 "/tmp/git/skel/${i}" /root/
     done
   fi
+
+  git_deploy eza
   git_deploy freebsd-install-script
   git_deploy freebsd-pf-script
-  git_deploy netconn
-  git_deploy mount_iso
-  git_deploy hddid
-  git_deploy eza
   git_deploy freebsd-system-info
+  git_deploy hddid
+  git_deploy mount_iso
+  git_deploy netconn
+  git_deploy randomword
   git_deploy ssh-tools
+
   git_deploy btfc
   if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
     install -d -m 700 /usr/local/etc/btfc
