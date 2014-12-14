@@ -8,7 +8,7 @@ alias p   pkg-static
 alias pg  pgrep -lf
 alias egrep   egrep --color
 alias grep    grep --color
-alias iftop   iftop -Bn
+alias iftop   iftop -BPn
 alias top     top -CazHits1
 alias findd     'find . -type d -exec ls -ld {} \; | egrep -v "(drwx--S---)"'
 alias findf     'find . -type f -exec ls -ld {} \; | egrep -v "(-rw.------)"'
