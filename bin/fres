@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is YYmmdd-HHMM in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141214-045552
+SCRIPTVERSION=141215-050554
 
 ######################################################################
 # Functions
@@ -241,6 +241,8 @@ EOF
 install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
+
+test -e /etc/mail/aliases.db || newaliases
 
 pkg_initial_install
 
