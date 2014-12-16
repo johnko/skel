@@ -75,6 +75,10 @@ git_deploy() {
   [ -z "$prefix" ] && prefix=$HOME
   if [ ! -d /tmp/git/${repo} ]; then
     git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
+  else
+    cd /tmp/git/${repo}
+    git pull
+    cd -
   fi
   install -d -m 700 ${prefix}/bin
   for i in /tmp/git/${repo}/bin/* ; do
