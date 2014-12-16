@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141215-050554
+SCRIPTVERSION=141216-173621
 
 ######################################################################
 # Functions
@@ -109,19 +109,35 @@ ucarp
 wget indexinfo libidn gettext-runtime
 " # end of PKGLIST
   fi
-  if [ ! -f /usr/sbin/p ] && [ ! -f "$HOME/bin/p" ]; then
+  if [ ! -f /sbin/pkg-static ]; then
     [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
-    if sysctl -n security.jail.jailed | grep 1 ; then
-      destination="$HOME/bin/p"
-      install -d -m 700 $HOME/bin
-    else
-      destination="/usr/sbin/p"
-    fi
     [ -e /usr/local/sbin/pkg-static ] && \
       install -m 755 -o root -g wheel \
-        /usr/local/sbin/pkg-static "$destination"
+        /usr/local/sbin/pkg-static /sbin/pkg-static
   fi
-  pkg-static install -y $PKGLIST
+  if [ "update" = "$1" ]; then
+    if [ -d /boot/packages ]; then
+      if [ -d /tmp/packages_old ]; then
+        rm -r /tmp/packages_old
+      fi
+      mv /boot/packages /tmp/packages_old
+    fi
+    install -d -m 755 /boot/packages
+    if [ -f /usr/local/etc/pkg.conf ]; then
+      cat /usr/local/etc/pkg.conf >/usr/local/etc/pkg.conf.bkp
+    fi
+    install -d -m 755 /usr/local/etc
+    echo "PKG_CACHEDIR = \"${mnt}/boot/packages\";" >>/usr/local/etc/pkg.conf
+    pkg-static fetch -y $PKGLIST
+    if [ -f /usr/local/etc/pkg.conf.bkp ]; then
+      cat /usr/local/etc/pkg.conf.bkp >/usr/local/etc/pkg.conf
+      rm /usr/local/etc/pkg.conf.bkp
+    else
+      rm /usr/local/etc/pkg.conf
+    fi
+  else
+    pkg-static install -y $PKGLIST
+  fi
 }
 
 upgrade_to_ten_one() {
@@ -247,6 +263,12 @@ EOF
 # Main
 ######################################################################
 
+while getopts z:bh o; do
+  case "$o" in
+    b) UPDATEBOOKTPKG=1 ;;
+  esac
+done
+
 install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
@@ -254,6 +276,8 @@ install_hosts_overwrite
 test -e /etc/mail/aliases.db || newaliases
 
 pkg_initial_install
+
+[ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
 
 install -d -m 700 /tmp/git
   git_deploy skel
