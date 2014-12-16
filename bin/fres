@@ -133,7 +133,7 @@ update_to_latest_patch() {
   freebsd-update install
 }
 
-unset_setuid() {
+zfs_no_setuid() {
   ########## prevents a periodic job from searching for suid in large dataset
   zfs set setuid=off tank/largebackupdataset
 }
@@ -154,6 +154,10 @@ fzg_single() {
 
 fzg_attach_disk() {
   fzg -e ada0 -z 2g -p $POOLNAME -d ada1
+}
+
+fzg_update() {
+  fzg -f -p $POOLNAME
 }
 
 fzg_usb() {
@@ -185,6 +189,7 @@ ezjail_default_flavour="example"
 EOF
   fi
   # eza install -h file:///boot/../10.1-RELEASE
+  # eza update -u
   # eza create -f flavour testjail 'em0|192.168.0.211'
   # eza config -r norun testjail
   # eza start testjail
