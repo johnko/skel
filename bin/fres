@@ -50,22 +50,26 @@ EOF
 }
 
 install_resolv_overwrite() {
-  cat >/boot/resolv.conf.overwrite <<EOF
+  if [ ! -e /boot/resolv.conf.overwrite ]; then
+    cat >/boot/resolv.conf.overwrite <<EOF
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
+  fi
 }
 
 install_hosts_overwrite() {
-  cat >/boot/hosts.overwrite <<EOF
-::1			localhost localhost.my.domain
-127.0.0.1		localhost localhost.my.domain
+  if [ ! -e /boot/hosts.overwrite ]; then
+    cat >/boot/hosts.overwrite <<EOF
+::1 localhost localhost.my.domain
+127.0.0.1 localhost localhost.my.domain
 192.168.255.120 a
 192.168.255.140 b
 192.168.255.160 s
 192.168.255.180 m
 69.28.67.126 z
 EOF
+  fi
 }
 
 git_deploy() {
