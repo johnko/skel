@@ -231,8 +231,6 @@ things_to_sync() {
   cat <<EOF
 ########## Things that are similar globally
   /boot/loader.conf
-  /boot/hosts.overwrite
-  /etc/hosts
   /etc/ssh/sshd_config
   /root/.ssh/authorized_keys
   /root/bin/
@@ -243,9 +241,11 @@ things_to_sync() {
   /boot/resolv.conf.overwrite
   /boot/periodic.conf.append
   /boot/periodic.conf.overwrite
-  /boot/sysctl.conf.overwrite
   /boot/sysctl.conf.append
+  /boot/sysctl.conf.overwrite
   /boot/hosts.append
+  /boot/hosts.overwrite
+  /etc/hosts
 ########## Things that are unique per system/jail
   /boot/../mfsroot    #because of /boot is symlink to POOLNAME/boot
   /boot/*eli
@@ -255,10 +255,14 @@ things_to_sync() {
   /boot/zfs/
   /etc/*db
   /etc/*passwd
+  /etc/fstab
   /etc/group
+  /etc/hostid
+  /etc/mail
   /etc/pf/
   /etc/rc.conf.d/
   /etc/shells
+  /etc/ssh/
   /root/.ssh/authorized_keys2
 EOF
 }
