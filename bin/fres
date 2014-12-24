@@ -63,11 +63,18 @@ install_hosts_overwrite() {
     cat >/boot/hosts.overwrite <<EOF
 ::1 localhost localhost.my.domain
 127.0.0.1 localhost localhost.my.domain
+69.28.67.126 z
+EOF
+  fi
+}
+
+install_hosts_append() {
+  if [ ! -e /boot/hosts.append ]; then
+    cat >/boot/hosts.append <<EOF
 192.168.255.120 a
 192.168.255.140 b
 192.168.255.160 s
 192.168.255.180 m
-69.28.67.126 z
 EOF
   fi
 }
@@ -280,6 +287,7 @@ done
 install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
+install_hosts_append
 
 test -e /etc/mail/aliases.db || newaliases
 
