@@ -226,7 +226,16 @@ EOF
   # eza create -a /usr/jails/ezjail_archives/ripp-201412061053.13.tar.gz ripp 'bge0|192.168.0.248'
 }
 
-btcluster_init(){
+add_urep_user() {
+  if [ ! -d /usr/home/urep ]; then
+    if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
+      rmuser -yv urep
+    fi
+    echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
+  fi
+}
+
+btcluster_init() {
   ########## for testing bittorrent-for-clusters
   git clone https://github.com/jk-bt/bittorrent-for-clusters.git btcluster
   btcluster/setup.sh
@@ -288,6 +297,7 @@ install_ssh_auth_keys
 install_resolv_overwrite
 install_hosts_overwrite
 install_hosts_append
+add_urep_user
 
 test -e /etc/mail/aliases.db || newaliases
 
