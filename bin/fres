@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141231-042646
+SCRIPTVERSION=141231-044227
 
 ######################################################################
 # Functions
@@ -50,8 +50,14 @@ EOF
 }
 
 install_resolv_overwrite() {
-  if [ ! -e /boot/resolv.conf.overwrite ]; then
-    cat >/boot/resolv.conf.overwrite <<EOF
+  resolvfile=/etc/resolv.conf
+  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    if [ -e /boot/../mfsroot ]; then
+      resolvfile=/boot/resolv.conf.overwrite
+    fi
+  fi
+  if [ ! -e ${resolvfile} ]; then
+    cat >${resolvfile} <<EOF
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
