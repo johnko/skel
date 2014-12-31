@@ -296,16 +296,19 @@ while getopts z:bh o; do
 done
 
 install_ssh_auth_keys
-install_resolv_overwrite
-install_hosts_overwrite
-install_hosts_append
+if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+  install_resolv_overwrite
+  install_hosts_overwrite
+  install_hosts_append
+fi
 add_urep_user
 
 test -e /etc/mail/aliases.db || newaliases
 
-pkg_initial_install
-
-[ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
+if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+  pkg_initial_install
+  [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
+fi
 
 install -d -m 700 /tmp/git
   git_deploy skel
@@ -334,7 +337,8 @@ install -d -m 700 /tmp/git
                   /usr/local/etc/btfc/btfc.conf
   fi
 
-ezjail_setup
-
-which pf-sshinvaliduserip
-which gdf && gdf
+if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+  ezjail_setup
+  which pf-sshinvaliduserip
+  which gdf && gdf
+fi
