@@ -217,9 +217,11 @@ EOF
   fi
   # eza install -h file:///boot/../10.1-RELEASE
   # eza update -u
-  # eza create -f flavour testjail 'em0|192.168.0.211'
+  # eza create [-f flavour] testjail 'em0|192.168.0.211'
   # eza config -r norun testjail
   # eza start testjail
+  # eza stop testjail
+  # eza delete -w testjail
   ########## force archive
   # eza archive -f ripp
   ########## create based on archive
