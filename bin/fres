@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141231-044227
+SCRIPTVERSION=141231-044427
 
 ######################################################################
 # Functions
@@ -302,8 +302,8 @@ while getopts z:bh o; do
 done
 
 install_ssh_auth_keys
+install_resolv_overwrite
 if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-  install_resolv_overwrite
   install_hosts_overwrite
   install_hosts_append
 fi
