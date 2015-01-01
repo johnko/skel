@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=141231-044427
+SCRIPTVERSION=150101-091616
 
 ######################################################################
 # Functions
@@ -335,6 +335,7 @@ install -d -m 700 /tmp/git
   git_deploy randomword
   git_deploy ssh-tools
   git_deploy nginx-config-sites-enabled
+  git_deploy github-backup
 
   git_deploy btfc
   if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
