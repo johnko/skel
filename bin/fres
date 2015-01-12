@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150101-091616
+SCRIPTVERSION=150112-063233
 
 ######################################################################
 # Functions
@@ -90,15 +90,15 @@ git_deploy() {
   [ -z "$repo" ] && exit 1
   prefix=$2
   [ -z "$prefix" ] && prefix=$HOME
-  if [ ! -d /tmp/git/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/git/${repo}
+  if [ ! -d /tmp/git/$(whoami)/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git /tmp/git/$(whoami)/${repo}
   else
-    cd /tmp/git/${repo}
+    cd /tmp/git/$(whoami)/${repo}
     git pull
     cd -
   fi
   install -d -m 700 ${prefix}/bin
-  for i in /tmp/git/${repo}/bin/* ; do
+  for i in /tmp/git/$(whoami)/${repo}/bin/* ; do
     install -m 700 ${i} ${prefix}/bin/
   done
 }
@@ -302,28 +302,34 @@ while getopts z:bh o; do
 done
 
 install_ssh_auth_keys
-install_resolv_overwrite
-if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-  install_hosts_overwrite
-  install_hosts_append
+
+
+if [ "0" = "`id -u`" ]; then
+  install_resolv_overwrite
+  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    install_hosts_overwrite
+    install_hosts_append
+  fi
+  add_urep_user
+  test -e /etc/mail/aliases.db || newaliases
+  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    pkg_initial_install
+    [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
+  fi
 fi
-add_urep_user
 
-test -e /etc/mail/aliases.db || newaliases
 
-if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-  pkg_initial_install
-  [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
-fi
-
-install -d -m 700 /tmp/git
+if ! which git ; then
+  echo "git: command not found"
+else
+  install -d -m 777 /tmp/git
+  install -d -m 700 /tmp/git/$(whoami)
   git_deploy skel
-  if ls -A1 /tmp/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
-    for i in `ls -A1 /tmp/git/skel/ | egrep -v '^\.git$' | grep '^\.'` ; do
-      install -m 644 "/tmp/git/skel/${i}" /root/
+  if ls -A1 /tmp/git/$(whoami)/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
+    for i in $(ls -A1 /tmp/git/$(whoami)/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
+      install -m 644 "/tmp/git/$(whoami)/skel/${i}" ${HOME}/
     done
   fi
-
   git_deploy eza
   git_deploy freebsd-install-script
   git_deploy freebsd-pf-script
@@ -336,16 +342,22 @@ install -d -m 700 /tmp/git
   git_deploy ssh-tools
   git_deploy nginx-config-sites-enabled
   git_deploy github-backup
-
+  git_deploy gtfc
   git_deploy btfc
-  if [ -e /tmp/git/btfc/etc/btfc/btfc.conf ]; then
-    install -d -m 700 /usr/local/etc/btfc
-    install -m 600 /tmp/git/btfc/etc/btfc/btfc.conf \
-                  /usr/local/etc/btfc/btfc.conf
+  if [ "0" = "`id -u`" ]; then
+    if [ -e /tmp/git/$(whoami)/btfc/etc/btfc/btfc.conf ]; then
+      install -d -m 700 /usr/local/etc/btfc
+      install -m 600 /tmp/git/$(whoami)/btfc/etc/btfc/btfc.conf \
+                    /usr/local/etc/btfc/btfc.conf
+    fi
   fi
+fi
 
-if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-  ezjail_setup
-  which pf-sshinvaliduserip
-  which gdf && gdf
+
+if [ "0" = "`id -u`" ]; then
+  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    ezjail_setup
+    which pf-sshinvaliduserip
+    which gdf && gdf
+  fi
 fi
