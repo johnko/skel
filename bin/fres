@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150112-063233
+SCRIPTVERSION=150113-031736
 
 ######################################################################
 # Functions
@@ -301,6 +301,7 @@ while getopts z:bh o; do
   esac
 done
 
+
 install_ssh_auth_keys
 
 
@@ -358,6 +359,9 @@ if [ "0" = "`id -u`" ]; then
   if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
     ezjail_setup
     which pf-sshinvaliduserip
+    if service pf status | grep Enabled >/dev/null 2>&1; then
+      which pf-table && pf-table save all
+    fi
     which gdf && gdf
   fi
 fi
