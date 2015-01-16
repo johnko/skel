@@ -29,11 +29,30 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150113-031736
+SCRIPTVERSION=150116-010329
 
 ######################################################################
 # Functions
 ######################################################################
+
+append_motd() {
+  if ! grep "stat-all" /etc/motd >/dev/null 2>&1 ; then
+    cat >>/etc/motd <<EOF
+
+  Update programs and scripts:               fres
+  Cache programs for reboot:                 fres -b
+  System information:                        stat-all
+  Hard drive information:                    hddid
+  zpool status + geli translation:           zss
+  Update operating system:                   fzg -f [-n] [-p pool]
+                                             reboot
+  PF firewall, block ssh spammers:           pf-sshinvaliduserip
+               blacklist sshban list:        pf-move-sshban-to-black
+               show tables:                  pf-table show all
+               show anchor:                  pf-anchor show all
+EOF
+  fi
+}
 
 install_ssh_auth_keys() {
   prefix=$1
@@ -306,6 +325,7 @@ install_ssh_auth_keys
 
 
 if [ "0" = "`id -u`" ]; then
+  append_motd
   install_resolv_overwrite
   if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
     install_hosts_overwrite
