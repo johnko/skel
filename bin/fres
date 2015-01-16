@@ -35,37 +35,6 @@ SCRIPTVERSION=150116-012914
 # Functions
 ######################################################################
 
-append_motd() {
-  if ! grep "stat-all" /etc/motd >/dev/null 2>&1 ; then
-    cat >>/etc/motd <<EOF
-
-  Update programs and scripts:               fres
-  Cache program packages for reboot:         fres -b
-  System information:                        stat-all
-  Hard drive information:                    hddid
-  zpool status + geli translation:           zss
-EOF
-  if [ -e /boot/../mfsroot ]; then
-    cat >>/etc/motd <<EOF
-  Update operating system:                   fzg -f [-n] [-p pool]
-                                             reboot
-EOF
-  else
-    cat >>/etc/motd <<EOF
-  Update operating system:                   freebsd-update fetch
-                                             freebsd-update install
-                                             reboot
-EOF
-  fi
-    cat >>/etc/motd <<EOF
-  PF firewall, block ssh spammers:           pf-sshinvaliduserip
-               blacklist sshban list:        pf-move-sshban-to-black
-               show tables:                  pf-table show all
-               show anchor:                  pf-anchor show all
-EOF
-  fi
-}
-
 install_ssh_auth_keys() {
   prefix=$1
   if [ -z "$prefix" ]; then
@@ -337,7 +306,6 @@ install_ssh_auth_keys
 
 
 if [ "0" = "`id -u`" ]; then
-  append_motd
   install_resolv_overwrite
   if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
     install_hosts_overwrite
