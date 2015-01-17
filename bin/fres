@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150116-012914
+SCRIPTVERSION=150117-022416
 
 ######################################################################
 # Functions
@@ -241,6 +241,20 @@ add_urep_user() {
     fi
     echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
   fi
+}
+
+gitcluster_init() {
+  first=$1
+  repo=$2
+  ssh    urep@$first   gtfc init  $first     $repo
+}
+
+gitcluster_add() {
+  first=$1
+  second=$2
+  repo=$3
+  ssh -A urep@$second  gtfc clone $first     $repo
+  ssh    urep@$first   sh $repo/gitpullall.sh -f
 }
 
 btcluster_init() {
