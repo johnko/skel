@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150117-022416
+SCRIPTVERSION=150123-044812
 
 ######################################################################
 # Functions
@@ -357,14 +357,7 @@ else
   git_deploy nginx-config-sites-enabled
   git_deploy github-backup
   git_deploy gtfc
-  git_deploy btfc
-  if [ "0" = "`id -u`" ]; then
-    if [ -e /tmp/git/$(whoami)/btfc/etc/btfc/btfc.conf ]; then
-      install -d -m 700 /usr/local/etc/btfc
-      install -m 600 /tmp/git/$(whoami)/btfc/etc/btfc/btfc.conf \
-                    /usr/local/etc/btfc/btfc.conf
-    fi
-  fi
+  git_deploy btfc2
 fi
 
 
