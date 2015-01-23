@@ -12,6 +12,8 @@ openssl
 pkg
 rsync
 tmux libevent2
+transmission-cli miniupnpc bittorrent-libutp libnatpmp
+  curl ca_root_nss libevent2 dht
 ucarp
 wget indexinfo libidn gettext-runtime
 ########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
