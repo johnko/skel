@@ -65,27 +65,27 @@ EOF
 }
 
 install_hosts_overwrite() {
-if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-  if [ ! -e /boot/hosts.overwrite ]; then
-    cat >/boot/hosts.overwrite <<EOF
+  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    if [ ! -e /boot/hosts.overwrite ]; then
+      cat >/boot/hosts.overwrite <<EOF
 ::1 localhost localhost.my.domain
 127.0.0.1 localhost localhost.my.domain
 EOF
+    fi
   fi
-fi
 }
 
 install_hosts_append() {
-if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-  if [ ! -e /boot/hosts.append ]; then
-    cat >/boot/hosts.append <<EOF
+  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    if [ ! -e /boot/hosts.append ]; then
+      cat >/boot/hosts.append <<EOF
 192.168.255.102 d
 192.168.255.104 e
 192.168.255.106 f
 192.168.255.108 g
 EOF
+    fi
   fi
-fi
 }
 
 git_deploy() {
@@ -107,11 +107,11 @@ git_deploy() {
 }
 
 pkg_initial_install() {
-if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-  if [ -e $HOME/.cshpkglist ]; then
-    PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
-  else
-    PKGLIST="
+  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    if [ -e $HOME/.cshpkglist ]; then
+      PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+    else
+      PKGLIST="
 cmdwatch
 ezjail
 git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
@@ -131,37 +131,37 @@ transmission-cli miniupnpc bittorrent-libutp libnatpmp
 ucarp
 wget indexinfo libidn gettext-runtime
 " # end of PKGLIST
-  fi
-  if [ ! -f /sbin/pkg-static ]; then
-    [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
-    [ -e /usr/local/sbin/pkg-static ] && \
-      install -m 755 -o root -g wheel \
-        /usr/local/sbin/pkg-static /sbin/pkg-static
-  fi
-  if [ "update" = "$1" ]; then
-    if [ -d /boot/packages ]; then
-      if [ -d /tmp/packages_old ]; then
-        rm -r /tmp/packages_old
+    fi
+    if [ ! -f /sbin/pkg-static ]; then
+      [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
+      [ -e /usr/local/sbin/pkg-static ] && \
+        install -m 755 -o root -g wheel \
+          /usr/local/sbin/pkg-static /sbin/pkg-static
+    fi
+    if [ "update" = "$1" ]; then
+      if [ -d /boot/packages ]; then
+        if [ -d /tmp/packages_old ]; then
+          rm -r /tmp/packages_old
+        fi
+        mv /boot/packages /tmp/packages_old
       fi
-      mv /boot/packages /tmp/packages_old
-    fi
-    install -d -m 755 /boot/packages
-    if [ -f /usr/local/etc/pkg.conf ]; then
-      cat /usr/local/etc/pkg.conf >/usr/local/etc/pkg.conf.bkp
-    fi
-    install -d -m 755 /usr/local/etc
-    echo "PKG_CACHEDIR = \"${mnt}/boot/packages\";" >>/usr/local/etc/pkg.conf
-    pkg-static fetch -y $PKGLIST
-    if [ -f /usr/local/etc/pkg.conf.bkp ]; then
-      cat /usr/local/etc/pkg.conf.bkp >/usr/local/etc/pkg.conf
-      rm /usr/local/etc/pkg.conf.bkp
+      install -d -m 755 /boot/packages
+      if [ -f /usr/local/etc/pkg.conf ]; then
+        cat /usr/local/etc/pkg.conf >/usr/local/etc/pkg.conf.bkp
+      fi
+      install -d -m 755 /usr/local/etc
+      echo "PKG_CACHEDIR = \"${mnt}/boot/packages\";" >>/usr/local/etc/pkg.conf
+      pkg-static fetch -y $PKGLIST
+      if [ -f /usr/local/etc/pkg.conf.bkp ]; then
+        cat /usr/local/etc/pkg.conf.bkp >/usr/local/etc/pkg.conf
+        rm /usr/local/etc/pkg.conf.bkp
+      else
+        rm /usr/local/etc/pkg.conf
+      fi
     else
-      rm /usr/local/etc/pkg.conf
+      pkg-static install -y $PKGLIST
     fi
-  else
-    pkg-static install -y $PKGLIST
   fi
-fi
 }
 
 upgrade_to_ten_one() {
@@ -328,12 +328,12 @@ install_ssh_auth_keys
 
 if [ "0" = "`id -u`" ]; then
   install_resolv_overwrite
-    install_hosts_overwrite
-    install_hosts_append
+  install_hosts_overwrite
+  install_hosts_append
   add_urep_user
   test -e /etc/mail/aliases.db || newaliases
-    pkg_initial_install
-    [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
+  pkg_initial_install
+  [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
 fi
 
 
