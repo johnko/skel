@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150123-044812
+SCRIPTVERSION=150202-041108
 
 ######################################################################
 # Functions
@@ -65,15 +65,18 @@ EOF
 }
 
 install_hosts_overwrite() {
+if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
   if [ ! -e /boot/hosts.overwrite ]; then
     cat >/boot/hosts.overwrite <<EOF
 ::1 localhost localhost.my.domain
 127.0.0.1 localhost localhost.my.domain
 EOF
   fi
+fi
 }
 
 install_hosts_append() {
+if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
   if [ ! -e /boot/hosts.append ]; then
     cat >/boot/hosts.append <<EOF
 192.168.255.102 d
@@ -82,6 +85,7 @@ install_hosts_append() {
 192.168.255.108 g
 EOF
   fi
+fi
 }
 
 git_deploy() {
@@ -103,6 +107,7 @@ git_deploy() {
 }
 
 pkg_initial_install() {
+if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
   if [ -e $HOME/.cshpkglist ]; then
     PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
   else
@@ -156,6 +161,7 @@ wget indexinfo libidn gettext-runtime
   else
     pkg-static install -y $PKGLIST
   fi
+fi
 }
 
 upgrade_to_ten_one() {
@@ -322,16 +328,12 @@ install_ssh_auth_keys
 
 if [ "0" = "`id -u`" ]; then
   install_resolv_overwrite
-  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
     install_hosts_overwrite
     install_hosts_append
-  fi
   add_urep_user
   test -e /etc/mail/aliases.db || newaliases
-  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
     pkg_initial_install
     [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
-  fi
 fi
 
 
@@ -371,5 +373,7 @@ if [ "0" = "`id -u`" ]; then
       which pf-table && pf-table save all
     fi
     which gdf && gdf
+  else
+    which nginx-config-sites-enabled && nginx-config-sites-enabled
   fi
 fi
