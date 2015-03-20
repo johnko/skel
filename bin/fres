@@ -117,7 +117,7 @@ ezjail
 git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
   p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Mozilla-CA p5-Net-SSLeay
   p5-Socket p5-IO-Socket-IP python27 libffi indexinfo gettext-runtime
-  p5-Error curl ca_root_nss cvsps p5-MIME-Base64
+  p5-Error curl ca_root_nss cvsps
 gnupg1 indexinfo curl ca_root_nss gettext-runtime
 iftop
 nginx pcre
