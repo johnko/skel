@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150320-092427
+SCRIPTVERSION=150329-031441
 
 ######################################################################
 # Functions
@@ -85,6 +85,34 @@ install_hosts_append() {
 192.168.255.108 g
 EOF
     fi
+  fi
+}
+
+setup_tmux_conf() {
+  cat <<EOF >~/.tmux.conf
+set-window-option -g monitor-activity on
+bind -n escape detach
+# new window
+new  -s 0 -n status top
+# split pane 0 becomes pane 1
+splitw -v -p 50 -t 0 'ifconfig lagg0 && iftop -i lagg0 || iftop'
+source-file ~/.tmux.conf.local
+EOF
+  chmod 600 ~/.tmux.conf
+
+  if [ ! -e ~/.tmux.conf.local ]; then
+    cat <<EOF >~/.tmux.conf.local
+# split pane 1 becomes pane 2
+splitw -v -p 50 -t 1 'tail -f /var/log/auth.log'
+
+# split pane 0 becomes pane 3
+splitw -v -p 50 -t 0 'cmdwatch -n 30 zss bootpool'
+# split pane 3 becomes pane 4
+splitw -h -p 70 -t 3 'cmdwatch -n 30 zss pool'
+# split pane 4 becomes pane 5
+splitw -h -p 50 -t 4 'cmdwatch -n 30 zss tank'
+EOF
+    chmod 600 ~/.tmux.conf.local
   fi
 }
 
@@ -334,6 +362,7 @@ if [ "0" = "`id -u`" ]; then
   test -e /etc/mail/aliases.db || newaliases
   pkg_initial_install
   [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
+  setup_tmux_conf
 fi
 
 
