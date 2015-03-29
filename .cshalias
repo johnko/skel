@@ -15,6 +15,7 @@ alias omitblanklines    egrep -v '^\s*$'
 alias omitcomments      egrep -v '^\s*#'
 alias p     pkg-static
 alias pg    pgrep -lf
+alias ta    tmux attach
 alias top   top -CazHits1
 alias zi    zpool import
 alias zio   zpool iostat
