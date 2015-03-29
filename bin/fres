@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150329-035448
+SCRIPTVERSION=150329-035659
 
 ######################################################################
 # Functions
@@ -455,6 +455,7 @@ else
   install -d -m 777 /tmp/git
   install -d -m 700 /tmp/git/$(whoami)
   git_deploy skel
+  git_config
   if ls -A1 /tmp/git/$(whoami)/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
     for i in $(ls -A1 /tmp/git/$(whoami)/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
       install -m 644 "/tmp/git/$(whoami)/skel/${i}" ${HOME}/
