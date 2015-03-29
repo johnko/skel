@@ -91,7 +91,7 @@ EOF
 setup_tmux_conf() {
   cat <<EOF >~/.tmux.conf
 set-window-option -g monitor-activity on
-bind -n escape detach
+#bind -n escape detach
 # new window
 new  -s 0 -n status top
 # split pane 0 becomes pane 1
