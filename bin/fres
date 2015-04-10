@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150329-035659
+SCRIPTVERSION=150410-191425
 
 ######################################################################
 # Functions
@@ -140,24 +140,24 @@ pkg_initial_install() {
       PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
     else
       PKGLIST="
-cmdwatch
-ezjail
-git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
-  p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Mozilla-CA p5-Net-SSLeay
-  p5-Socket p5-IO-Socket-IP python27 libffi indexinfo gettext-runtime
-  p5-Error curl ca_root_nss cvsps
-gnupg1 indexinfo curl ca_root_nss gettext-runtime
-iftop
-nginx pcre
-openntpd
-openssl
-pkg
-rsync
-tmux libevent2
-transmission-cli miniupnpc bittorrent-libutp libnatpmp
-  curl ca_root_nss libevent2 dht
-ucarp
-wget indexinfo libidn gettext-runtime
+      cmdwatch
+      ezjail
+      git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
+        p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Mozilla-CA p5-Net-SSLeay
+        p5-Socket p5-IO-Socket-IP python27 libffi indexinfo gettext-runtime
+        p5-Error curl ca_root_nss cvsps
+      gnupg1 indexinfo curl ca_root_nss gettext-runtime
+      iftop
+      nginx pcre
+      openntpd
+      openssl
+      pkg
+      rsync
+      tmux libevent2
+      transmission-cli miniupnpc bittorrent-libutp libnatpmp
+        curl ca_root_nss libevent2 dht
+      ucarp
+      wget indexinfo libidn gettext-runtime
 " # end of PKGLIST
     fi
     if [ ! -f /sbin/pkg-static ]; then
@@ -213,11 +213,11 @@ mfsbsd_install() {
 }
 
 fzg_mirror() {
-  fzg -d ada0 -d ada1 -z 2g -m -p $POOLNAME
+  fzg -d ada0 -d ada1 -z 2g -m -p $POOLNAME -D
 }
 
 fzg_single() {
-  fzg -d ada0 -z 2g -m -p $POOLNAME
+  fzg -d ada0 -z 2g -m -p $POOLNAME -D
 }
 
 fzg_attach_disk() {
@@ -229,11 +229,11 @@ fzg_update() {
 }
 
 fzg_usb() {
-  fzg -d da0 -z 2g -m -n -p usb
+  fzg -d da0 -z 2g -m -n -p usb -D
 }
 
 fzg_data_mirror() {
-  fzg -i -d ada0 -d ada1 -r mirror -p tank
+  fzg -i -d ada0 -d ada1 -r mirror -p tank -D
 }
 
 fzg_data_lock() {
