@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150527-004551
+SCRIPTVERSION=150527-010737
 
 ######################################################################
 # Functions
@@ -369,11 +369,13 @@ fi
 if ! which git ; then
     echo "git: command not found"
 else
-    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
-    if [ "x" != "x${NEWDATASET}" ]; then
-        zfs create ${NEWDATASET}
-    else
-        install -d -m 700 ~/git
+    if [ ! -d ~/git ]; then
+        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
+        if [ "x" != "x${NEWDATASET}" ]; then
+            zfs create ${NEWDATASET}
+        else
+            install -d -m 700 ~/git
+        fi
     fi
     git_deploy skel
     if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
