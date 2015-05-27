@@ -36,60 +36,60 @@ SCRIPTVERSION=150527-004551
 ######################################################################
 
 install_ssh_auth_keys() {
-  prefix=$1
-  if [ -z "$prefix" ]; then
-    prefix=$HOME
-  fi
-  install -d -m 700 ${prefix}/.ssh
-  chmod 700 ${prefix}/.ssh
-  cat >${prefix}/.ssh/authorized_keys <<EOF
+    prefix=$1
+    if [ -z "$prefix" ]; then
+        prefix=$HOME
+    fi
+    install -d -m 700 ${prefix}/.ssh
+    chmod 700 ${prefix}/.ssh
+    cat >${prefix}/.ssh/authorized_keys <<EOF
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCVFa6ppe1CpTM6KIuSVV32d/fyz1E7XC6w6HkROSp7oLYC5PFeQRHtJQfNLW5JmCsEVogPJmUS/6e801Q8IKMajlTFpUzR9I+qGutmqBZNo6cmTLgTn3SVMueZb20GsYcBOhJRgsbgKbPdwQM/PKfnJYQzhzU6iOcrU+HCBQaTkMGT5HLsPO0FrVo3KnFdv1uGBAwxqyddztnuCrgxm/WbOy8fcHkReTOeLtGJsQu8fqWtBSzaAGlo2Rk/O4jEYX0uMV9Eq+yuZkHQP6tGNHDp4hPGEnnXhubhLYKmCH47Olq7CFqyUEeE74TmqZVNeY1dr7XunhsOO1RMLvYu4NYz chill
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDY+s7s+bs27WQV0gWZzwiRSZxALgnTBxtqb1ed39sZGzxcO0s1v9KoGtRaaisSIkMP+WSgzE1DIYBoW2FUGiD+lQXNlQSiIzw7oQCbR+EMuHO6+LW93hjix3c1rbrnhJfQST7Mwi/GfoFefxyW77/CO2Xkh2OkruNPUoBAXv/CvujF1ZXdL8D0tViXfpp/18tYx5feuLQMtq9Oi6A4N0021ICfAmUtGcpkQ8STldeVFxgBuVI3xtLmPqc8v45kB5EcNh9hvtaPznpKQCwQ6NTAv4NXRSVhApCKU1uY+TCNiHmnNwSnZ/PgKFmYlsh9vJr0CZbX6wbB++9Uwh3j51Xd dip
 EOF
-  chmod 600 ${prefix}/.ssh/authorized_keys
+    chmod 600 ${prefix}/.ssh/authorized_keys
 }
 
 install_resolv_overwrite() {
-  resolvfile=/etc/resolv.conf
-  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-    if [ -e /boot/../mfsroot ]; then
-      resolvfile=/boot/resolv.conf.overwrite
+    resolvfile=/etc/resolv.conf
+    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        if [ -e /boot/../mfsroot ]; then
+            resolvfile=/boot/resolv.conf.overwrite
+        fi
     fi
-  fi
-  if [ ! -e ${resolvfile} ]; then
-    cat >${resolvfile} <<EOF
+    if [ ! -e ${resolvfile} ]; then
+        cat >${resolvfile} <<EOF
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
-  fi
+    fi
 }
 
 install_hosts_overwrite() {
-  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-    if [ ! -e /boot/hosts.overwrite ]; then
-      cat >/boot/hosts.overwrite <<EOF
+    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        if [ ! -e /boot/hosts.overwrite ]; then
+            cat >/boot/hosts.overwrite <<EOF
 ::1 localhost localhost.my.domain
 127.0.0.1 localhost localhost.my.domain
 EOF
+        fi
     fi
-  fi
 }
 
 install_hosts_append() {
-  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-    if [ ! -e /boot/hosts.append ]; then
-      cat >/boot/hosts.append <<EOF
+    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        if [ ! -e /boot/hosts.append ]; then
+            cat >/boot/hosts.append <<EOF
 192.168.255.102 d
 192.168.255.104 e
 192.168.255.106 f
 192.168.255.108 g
 EOF
+        fi
     fi
-  fi
 }
 
 setup_tmux_conf() {
-  cat <<EOF >~/.tmux.conf
+    cat <<EOF >~/.tmux.conf
 set-window-option -g monitor-activity on
 #bind -n escape detach
 # new window
@@ -98,10 +98,10 @@ new  -s 0 -n status top
 splitw -v -p 50 -t 0 'ifconfig lagg0 && iftop -i lagg0 || iftop'
 source-file ~/.tmux.conf.local
 EOF
-  chmod 600 ~/.tmux.conf
+    chmod 600 ~/.tmux.conf
 
-  if [ ! -e ~/.tmux.conf.local ]; then
-    cat <<EOF >~/.tmux.conf.local
+    if [ ! -e ~/.tmux.conf.local ]; then
+        cat <<EOF >~/.tmux.conf.local
 # split pane 1 becomes pane 2
 splitw -v -p 50 -t 1 'tail -f /var/log/auth.log'
 
@@ -112,34 +112,34 @@ splitw -h -p 70 -t 3 'cmdwatch -n 30 zss pool'
 # split pane 4 becomes pane 5
 splitw -h -p 50 -t 4 'cmdwatch -n 30 zss tank'
 EOF
-    chmod 600 ~/.tmux.conf.local
-  fi
+        chmod 600 ~/.tmux.conf.local
+    fi
 }
 
 git_deploy() {
-  repo=$1
-  [ -z "$repo" ] && exit 1
-  prefix=$2
-  [ -z "$prefix" ] && prefix=$HOME
-  if [ ! -d ~/git/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git ~/git/${repo}
-  else
-    cd ~/git/${repo}
-    git pull
-    cd -
-  fi
-  install -d -m 700 ${prefix}/bin
-  for i in ~/git/${repo}/bin/* ; do
-    install -m 700 ${i} ${prefix}/bin/
-  done
+    repo=$1
+    [ -z "$repo" ] && exit 1
+    prefix=$2
+    [ -z "$prefix" ] && prefix=$HOME
+    if [ ! -d ~/git/${repo} ]; then
+        git clone https://github.com/johnko/${repo}.git ~/git/${repo}
+    else
+        cd ~/git/${repo}
+        git pull
+        cd -
+    fi
+    install -d -m 700 ${prefix}/bin
+    for i in ~/git/${repo}/bin/* ; do
+        install -m 700 ${i} ${prefix}/bin/
+    done
 }
 
 pkg_initial_install() {
-  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-    if [ -e $HOME/.cshpkglist ]; then
-      PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
-    else
-      PKGLIST="
+    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        if [ -e $HOME/.cshpkglist ]; then
+            PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+        else
+            PKGLIST="
       cmdwatch
       ezjail
       git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
@@ -159,94 +159,94 @@ pkg_initial_install() {
       ucarp
       wget indexinfo libidn gettext-runtime
 " # end of PKGLIST
-    fi
-    if [ ! -f /sbin/pkg-static ]; then
-      [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
-      [ -e /usr/local/sbin/pkg-static ] && \
-        install -m 755 -o root -g wheel \
-          /usr/local/sbin/pkg-static /sbin/pkg-static
-    fi
-    if [ "update" = "$1" ]; then
-      if [ -d /boot/packages ]; then
-        if [ -d /tmp/packages_old ]; then
-          rm -r /tmp/packages_old
         fi
-        mv /boot/packages /tmp/packages_old
-      fi
-      install -d -m 755 /boot/packages
-      if [ -f /usr/local/etc/pkg.conf ]; then
-        cat /usr/local/etc/pkg.conf >/usr/local/etc/pkg.conf.bkp
-      fi
-      install -d -m 755 /usr/local/etc
-      echo "PKG_CACHEDIR = \"${mnt}/boot/packages\";" >>/usr/local/etc/pkg.conf
-      pkg-static fetch -y $PKGLIST
-      if [ -f /usr/local/etc/pkg.conf.bkp ]; then
-        cat /usr/local/etc/pkg.conf.bkp >/usr/local/etc/pkg.conf
-        rm /usr/local/etc/pkg.conf.bkp
-      else
-        rm /usr/local/etc/pkg.conf
-      fi
-    else
-      pkg-static install -y $PKGLIST
+        if [ ! -f /sbin/pkg-static ]; then
+            [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
+            [ -e /usr/local/sbin/pkg-static ] && \
+                install -m 755 -o root -g wheel \
+                /usr/local/sbin/pkg-static /sbin/pkg-static
+        fi
+        if [ "update" = "$1" ]; then
+            if [ -d /boot/packages ]; then
+                if [ -d /tmp/packages_old ]; then
+                    rm -r /tmp/packages_old
+                fi
+                mv /boot/packages /tmp/packages_old
+            fi
+            install -d -m 755 /boot/packages
+            if [ -f /usr/local/etc/pkg.conf ]; then
+                cat /usr/local/etc/pkg.conf >/usr/local/etc/pkg.conf.bkp
+            fi
+            install -d -m 755 /usr/local/etc
+            echo "PKG_CACHEDIR = \"${mnt}/boot/packages\";" >>/usr/local/etc/pkg.conf
+            pkg-static fetch -y $PKGLIST
+            if [ -f /usr/local/etc/pkg.conf.bkp ]; then
+                cat /usr/local/etc/pkg.conf.bkp >/usr/local/etc/pkg.conf
+                rm /usr/local/etc/pkg.conf.bkp
+            else
+                rm /usr/local/etc/pkg.conf
+            fi
+        else
+            pkg-static install -y $PKGLIST
+        fi
     fi
-  fi
 }
 
 upgrade_to_ten_one() {
-  freebsd-update upgrade -r 10.1-RELEASE
+    freebsd-update upgrade -r 10.1-RELEASE
 }
 
 update_to_latest_patch() {
-  freebsd-update fetch
-  freebsd-update install
+    freebsd-update fetch
+    freebsd-update install
 }
 
 zfs_no_setuid() {
-  ########## prevents a periodic job from searching for suid in large dataset
-  zfs set setuid=off tank/largebackupdataset
+    ########## prevents a periodic job from searching for suid in large dataset
+    zfs set setuid=off tank/largebackupdataset
 }
 
 mfsbsd_install() {
-  ########## if using mfsbsd special edition
-  mount_cd9660 /dev/cd0 /cdrom || mount -o ro /dev/da0a /cdrom
-  zfsinstall -d $DISK -u /cdrom/10.1-RELEASE-amd64 -p $POOLNAME -s 2G -z 2G -c
+    ########## if using mfsbsd special edition
+    mount_cd9660 /dev/cd0 /cdrom || mount -o ro /dev/da0a /cdrom
+    zfsinstall -d $DISK -u /cdrom/10.1-RELEASE-amd64 -p $POOLNAME -s 2G -z 2G -c
 }
 
 fzg_mirror() {
-  fzg -d ada0 -d ada1 -z 2g -m -p $POOLNAME -D -H $HOSTNAME
+    fzg -d ada0 -d ada1 -z 2g -m -p $POOLNAME -D -H $HOSTNAME
 }
 
 fzg_single() {
-  fzg -d ada0 -z 2g -m -p $POOLNAME -D -H $HOSTNAME
+    fzg -d ada0 -z 2g -m -p $POOLNAME -D -H $HOSTNAME
 }
 
 fzg_attach_disk() {
-  fzg -e ada0 -z 2g -p $POOLNAME -d ada1
+    fzg -e ada0 -z 2g -p $POOLNAME -d ada1
 }
 
 fzg_update() {
-  fzg -f -p $POOLNAME
+    fzg -f -p $POOLNAME
 }
 
 fzg_usb() {
-  fzg -d da0 -z 2g -m -n -p usb -D -H $HOSTNAME
+    fzg -d da0 -z 2g -m -n -p usb -D -H $HOSTNAME
 }
 
 fzg_data_mirror() {
-  fzg -i -d ada0 -d ada1 -r mirror -p tank -D
+    fzg -i -d ada0 -d ada1 -r mirror -p tank -D
 }
 
 fzg_data_lock() {
-  fzg -l -p tank
+    fzg -l -p tank
 }
 
 fzg_data_unlock() {
-  fzg -u -d ada0p5 -d ada1p5
+    fzg -u -d ada0p5 -d ada1p5
 }
 
 ezjail_setup() {
-  if [ -d /usr/local/etc ]; then
-    cat >/usr/local/etc/ezjail.conf <<EOF
+    if [ -d /usr/local/etc ]; then
+        cat >/usr/local/etc/ezjail.conf <<EOF
 ezjail_jaildir=/usr/jails
 ezjail_use_zfs="YES"
 ezjail_use_zfs_for_jails="YES"
@@ -255,88 +255,88 @@ ezjail_fdescfs_enable="NO"
 ezjail_procfs_enable="NO"
 ezjail_default_flavour="example"
 EOF
-  fi
-  # eza install -h file:///boot/../10.1-RELEASE
-  # eza update -u
-  # eza create [-f flavour] testjail 'em0|192.168.0.211'
-  # eza config -r norun testjail
-  # eza start testjail
-  # eza stop testjail
-  # eza delete -w testjail
-  ########## force archive
-  # eza archive -f ripp
-  ########## create based on archive
-  # eza create -a /usr/jails/ezjail_archives/ripp-201412061053.13.tar.gz ripp 'bge0|192.168.0.248'
+    fi
+    # eza install -h file:///boot/../10.1-RELEASE
+    # eza update -u
+    # eza create [-f flavour] testjail 'em0|192.168.0.211'
+    # eza config -r norun testjail
+    # eza start testjail
+    # eza stop testjail
+    # eza delete -w testjail
+    ########## force archive
+    # eza archive -f ripp
+    ########## create based on archive
+    # eza create -a /usr/jails/ezjail_archives/ripp-201412061053.13.tar.gz ripp 'bge0|192.168.0.248'
 }
 
 add_urep_user() {
-  if [ ! -d /usr/home/urep ]; then
-    if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
-      rmuser -yv urep
+    if [ ! -d /usr/home/urep ]; then
+        if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
+            rmuser -yv urep
+        fi
+        echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
     fi
-    echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
-  fi
 }
 
 gitcluster_init() {
-  first=$1
-  repo=$2
-  ssh    urep@$first   gtfc init  $first     $repo
+    first=$1
+    repo=$2
+    ssh    urep@$first   gtfc init  $first     $repo
 }
 
 gitcluster_add() {
-  first=$1
-  second=$2
-  repo=$3
-  ssh -A urep@$second  gtfc clone $first     $repo
-  ssh    urep@$first   sh $repo/gitpullall.sh -f
+    first=$1
+    second=$2
+    repo=$3
+    ssh -A urep@$second  gtfc clone $first     $repo
+    ssh    urep@$first   sh $repo/gitpullall.sh -f
 }
 
 btcluster_init() {
-  ########## for testing bittorrent-for-clusters
-  git clone https://github.com/jk-bt/bittorrent-for-clusters.git btcluster
-  btcluster/setup.sh
-  mkdir -p /mnt/tank/sync
-  btcluster/bin/btinit.sh /mnt/tank/sync
+    ########## for testing bittorrent-for-clusters
+    git clone https://github.com/jk-bt/bittorrent-for-clusters.git btcluster
+    btcluster/setup.sh
+    mkdir -p /mnt/tank/sync
+    btcluster/bin/btinit.sh /mnt/tank/sync
 }
 
 things_to_sync() {
-  cat <<EOF
+    cat <<EOF
 ########## Things that are similar globally
-  /boot/loader.conf
-  /etc/ssh/sshd_config
-  /root/.ssh/authorized_keys
-  /root/bin/
-  /usr/home/urep/
+    /boot/loader.conf
+    /etc/ssh/sshd_config
+    /root/.ssh/authorized_keys
+    /root/bin/
+    /usr/home/urep/
 ########## Things that are similar per DC across mfs types
-  /boot/packages/
-  /boot/resolv.conf.append
-  /boot/resolv.conf.overwrite
-  /boot/periodic.conf.append
-  /boot/periodic.conf.overwrite
-  /boot/sysctl.conf.append
-  /boot/sysctl.conf.overwrite
-  /boot/hosts.append
-  /boot/hosts.overwrite
-  /etc/hosts
+    /boot/packages/
+    /boot/resolv.conf.append
+    /boot/resolv.conf.overwrite
+    /boot/periodic.conf.append
+    /boot/periodic.conf.overwrite
+    /boot/sysctl.conf.append
+    /boot/sysctl.conf.overwrite
+    /boot/hosts.append
+    /boot/hosts.overwrite
+    /etc/hosts
 ########## Things that are unique per system/jail
-  /boot/../mfsroot    #because of /boot is symlink to POOLNAME/boot
-  /boot/*eli
-  /boot/*key
-  /boot/fstab.append
-  /boot/loader.conf.local
-  /boot/zfs/
-  /etc/*db
-  /etc/*passwd
-  /etc/fstab
-  /etc/group
-  /etc/hostid
-  /etc/mail
-  /etc/pf/
-  /etc/rc.conf.d/
-  /etc/shells
-  /etc/ssh/
-  /root/.ssh/authorized_keys2
+    /boot/../mfsroot    #because of /boot is symlink to POOLNAME/boot
+    /boot/*eli
+    /boot/*key
+    /boot/fstab.append
+    /boot/loader.conf.local
+    /boot/zfs/
+    /etc/*db
+    /etc/*passwd
+    /etc/fstab
+    /etc/group
+    /etc/hostid
+    /etc/mail
+    /etc/pf/
+    /etc/rc.conf.d/
+    /etc/shells
+    /etc/ssh/
+    /root/.ssh/authorized_keys2
 EOF
 }
 
@@ -345,9 +345,9 @@ EOF
 ######################################################################
 
 while getopts z:bh o; do
-  case "$o" in
-    b) UPDATEBOOKTPKG=1 ;;
-  esac
+    case "$o" in
+        b) UPDATEBOOKTPKG=1 ;;
+    esac
 done
 
 
@@ -355,55 +355,60 @@ install_ssh_auth_keys
 
 
 if [ "0" = "`id -u`" ]; then
-  install_resolv_overwrite
-  install_hosts_overwrite
-  install_hosts_append
-  add_urep_user
-  test -e /etc/mail/aliases.db || newaliases
-  pkg_initial_install
-  [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
-  setup_tmux_conf
+    install_resolv_overwrite
+    install_hosts_overwrite
+    install_hosts_append
+    add_urep_user
+    test -e /etc/mail/aliases.db || newaliases
+    pkg_initial_install
+    [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
+    setup_tmux_conf
 fi
 
 
 if ! which git ; then
-  echo "git: command not found"
+    echo "git: command not found"
 else
-  install -d -m 700 ~/git
-  git_deploy skel
-  if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
-    for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
-      install -m 644 "~/git/skel/${i}" ${HOME}/
-    done
-  fi
-  git_deploy zsnapple
-  git_deploy crontabbed
-  git_deploy eza
-  git_deploy freebsd-install-script
-  git_deploy freebsd-pf-script
-  git_deploy freebsd-system-info
-  git_deploy hddid
-  git_deploy mount_iso
-  git_deploy netconn
-  git_deploy pwgen
-  git_deploy randomword
-  git_deploy ssh-tools
-  git_deploy nginx-config-sites-enabled
-  git_deploy github-backup
-  git_deploy gtfc
-  git_deploy btfc2
+    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
+    if [ "x" != "x${NEWDATASET}" ]; then
+        zfs create ${NEWDATASET}
+    else
+        install -d -m 700 ~/git
+    fi
+    git_deploy skel
+    if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
+        for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
+            install -m 644 "~/git/skel/${i}" ${HOME}/
+        done
+    fi
+    git_deploy zsnapple
+    git_deploy crontabbed
+    git_deploy eza
+    git_deploy freebsd-install-script
+    git_deploy freebsd-pf-script
+    git_deploy freebsd-system-info
+    git_deploy hddid
+    git_deploy mount_iso
+    git_deploy netconn
+    git_deploy pwgen
+    git_deploy randomword
+    git_deploy ssh-tools
+    git_deploy nginx-config-sites-enabled
+    git_deploy github-backup
+    git_deploy gtfc
+    git_deploy btfc2
 fi
 
 
 if [ "0" = "`id -u`" ]; then
-  if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-    ezjail_setup
-    which pf-sshinvaliduserip
-    if service pf status | grep Enabled >/dev/null 2>&1; then
-      which pf-table && pf-table save all
+    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        ezjail_setup
+        which pf-sshinvaliduserip
+        if service pf status | grep Enabled >/dev/null 2>&1; then
+            which pf-table && pf-table save all
+        fi
+        which gdf && gdf
+    else
+        which nginx-config-sites-enabled && nginx-config-sites-enabled
     fi
-    which gdf && gdf
-  else
-    which nginx-config-sites-enabled && nginx-config-sites-enabled
-  fi
 fi
