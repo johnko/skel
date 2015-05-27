@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150527-011356
+SCRIPTVERSION=150527-024134
 
 ######################################################################
 # Functions
@@ -307,6 +307,7 @@ things_to_sync() {
     /etc/ssh/sshd_config
     /root/.ssh/authorized_keys
     /root/bin/
+    /root/git/
     /usr/home/urep/
 ########## Things that are similar per DC across mfs types
     /boot/packages/
@@ -337,6 +338,8 @@ things_to_sync() {
     /etc/shells
     /etc/ssh/
     /root/.ssh/authorized_keys2
+    /root/.tmux.conf.local
+    /root/crontabbed/
 EOF
 }
 
