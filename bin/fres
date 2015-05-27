@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150527-010737
+SCRIPTVERSION=150527-011356
 
 ######################################################################
 # Functions
@@ -380,7 +380,7 @@ else
     git_deploy skel
     if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
         for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
-            install -m 644 "~/git/skel/${i}" ${HOME}/
+            install -m 644 ~/git/skel/${i} ${HOME}/
         done
     fi
     git_deploy zsnapple
