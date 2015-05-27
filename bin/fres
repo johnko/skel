@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150527-004013
+SCRIPTVERSION=150527-004551
 
 ######################################################################
 # Functions
@@ -121,15 +121,15 @@ git_deploy() {
   [ -z "$repo" ] && exit 1
   prefix=$2
   [ -z "$prefix" ] && prefix=$HOME
-  if [ ! -d /tmp/git/$(whoami)/${repo} ]; then
-    git clone https://github.com/johnko/${repo}.git /tmp/git/$(whoami)/${repo}
+  if [ ! -d ~/git/${repo} ]; then
+    git clone https://github.com/johnko/${repo}.git ~/git/${repo}
   else
-    cd /tmp/git/$(whoami)/${repo}
+    cd ~/git/${repo}
     git pull
     cd -
   fi
   install -d -m 700 ${prefix}/bin
-  for i in /tmp/git/$(whoami)/${repo}/bin/* ; do
+  for i in ~/git/${repo}/bin/* ; do
     install -m 700 ${i} ${prefix}/bin/
   done
 }
@@ -369,12 +369,11 @@ fi
 if ! which git ; then
   echo "git: command not found"
 else
-  install -d -m 777 /tmp/git
-  install -d -m 700 /tmp/git/$(whoami)
+  install -d -m 700 ~/git
   git_deploy skel
-  if ls -A1 /tmp/git/$(whoami)/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
-    for i in $(ls -A1 /tmp/git/$(whoami)/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
-      install -m 644 "/tmp/git/$(whoami)/skel/${i}" ${HOME}/
+  if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
+    for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
+      install -m 644 "~/git/skel/${i}" ${HOME}/
     done
   fi
   git_deploy zsnapple
