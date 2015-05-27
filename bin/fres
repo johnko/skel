@@ -378,6 +378,7 @@ else
     done
   fi
   git_deploy zsnapple
+  git_deploy crontabbed
   git_deploy eza
   git_deploy freebsd-install-script
   git_deploy freebsd-pf-script
