@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150528-052705
+SCRIPTVERSION=150528-062520
 
 ######################################################################
 # Functions
@@ -162,8 +162,12 @@ pkg_initial_install() {
         fi
         if [ ! -f /sbin/pkg-static ]; then
             [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
-            [ -e /usr/local/sbin/pkg-static ] && \
-                install -m 755 -o root -g wheel \
+            [ -e /usr/local/sbin/pkg-static ] \
+                && install -m 755 -o root -g wheel \
+                /usr/local/sbin/pkg-static /sbin/pkg-static
+        else
+            diff /usr/local/sbin/pkg-static /sbin/pkg-static \
+                || install -m 755 -o root -g wheel \
                 /usr/local/sbin/pkg-static /sbin/pkg-static
         fi
         if [ "update" = "$1" ]; then
