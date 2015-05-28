@@ -16,7 +16,7 @@ alias omitcomments      egrep -v '^\s*#'
 alias p         pkg-static
 alias pg        pgrep -lf
 alias stat-heat stat-temperature
-alias ta        tmux attach || tmux
+alias ta        'tmux attach || tmux'
 alias tas       tmux source-file ~/.tmux.conf.status
 alias top       top -CazHits1
 alias zi        zpool import
