@@ -99,7 +99,8 @@ EOF
         cat <<EOF >~/.tmux.conf.status
 set-window-option -g monitor-activity on
 # new window
-new  -s 0 -n status top
+#new -s 0 -n status top
+neww -n status top
 # split pane 0 becomes pane 1
 splitw -v -p 50 -t 0 'ifconfig lagg0 && iftop -i lagg0 || iftop'
 # split pane 1 becomes pane 2
