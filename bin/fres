@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150528-043822
+SCRIPTVERSION=150528-052705
 
 ######################################################################
 # Functions
@@ -92,19 +92,18 @@ setup_tmux_conf() {
     cat <<EOF >~/.tmux.conf
 set-window-option -g monitor-activity on
 #bind -n escape detach
+EOF
+    chmod 600 ~/.tmux.conf
+
+    if [ ! -e ~/.tmux.conf.status ]; then
+        cat <<EOF >~/.tmux.conf.status
+set-window-option -g monitor-activity on
 # new window
 new  -s 0 -n status top
 # split pane 0 becomes pane 1
 splitw -v -p 50 -t 0 'ifconfig lagg0 && iftop -i lagg0 || iftop'
-source-file ~/.tmux.conf.local
-EOF
-    chmod 600 ~/.tmux.conf
-
-    if [ ! -e ~/.tmux.conf.local ]; then
-        cat <<EOF >~/.tmux.conf.local
 # split pane 1 becomes pane 2
 splitw -v -p 50 -t 1 'tail -f /var/log/auth.log'
-
 # split pane 0 becomes pane 3
 splitw -v -p 50 -t 0 'cmdwatch -n 30 zss bootpool'
 # split pane 3 becomes pane 4
@@ -112,7 +111,7 @@ splitw -h -p 70 -t 3 'cmdwatch -n 30 zss pool'
 # split pane 4 becomes pane 5
 splitw -h -p 50 -t 4 'cmdwatch -n 30 zss tank'
 EOF
-        chmod 600 ~/.tmux.conf.local
+        chmod 600 ~/.tmux.conf.status
     fi
 }
 
