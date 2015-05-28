@@ -17,7 +17,7 @@ alias p         pkg-static
 alias pg        pgrep -lf
 alias stat-heat stat-temperature
 alias ta        tmux attach
-alias tas       tmux -f ~/.tmux.conf.local attach
+alias tas       tmux -f ~/.tmux.conf.status attach
 alias top       top -CazHits1
 alias zi        zpool import
 alias zio       zpool iostat
