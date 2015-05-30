@@ -391,23 +391,29 @@ else
             install -m 644 ~/git/skel/${i} ${HOME}/
         done
     fi
-    git_deploy zsnapple
-    git_deploy crontabbed
-    git_deploy eza
-    git_deploy freebsd-install-script
-    git_deploy freebsd-pf-script
-    git_deploy freebsd-system-info
-    git_deploy freebsd-sortconf
-    git_deploy hddid
-    git_deploy mount_iso
-    git_deploy netconn
-    git_deploy pwgen
-    git_deploy randomword
-    git_deploy ssh-tools
-    git_deploy nginx-config-sites-enabled
-    git_deploy github-backup
-    git_deploy gtfc
-    git_deploy btfc2
+    REPOS="
+    btfc2
+    crontabbed
+    eza
+    freebsd-install-script
+    freebsd-pf-script
+    freebsd-sortconf
+    freebsd-system-info
+    github-backup
+    gtfc
+    hddid
+    mount_iso
+    netconn
+    nginx-config-sites-enabled
+    pwgen
+    randomword
+    ssh-multi
+    ssh-tools
+    zsnapple
+" # end of REPOS
+    for i in ${REPOS} ; do
+        git_deploy ${i}
+    done
 fi
 
 
