@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150528-065923
+SCRIPTVERSION=150605-073642
 
 ######################################################################
 # Functions
@@ -394,6 +394,7 @@ else
     REPOS="
     btfc2
     crontabbed
+    deploy
     eza
     freebsd-install-script
     freebsd-pf-script
