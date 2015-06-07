@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150605-073642
+SCRIPTVERSION=150607-225127
 
 ######################################################################
 # Functions
@@ -135,6 +135,16 @@ git_deploy() {
 }
 
 pkg_initial_install() {
+    if [ ! -f /sbin/pkg-static ]; then
+        [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
+        [ -e /usr/local/sbin/pkg-static ] \
+            && install -m 755 -o root -g wheel \
+            /usr/local/sbin/pkg-static /sbin/pkg-static
+    else
+        diff /usr/local/sbin/pkg-static /sbin/pkg-static \
+            || install -m 755 -o root -g wheel \
+            /usr/local/sbin/pkg-static /sbin/pkg-static
+    fi
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         if [ -e $HOME/.cshpkglist ]; then
             PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
@@ -160,16 +170,6 @@ pkg_initial_install() {
             w3m boehm-gc
             wget indexinfo libidn gettext-runtime
 " # end of PKGLIST
-        fi
-        if [ ! -f /sbin/pkg-static ]; then
-            [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
-            [ -e /usr/local/sbin/pkg-static ] \
-                && install -m 755 -o root -g wheel \
-                /usr/local/sbin/pkg-static /sbin/pkg-static
-        else
-            diff /usr/local/sbin/pkg-static /sbin/pkg-static \
-                || install -m 755 -o root -g wheel \
-                /usr/local/sbin/pkg-static /sbin/pkg-static
         fi
         if [ "update" = "$1" ]; then
             if [ -d /boot/packages ]; then
