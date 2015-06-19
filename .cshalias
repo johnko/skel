@@ -1,4 +1,5 @@
 alias egrep     egrep --color
+alias eza-install 'eza install -h file:///boot/../10.1-RELEASE'
 alias findd     'find . -type d -exec ls -ld {} \; | egrep -v "(drwx--S---)"'
 alias findf     'find . -type f -exec ls -ld {} \; | egrep -v "(-rw.------)"'
 alias findport  'find /usr/ports/ -maxdepth 2 -type d | egrep -i'
