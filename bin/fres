@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150620-092347
+SCRIPTVERSION=150620-093749
 
 ######################################################################
 # Functions
@@ -404,6 +404,8 @@ else
         for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
             install -m 644 ~/git/skel/${i} ${HOME}/
         done
+        tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
+        chmod 600 ~/perm/*
     fi
     REPOS="
     apache-config-freebsd
