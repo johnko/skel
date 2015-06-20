@@ -19,7 +19,7 @@ alias pg        pgrep -lf
 alias sr        squidclient -m PURGE
 alias stat-heat stat-temperature
 alias ta        'tmux attach || tmux'
-alias tas       tmux source-file ~/.tmux.conf.status
+alias tas       tmux source-file ~/perm/tmux.conf.status
 alias tn        tmux new-window
 alias top       top -CazHits1
 alias zi        zpool import
