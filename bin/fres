@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150620-142655
+SCRIPTVERSION=150620-220952
 
 ######################################################################
 # Functions
@@ -343,24 +343,20 @@ done
 install_ssh_auth_keys
 
 
-if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-    if [ ! -d ~/perm ]; then
-        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/perm/'`
-        if [ "x" != "x${NEWDATASET}" ]; then
-            zfs create -o exec=off -o setuid=off ${NEWDATASET}
-        else
-            install -d -m 700 ~/perm
-        fi
+if [ ! -d ~/perm ]; then
+    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/perm/'`
+    if [ "x" != "x${NEWDATASET}" ]; then
+        zfs create -o exec=off -o setuid=off ${NEWDATASET}
+    else
+        install -d -m 700 ~/perm
     fi
-    if [ "0" = "`id -u`" ]; then
-        if [ ! -d ~/local ]; then
-            NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
-            if [ "x" != "x${NEWDATASET}" ]; then
-                zfs create -o exec=off -o setuid=off ${NEWDATASET}
-            else
-                install -d -m 700 ~/local
-            fi
-        fi
+fi
+if [ ! -d ~/local ]; then
+    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
+    if [ "x" != "x${NEWDATASET}" ]; then
+        zfs create -o exec=off -o setuid=off ${NEWDATASET}
+    else
+        install -d -m 700 ~/local
     fi
 fi
 
