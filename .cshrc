@@ -7,8 +7,8 @@
 #
 
 source ~/.cshalias
-if (-e ~/.cshproxy) then
-  source ~/.cshproxy
+if (-e ~/perm/cshproxy) then
+  source ~/perm/cshproxy
 endif
 
 # A righteous umask
