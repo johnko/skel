@@ -6,7 +6,10 @@
 # more examples available at /usr/share/examples/csh/
 #
 
-source ~/.cshalias
+if (-e ~/perm/cshalias) then
+  source ~/perm/cshalias
+endif
+
 if (-e ~/perm/cshproxy) then
   source ~/perm/cshproxy
 endif
