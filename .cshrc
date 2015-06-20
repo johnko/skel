@@ -7,6 +7,7 @@
 #
 
 source ~/.cshalias
+source ~/.cshproxy
 
 # A righteous umask
 umask 22
