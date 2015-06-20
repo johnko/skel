@@ -315,6 +315,7 @@ things_to_sync() {
     /root/.ssh/authorized_keys
     /root/bin/
     /root/git/
+    /root/perm/
     /usr/home/urep/
 ########## Things that are similar per DC across mfs types
     /boot/packages/
