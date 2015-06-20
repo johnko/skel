@@ -95,8 +95,8 @@ set-window-option -g monitor-activity on
 EOF
     chmod 600 ~/.tmux.conf
 
-    if [ ! -e ~/.tmux.conf.status ]; then
-        cat <<EOF >~/.tmux.conf.status
+    if [ ! -e ~/perm/tmux.conf.status ]; then
+        cat <<EOF >~/perm/tmux.conf.status
 set-window-option -g monitor-activity on
 # new window
 #new -s 0 -n status top
@@ -112,7 +112,7 @@ splitw -h -p 70 -t 3 'cmdwatch -n 30 zss pool'
 # split pane 4 becomes pane 5
 splitw -h -p 50 -t 4 'cmdwatch -n 30 zss tank'
 EOF
-        chmod 600 ~/.tmux.conf.status
+        chmod 600 ~/perm/tmux.conf.status
     fi
 }
 
@@ -346,7 +346,6 @@ things_to_sync() {
     /etc/shells
     /etc/ssh/
     /root/.ssh/authorized_keys2
-    /root/.tmux.conf.local
     /root/crontabbed/
 EOF
 }
