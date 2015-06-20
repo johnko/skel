@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150620-092029
+SCRIPTVERSION=150620-092347
 
 ######################################################################
 # Functions
@@ -146,8 +146,8 @@ pkg_initial_install() {
             /usr/local/sbin/pkg-static /sbin/pkg-static
     fi
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        if [ -e $HOME/.cshpkglist ]; then
-            PKGLIST="`cat $HOME/.cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+        if [ -e $HOME/perm/cshpkglist ]; then
+            PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
         else
             PKGLIST="
             cmdwatch
