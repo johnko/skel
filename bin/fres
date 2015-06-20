@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150620-095324
+SCRIPTVERSION=150620-142655
 
 ######################################################################
 # Functions
@@ -148,28 +148,6 @@ pkg_initial_install() {
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         if [ -e $HOME/perm/cshpkglist ]; then
             PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
-        else
-            PKGLIST="
-            cmdwatch
-            ezjail
-            git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
-              p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Mozilla-CA p5-Net-SSLeay
-              p5-Socket p5-IO-Socket-IP python27 libffi indexinfo gettext-runtime
-              p5-Error curl ca_root_nss cvsps
-            gnupg1 indexinfo curl ca_root_nss gettext-runtime
-            iftop
-            nginx pcre
-            openntpd
-            openssl
-            pkg
-            rsync
-            tmux libevent2
-            transmission-cli miniupnpc bittorrent-libutp libnatpmp
-              curl ca_root_nss libevent2 dht
-            ucarp
-            w3m boehm-gc
-            wget indexinfo libidn gettext-runtime
-" # end of PKGLIST
         fi
         if [ "update" = "$1" ]; then
             if [ -d /boot/packages ]; then
