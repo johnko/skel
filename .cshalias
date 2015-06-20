@@ -16,6 +16,7 @@ alias omitblanklines    egrep -v '^\s*$'
 alias omitcomments      egrep -v '^\s*#'
 alias p         pkg-static
 alias pg        pgrep -lf
+alias sr        squidclient -m PURGE
 alias stat-heat stat-temperature
 alias ta        'tmux attach || tmux'
 alias tas       tmux source-file ~/.tmux.conf.status
