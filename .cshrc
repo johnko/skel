@@ -7,7 +7,9 @@
 #
 
 source ~/.cshalias
-source ~/.cshproxy
+if (-e ~/.cshproxy) then
+  source ~/.cshproxy
+endif
 
 # A righteous umask
 umask 22
