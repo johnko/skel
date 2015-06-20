@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150620-093749
+SCRIPTVERSION=150620-094554
 
 ######################################################################
 # Functions
@@ -371,6 +371,16 @@ if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
             zfs create -o exec=off -o setuid=off ${NEWDATASET}
         else
             install -d -m 700 ~/perm
+        fi
+    fi
+    if [ "0" = "`id -u`" ]; then
+        if [ ! -d ~/local ]; then
+            NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
+            if [ "x" != "x${NEWDATASET}" ]; then
+                zfs create -o exec=off -o setuid=off ${NEWDATASET}
+            else
+                install -d -m 700 ~/local
+            fi
         fi
     fi
 fi
