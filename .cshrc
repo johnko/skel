@@ -10,8 +10,8 @@ if (-e ~/perm/cshalias) then
   source ~/perm/cshalias
 endif
 
-if (-e ~/perm/cshproxy) then
-  source ~/perm/cshproxy
+if (-e ~/local/cshproxy) then
+  source ~/local/cshproxy
 endif
 
 # A righteous umask
