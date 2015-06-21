@@ -145,11 +145,11 @@ pkg_initial_install() {
             || install -m 755 -o root -g wheel \
             /usr/local/sbin/pkg-static /sbin/pkg-static
     fi
-    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        if [ -e $HOME/perm/cshpkglist ]; then
-            PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
-        fi
-        if [ "update" = "$1" ]; then
+    if [ -e $HOME/perm/cshpkglist ]; then
+        PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+    fi
+    if [ "update" = "$1" ]; then
+        if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
             if [ -d /boot/packages ]; then
                 if [ -d /tmp/packages_old ]; then
                     rm -r /tmp/packages_old
@@ -169,7 +169,9 @@ pkg_initial_install() {
             else
                 rm /usr/local/etc/pkg.conf
             fi
-        else
+        fi
+    else
+        if [ "x" != "x$PKGLIST" ]; then
             pkg-static install -y $PKGLIST
         fi
     fi
