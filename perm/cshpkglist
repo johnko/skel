@@ -10,13 +10,14 @@ nginx pcre
 openntpd
 openssl
 pkg
+radmind
 rsync
 tmux libevent2
-transmission-cli miniupnpc bittorrent-libutp libnatpmp
-  curl ca_root_nss libevent2 dht
+transmission-cli miniupnpc bittorrent-libutp libnatpmp curl
+  ca_root_nss libevent2 dht
 ucarp
 w3m boehm-gc
 wget indexinfo libidn gettext-runtime
 zsync
 ########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
-########## yes '' | p install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0"\\"}'
+########## yes '' | pkg install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0"\\"}'
