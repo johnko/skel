@@ -29,9 +29,9 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150621-042502
+SCRIPTVERSION=150621-043302
 
-PKGLIST="
+PKGLISTTODO="
 firefly
 minidlna
 
@@ -56,7 +56,11 @@ conky
 gamin
 "
 
-for i in ${PKGLIST} ; do
+if [ -e $HOME/perm/cshpkglist ]; then
+    PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+fi
+
+for i in ${PKGLIST} ${PKGLISTTODO} ; do
     pkg install -y ${i}
     pkg remove -a -y
 done
