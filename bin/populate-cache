@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150621-043302
+SCRIPTVERSION=150621-043427
 
 PKGLISTTODO="
 firefly
@@ -63,4 +63,5 @@ fi
 for i in ${PKGLIST} ${PKGLISTTODO} ; do
     pkg install -y ${i}
     pkg remove -a -y
+    rm /var/cache/pkg/*.txz
 done
