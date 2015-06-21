@@ -29,7 +29,11 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150621-032118
+SCRIPTVERSION=150621-141555
+
+if [ "x" == "x${REPOSRC}" ]; then
+    REPOSRC=https://github.com/
+fi
 
 ######################################################################
 # Functions
@@ -122,7 +126,7 @@ git_deploy() {
     prefix=$2
     [ -z "$prefix" ] && prefix=$HOME
     if [ ! -d ~/git/${repo} ]; then
-        git clone https://github.com/johnko/${repo}.git ~/git/${repo}
+        git clone ${REPOSRC}johnko/${repo}.git ~/git/${repo}
     else
         cd ~/git/${repo}
         git pull | grep -v 'Already up-to-date.'
