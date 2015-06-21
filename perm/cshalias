@@ -1,5 +1,5 @@
 alias egrep     egrep --color
-alias eza-install 'eza install -h file:///boot/../10.1-RELEASE'
+alias eza-install       'eza install -h file:///boot/../10.1-RELEASE'
 alias findd     'find . -type d -exec ls -ld {} \; | egrep -v "(drwx--S---)"'
 alias findf     'find . -type f -exec ls -ld {} \; | egrep -v "(-rw.------)"'
 alias findport  'find /usr/ports/ -maxdepth 2 -type d | egrep -i'
@@ -16,6 +16,7 @@ alias omitblanklines    egrep -v '^\s*$'
 alias omitcomments      egrep -v '^\s*#'
 alias p         pkg-static
 alias pg        pgrep -lf
+alias populate-cache    pkg install -y firefly minidlna madsonic madsonic-standalone kodi icinga2 nagios4 zabbix24-server zabbix24-agent zabbix24-frontend monit suricata ossec-hids-server ossec-hids-client ossec-hids-local snort pg_activity mirmon ntopng arpalert conky gamin
 alias sr        squidclient -m PURGE
 alias stat-heat stat-temperature
 alias ta        'tmux attach || tmux'
