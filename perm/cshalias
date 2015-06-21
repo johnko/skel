@@ -16,7 +16,7 @@ alias omitblanklines    egrep -v '^\s*$'
 alias omitcomments      egrep -v '^\s*#'
 alias p         pkg-static
 alias pg        pgrep -lf
-alias populate-cache    pkg install -y firefly minidlna madsonic madsonic-standalone kodi icinga2 nagios4 zabbix24-server zabbix24-agent zabbix24-frontend monit suricata ossec-hids-server ossec-hids-client ossec-hids-local snort pg_activity mirmon ntopng arpalert conky gamin
+alias populate-cache    pkg install -y firefly minidlna madsonic-standalone kodi icinga2 nagios4 zabbix24-server zabbix24-agent zabbix24-frontend monit suricata ossec-hids-server ossec-hids-client ossec-hids-local snort pg_activity mirmon ntop arpalert conky gamin
 alias sr        squidclient -m PURGE
 alias stat-heat stat-temperature
 alias ta        'tmux attach || tmux'
