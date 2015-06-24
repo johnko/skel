@@ -16,7 +16,7 @@ alias omitblanklines    egrep -v '^\s*$'
 alias omitcomments      egrep -v '^\s*#'
 alias p         pkg-static
 alias pg        pgrep -lf
-alias squidlog  'sh -c "while [ 1 -eq 1 ]; do if [ -e /usr/jails/squid/var/log/squid/access.log ]; then tail -f /usr/jails/squid/var/log/squid/access.log ; fi ; done"'
+alias squidlog  'sh -c "while [ 1 -eq 1 ]; do sleep 3 ; if [ -e /usr/jails/squid/var/log/squid/access.log ]; then tail -f /usr/jails/squid/var/log/squid/access.log ; fi ; done"'
 alias sr        squidclient -m PURGE
 alias stat-heat stat-temperature
 alias ta        'tmux attach || tmux'
