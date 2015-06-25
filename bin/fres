@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150621-141555
+SCRIPTVERSION=150625-021102
 
 if [ "x" == "x${REPOSRC}" ]; then
     REPOSRC=https://github.com/
@@ -177,6 +177,9 @@ pkg_initial_install() {
     else
         if [ "x" != "x$PKGLIST" ]; then
             pkg-static install -y $PKGLIST
+        fi
+        if hostname | grep squid >/dev/null ;then
+            pkg-static remove -y openssl
         fi
     fi
 }
