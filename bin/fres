@@ -205,11 +205,11 @@ mfsbsd_install() {
 }
 
 fzg_mirror() {
-    fzg -d ada0 -d ada1 -z 2g -m -p $POOLNAME -D -H $HOSTNAME
+    fzg -d ada0 -d ada1 -z 2g -m -D -H `hostname-by-etc-hosts`
 }
 
 fzg_single() {
-    fzg -d ada0 -z 2g -m -p $POOLNAME -D -H $HOSTNAME
+    fzg -d ada0         -z 2g -m -D -H `hostname-by-etc-hosts`
 }
 
 fzg_attach_disk() {
@@ -221,7 +221,7 @@ fzg_update() {
 }
 
 fzg_usb() {
-    fzg -d da0 -z 2g -m -n -p usb -D -H $HOSTNAME
+    fzg -d da0          -z 2g -m -n -p usb -D -H usb.local
 }
 
 fzg_data_mirror() {
