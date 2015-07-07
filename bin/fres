@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150705-165447
+SCRIPTVERSION=150707-162742
 
 if [ "x" == "x${REPOSRC}" ]; then
     REPOSRC=https://github.com/
@@ -133,9 +133,11 @@ git_deploy() {
         cd -
     fi
     install -d -m 700 ${prefix}/bin
-    for i in ~/git/${repo}/bin/* ; do
-        install -m 700 ${i} ${prefix}/bin/
-    done
+    if [ -d ~/git/${repo}/bin ]; then
+        for i in ~/git/${repo}/bin/* ; do
+            install -m 700 ${i} ${prefix}/bin/
+        done
+    fi
 }
 
 pkg_initial_install() {
