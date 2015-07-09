@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150707-162742
+SCRIPTVERSION=150709-034549
 
 if [ "x" == "x${REPOSRC}" ]; then
     REPOSRC=https://github.com/
@@ -151,7 +151,9 @@ pkg_initial_install() {
             || install -m 755 -o root -g wheel \
             /usr/local/sbin/pkg-static /sbin/pkg-static
     fi
-    if [ -e $HOME/perm/cshpkglist ]; then
+    if [ -e $HOME/local/cshpkglist ]; then
+        PKGLIST="`cat $HOME/local/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+    elif [ -e $HOME/perm/cshpkglist ]; then
         PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
     fi
     if [ "update" = "$1" ]; then
