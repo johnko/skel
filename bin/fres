@@ -29,7 +29,13 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150713-013853
+SCRIPTVERSION=150713-085607
+
+
+LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
+LIBAACPLUSPKG=/var/ports/packages/All/libaacplus-2.0.2_7.txz
+FFMPEGPKG=/var/ports/packages/All/ffmpeg-2.7.1_1,1.txz
+
 
 if [ "x" == "x${REPOSRC}" ]; then
     REPOSRC=https://github.com/
@@ -156,6 +162,10 @@ pkg_initial_install() {
     elif [ -e $HOME/perm/cshpkglist ]; then
         PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     fi
+    if [ -e /boot/packages/ffmpeg-custom.txz ]; then
+        tmp="${PKGLIST}"
+        PKGLIST="`echo ${PKGLIST} | sed 's;ffmpeg;;'`"
+    fi
     if [ "update" = "$1" ]; then
         if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
             if [ -d /boot/packages ]; then
@@ -177,6 +187,17 @@ pkg_initial_install() {
             else
                 rm /usr/local/etc/pkg.conf
             fi
+            if [ -e ${LAMEPKG} ]; then
+                cp ${LAMEPKG} /boot/packages/
+            fi
+            if [ -e ${LIBAACPLUSPKG} ]; then
+                cp ${LIBAACPLUSPKG} /boot/packages/
+            fi
+            if [ -e ${FFMPEGPKG} ]; then
+                rm /boot/packages/ffmpeg*
+                cp ${FFMPEGPKG} /boot/packages/
+                cp ${FFMPEGPKG} /boot/packages/ffmpeg-custom.txz
+            fi
         fi
     else
         if [ "x" != "x$PKGLIST" ]; then
@@ -184,6 +205,15 @@ pkg_initial_install() {
         fi
         if hostname | grep squid >/dev/null ;then
             pkg-static remove -y openssl
+        fi
+        if [ -e /boot/packages/${LAMEPKG##*/} ]; then
+            pkg-static add -y /boot/packages/${LAMEPKG##*/}
+        fi
+        if [ -e /boot/packages/${LIBAACPLUSPKG##*/} ]; then
+            pkg-static add -y /boot/packages/${LIBAACPLUSPKG##*/}
+        fi
+        if [ -e /boot/packages/ffmpeg-custom.txz ]; then
+            pkg-static add -y /boot/packages/ffmpeg-custom.txz
         fi
     fi
 }
