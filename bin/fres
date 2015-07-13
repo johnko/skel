@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150710-234448
+SCRIPTVERSION=150713-013853
 
 if [ "x" == "x${REPOSRC}" ]; then
     REPOSRC=https://github.com/
@@ -152,9 +152,9 @@ pkg_initial_install() {
             /usr/local/sbin/pkg-static /sbin/pkg-static
     fi
     if [ -e $HOME/local/cshpkglist ]; then
-        PKGLIST="`cat $HOME/local/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+        PKGLIST="`cat $HOME/local/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     elif [ -e $HOME/perm/cshpkglist ]; then
-        PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+        PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     fi
     if [ "update" = "$1" ]; then
         if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
