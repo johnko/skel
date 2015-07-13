@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150713-085607
+SCRIPTVERSION=150713-090206
 
 
 LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
@@ -207,13 +207,13 @@ pkg_initial_install() {
             pkg-static remove -y openssl
         fi
         if [ -e /boot/packages/${LAMEPKG##*/} ]; then
-            pkg-static add -y /boot/packages/${LAMEPKG##*/}
+            pkg-static add -f /boot/packages/${LAMEPKG##*/}
         fi
         if [ -e /boot/packages/${LIBAACPLUSPKG##*/} ]; then
-            pkg-static add -y /boot/packages/${LIBAACPLUSPKG##*/}
+            pkg-static add -f /boot/packages/${LIBAACPLUSPKG##*/}
         fi
         if [ -e /boot/packages/ffmpeg-custom.txz ]; then
-            pkg-static add -y /boot/packages/ffmpeg-custom.txz
+            pkg-static add -f /boot/packages/ffmpeg-custom.txz
         fi
     fi
 }
