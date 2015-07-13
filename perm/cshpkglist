@@ -19,8 +19,21 @@ ucarp
 w3m boehm-gc
 wget indexinfo libidn gettext-runtime
 zsync
-# minidlna ffmpeg fontconfig gmp freetype2 gnutls trousers-tddl p11-kit
-#   libtasn1 nettle xvid schroedinger orc libx264 libvpx libtheora
-#   libvorbis libogg opencv-core libexif jpeg sqlite3 libid3tag flac
+# minidlna ffmpeg fontconfig freetype2 gnutls trousers-tddl p11-kit
+#   libtasn1 nettle gmp libidn xvid schroedinger orc libx264 libvpx
+#   libtheora libvorbis libogg opencv-core libexif jpeg sqlite3 libid3tag
+#   flac
+# firefly gcc mpfr gmp mpc gcc-ecj binutils sqlite3 vorbis-tools
+#   libkate png libogg speex speexdsp libvorbis libao flac libid3tag
+# beets py27-munkres py27-setuptools27 py27-yaml py27-enum34
+#   py27-sqlite3 sqlite3 py27-unidecode py27-mutagen py27-musicbrainzngs
+#  py27-pylast py27-six py27-setuptools27
+#  py27-pyechonest py27-setuptools27
+#  py27-requests py27-setuptools27
+#  py27-discogs-client py27-requests py27-setuptools27 py27-oauthlib
+#   py27-pyjwt py27-pycrypto gmp py27-blinker py27-six
+#  ffmpeg fontconfig freetype2 gnutls trousers-tddl p11-kit libtasn1
+#   nettle gmp libidn xvid schroedinger orc libx264 libvpx libtheora
+#   libvorbis libogg opencv-core
 ########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
 ########## yes '' | pkg install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0"\\"}'
