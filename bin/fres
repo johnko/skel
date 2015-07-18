@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150713-090206
+SCRIPTVERSION=150718-184710
 
 
 LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
@@ -455,6 +455,7 @@ else
     psnap
     pwgen
     randomword
+    rsync-tools
     setproxy
     ssh-multi
     ssh-tools
