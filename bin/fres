@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150718-184710
+SCRIPTVERSION=150722-224113
 
 
 LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
@@ -180,7 +180,9 @@ pkg_initial_install() {
             fi
             install -d -m 755 /usr/local/etc
             echo "PKG_CACHEDIR = \"${mnt}/boot/packages\";" >>/usr/local/etc/pkg.conf
-            pkg-static fetch -y $PKGLIST
+            if [ "x" != "x$PKGLIST" ]; then
+                pkg-static fetch -y $PKGLIST
+            fi
             if [ -f /usr/local/etc/pkg.conf.bkp ]; then
                 cat /usr/local/etc/pkg.conf.bkp >/usr/local/etc/pkg.conf
                 rm /usr/local/etc/pkg.conf.bkp
@@ -411,7 +413,6 @@ if [ "0" = "`id -u`" ]; then
     add_urep_user
     test -e /etc/mail/aliases.db || newaliases
     pkg_initial_install
-    [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
     setup_tmux_conf
 fi
 
@@ -434,6 +435,9 @@ else
         done
         tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
         chmod 600 ~/perm/*
+    fi
+    if [ "0" = "`id -u`" ]; then
+        [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
     fi
     REPOS="
     apache-config-freebsd
