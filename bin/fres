@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150722-224113
+SCRIPTVERSION=150722-224434
 
 
 LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
@@ -412,10 +412,11 @@ if [ "0" = "`id -u`" ]; then
     install_hosts_append
     add_urep_user
     test -e /etc/mail/aliases.db || newaliases
-    pkg_initial_install
     setup_tmux_conf
+    if ! which git > /dev/null ; then
+        pkg-static install -y git
+    fi
 fi
-
 
 if ! which git ; then
     echo "git: command not found"
@@ -437,6 +438,7 @@ else
         chmod 600 ~/perm/*
     fi
     if [ "0" = "`id -u`" ]; then
+        pkg_initial_install
         [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
     fi
     REPOS="
