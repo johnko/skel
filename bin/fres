@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150722-224434
+SCRIPTVERSION=150724-232259
 
 
 LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
@@ -418,8 +418,9 @@ if [ "0" = "`id -u`" ]; then
     fi
 fi
 
-if ! which git ; then
-    echo "git: command not found"
+if ! which git > /dev/null ; then
+    echo "ERROR: git not found"
+    exit 1
 else
     if [ ! -d ~/git ]; then
         NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
