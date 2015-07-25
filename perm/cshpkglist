@@ -42,7 +42,7 @@ zsync
 #   py27-pycrypto gmp py27-blinker py27-six
 # py27-pyjwt python27 libffi indexinfo gettext-runtime
 #   py27-setuptools27
-# ffmpeg
+########## ffmpeg
 #   fontconfig expat freetype2 gnutls trousers-tddl p11-kit
 #   libtasn1 indexinfo ca_root_nss libffi nettle gmp libidn
 #   gettext-runtime xvid schroedinger orc libx264 libvpx libtheora
