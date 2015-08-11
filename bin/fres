@@ -29,8 +29,9 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150811-062103
+SCRIPTVERSION=150811-063734
 
+MYUID=`id -u`
 
 LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
 LIBAACPLUSPKG=/var/ports/packages/All/libaacplus-2.0.2_7.txz
@@ -389,24 +390,32 @@ install_ssh_auth_keys
 
 
 if [ ! -d ~/perm ]; then
-    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/perm/'`
-    if [ "x" != "x${NEWDATASET}" ]; then
-        zfs create -o exec=off -o setuid=off ${NEWDATASET}
-    else
+    # are you root?
+    if [ "0" == "${MYUID}" ]; then
+        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/perm/'`
+        if [ "x" != "x${NEWDATASET}" ]; then
+            zfs create -o exec=off -o setuid=off ${NEWDATASET}
+        fi
+    fi
+    if [ ! -d ~/perm ]; then
         install -d -m 700 ~/perm
     fi
 fi
 if [ ! -d ~/local ]; then
-    NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
-    if [ "x" != "x${NEWDATASET}" ]; then
-        zfs create -o exec=off -o setuid=off ${NEWDATASET}
-    else
+    # are you root?
+    if [ "0" == "${MYUID}" ]; then
+        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
+        if [ "x" != "x${NEWDATASET}" ]; then
+            zfs create -o exec=off -o setuid=off ${NEWDATASET}
+        fi
+    fi
+    if [ ! -d ~/local ]; then
         install -d -m 700 ~/local
     fi
 fi
 
 
-if [ "0" = "`id -u`" ]; then
+if [ "0" == "${MYUID}" ]; then
     install_resolv_overwrite
     install_hosts_overwrite
     install_hosts_append
@@ -423,10 +432,14 @@ if ! which git > /dev/null ; then
     exit 1
 else
     if [ ! -d ~/git ]; then
-        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
-        if [ "x" != "x${NEWDATASET}" ]; then
-            zfs create -o setuid=off ${NEWDATASET}
-        else
+        # are you root?
+        if [ "0" == "${MYUID}" ]; then
+            NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
+            if [ "x" != "x${NEWDATASET}" ]; then
+                zfs create -o setuid=off ${NEWDATASET}
+            fi
+        fi
+        if [ ! -d ~/git ]; then
             install -d -m 700 ~/git
         fi
     fi
