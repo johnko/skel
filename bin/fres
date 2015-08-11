@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150725-084140
+SCRIPTVERSION=150811-062103
 
 
 LAMEPKG=/var/ports/packages/All/lame-3.99.5_2.txz
@@ -169,10 +169,10 @@ pkg_initial_install() {
     if [ "update" = "$1" ]; then
         if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
             if [ -d /boot/packages ]; then
-                if [ -d /tmp/packages_old ]; then
-                    rm -r /tmp/packages_old
+                if [ -d /boot/packages_old ]; then
+                    rm -r /boot/packages_old
                 fi
-                mv /boot/packages /tmp/packages_old
+                mv /boot/packages /boot/packages_old
             fi
             install -d -m 755 /boot/packages
             if [ -f /usr/local/etc/pkg.conf ]; then
