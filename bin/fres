@@ -208,15 +208,16 @@ pkg_initial_install() {
         fi
         if hostname | grep squid >/dev/null ;then
             pkg-static remove -y openssl
-        fi
-        if [ -e /boot/packages/${LAMEPKG##*/} ]; then
-            pkg-static add -f /boot/packages/${LAMEPKG##*/}
-        fi
-        if [ -e /boot/packages/${LIBAACPLUSPKG##*/} ]; then
-            pkg-static add -f /boot/packages/${LIBAACPLUSPKG##*/}
-        fi
-        if [ -e /boot/packages/ffmpeg-custom.txz ]; then
-            pkg-static add -f /boot/packages/ffmpeg-custom.txz
+        else
+            if [ -e /boot/packages/${LAMEPKG##*/} ]; then
+                pkg-static add -f /boot/packages/${LAMEPKG##*/}
+            fi
+            if [ -e /boot/packages/${LIBAACPLUSPKG##*/} ]; then
+                pkg-static add -f /boot/packages/${LIBAACPLUSPKG##*/}
+            fi
+            if [ -e /boot/packages/ffmpeg-custom.txz ]; then
+                pkg-static add -f /boot/packages/ffmpeg-custom.txz
+            fi
         fi
     fi
 }
