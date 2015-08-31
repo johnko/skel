@@ -17,7 +17,11 @@ ucarp
 w3m perl5 boehm-gc
 wget indexinfo libidn gettext-runtime
 zsync
-# libtorrent-rasterbar py27-libtorrent-rasterbar py27-fusefs
+# py27-libtorrent-rasterbar libtorrent-rasterbar GeoIP boost-libs icu
+#   python27 libffi indexinfo gettext-runtime py27-setuptools27
+#   boost-python-libs
+# py27-fusefs fusefs-libs python27 libffi indexinfo gettext-runtime
+#   py27-setuptools27
 # transmission-cli miniupnpc bittorrent-libutp libnatpmp curl
 #   ca_root_nss libevent2 dht
 # minidlna
