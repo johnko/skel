@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150815-074238
+SCRIPTVERSION=150831-045334
 
 MYUID=`id -u`
 
@@ -459,6 +459,7 @@ else
     REPOS="
     apache-config-freebsd
     btfc2
+    btfs
     crontabbed
     deploy
     eza
