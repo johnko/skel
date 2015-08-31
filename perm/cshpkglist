@@ -17,6 +17,7 @@ ucarp
 w3m perl5 boehm-gc
 wget indexinfo libidn gettext-runtime
 zsync
+# libtorrent-rasterbar libtorrent-rasterbar-python py-fusefs
 # transmission-cli miniupnpc bittorrent-libutp libnatpmp curl
 #   ca_root_nss libevent2 dht
 # minidlna
