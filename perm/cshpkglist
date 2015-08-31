@@ -1,4 +1,5 @@
 cmdwatch
+curl ca_root_nss
 ezjail
 git expat p5-Authen-SASL p5-GSSAPI perl5 p5-Digest-HMAC
   p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Mozilla-CA p5-Net-SSLeay
@@ -10,15 +11,14 @@ nginx pcre
 openntpd
 openssl
 pkg
-radmind
 rsync
 tmux libevent2
-transmission-cli miniupnpc bittorrent-libutp libnatpmp curl
-  ca_root_nss libevent2 dht
 ucarp
 w3m perl5 boehm-gc
 wget indexinfo libidn gettext-runtime
 zsync
+# transmission-cli miniupnpc bittorrent-libutp libnatpmp curl
+#   ca_root_nss libevent2 dht
 # minidlna
 #   fontconfig expat freetype2 gnutls trousers-tddl
 #   p11-kit libtasn1 indexinfo ca_root_nss libffi nettle gmp libidn
@@ -53,5 +53,6 @@ zsync
 #   kbproto libXext xextproto libXrender renderproto harfbuzz graphite2
 #   cairo xcb-util-renderutil xcb-util pixman glib icu fribidi enca
 #   recode p5-Unicode-Map8 p5-Unicode-String
+########## radmind
 ########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
 ########## yes '' | pkg install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0}'
