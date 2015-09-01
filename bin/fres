@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150831-045334
+SCRIPTVERSION=150901-205049
 
 MYUID=`id -u`
 
@@ -89,12 +89,7 @@ EOF
 install_hosts_append() {
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         if [ ! -e /boot/hosts.append ]; then
-            cat >/boot/hosts.append <<EOF
-192.168.255.102 d
-192.168.255.104 e
-192.168.255.106 f
-192.168.255.108 g
-EOF
+            echo >/boot/hosts.append
         fi
     fi
 }
@@ -491,6 +486,9 @@ fi
 
 
 if [ "0" = "`id -u`" ]; then
+    if [ -e /boot/packages_cache ]; then
+        rm -r /var/cache/pkg
+    fi
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         ezjail_setup
         which pf-sshinvaliduserip
