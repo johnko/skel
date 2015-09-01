@@ -13,26 +13,31 @@ openssl
 pkg
 rsync
 tmux libevent2
+transmission-cli miniupnpc bittorrent-libutp libnatpmp curl
+  ca_root_nss libevent2 dht
 ucarp
 w3m perl5 boehm-gc
 wget indexinfo libidn gettext-runtime
 zsync
+
 # py27-libtorrent-rasterbar libtorrent-rasterbar GeoIP boost-libs icu
 #   python27 libffi indexinfo gettext-runtime py27-setuptools27
 #   boost-python-libs
 # py27-fusefs fusefs-libs python27 libffi indexinfo gettext-runtime
 #   py27-setuptools27
-# transmission-cli miniupnpc bittorrent-libutp libnatpmp curl
-#   ca_root_nss libevent2 dht
+
 # minidlna
 #   fontconfig expat freetype2 gnutls trousers-tddl
 #   p11-kit libtasn1 indexinfo ca_root_nss libffi nettle gmp libidn
 #   gettext-runtime xvid schroedinger orc libx264 libvpx libtheora
 #   libvorbis libogg opencv-core libexif jpeg sqlite3 libid3tag flac
+
 # firefly gcc indexinfo mpfr gmp mpc gcc-ecj binutils gettext-runtime
 #   sqlite3 vorbis-tools libkate png libogg curl ca_root_nss speex
 #   speexdsp libvorbis libao flac libid3tag
+
 # youtube_dl rtmpdump librtmp python27 libffi indexinfo gettext-runtime
+
 # beets py27-munkres python27 libffi indexinfo gettext-runtime
 #   py27-setuptools27 py27-yaml py27-enum34 py27-sqlite3 sqlite3
 #   py27-unidecode py27-mutagen py27-musicbrainzngs
@@ -47,17 +52,22 @@ zsync
 #   py27-pycrypto gmp py27-blinker py27-six
 # py27-pyjwt python27 libffi indexinfo gettext-runtime
 #   py27-setuptools27
+
 ########## ffmpeg
 #   fontconfig expat freetype2 gnutls trousers-tddl p11-kit
 #   libtasn1 indexinfo ca_root_nss libffi nettle gmp libidn
 #   gettext-runtime xvid schroedinger orc libx264 libvpx libtheora
 #   libvorbis libogg opencv-core
+
 ########## ffmpeg-build
 #   fftw3 fftw3-float libbluray libcdio-paranoia librtmp
 #   libass xproto libX11 libxcb libXdmcp libXau libxml2 libpthread-stubs
 #   kbproto libXext xextproto libXrender renderproto harfbuzz graphite2
 #   cairo xcb-util-renderutil xcb-util pixman glib icu fribidi enca
 #   recode p5-Unicode-Map8 p5-Unicode-String
+
 ########## radmind
+
 ########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
+
 ########## yes '' | pkg install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0}'
