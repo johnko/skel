@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150621-043427
+SCRIPTVERSION=150901-205455
 
 PKGLISTTODO="
 firefly
@@ -56,12 +56,16 @@ conky
 gamin
 "
 
-if [ -e $HOME/perm/cshpkglist ]; then
-    PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | grep -v '^\$'`"
+if [ -e $HOME/local/cshpkglist ]; then
+    PKGLIST="`cat $HOME/local/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
+elif [ -e $HOME/perm/cshpkglist ]; then
+    PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
 fi
 
 for i in ${PKGLIST} ${PKGLISTTODO} ; do
     pkg install -y ${i}
     pkg remove -a -y
-    rm /var/cache/pkg/*.txz
+    if [ -e /var/cache/pkg ]; then
+        rm /var/cache/pkg/*.txz
+    fi
 done
