@@ -20,11 +20,13 @@ w3m perl5 boehm-gc
 wget indexinfo libidn gettext-runtime
 zsync
 
-# py27-libtorrent-rasterbar libtorrent-rasterbar GeoIP boost-libs icu
-#   python27 libffi indexinfo gettext-runtime py27-setuptools27
-#   boost-python-libs
-# py27-pybonjour mDNSResponder python27 libffi indexinfo
-#   gettext-runtime py27-setuptools27
+py27-pybonjour mDNSResponder python27 libffi indexinfo
+  gettext-runtime py27-setuptools27
+py27-libtorrent-rasterbar libtorrent-rasterbar GeoIP boost-libs icu
+  python27 libffi indexinfo gettext-runtime py27-setuptools27
+  boost-python-libs
+# py27-pygit2 python27 libffi indexinfo gettext-runtime
+#   py27-setuptools27 py27-cffi py27-pycparser libgit2 libssh2
 # py27-fusefs fusefs-libs python27 libffi indexinfo gettext-runtime
 #   py27-setuptools27
 
