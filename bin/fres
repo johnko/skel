@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150903-015232
+SCRIPTVERSION=150904-022553
 
 MYUID=`id -u`
 
@@ -457,6 +457,7 @@ else
     btfc2
     btfs
     crontabbed
+    delugefs
     deploy
     eza
     ffmpeg-tools
@@ -472,6 +473,7 @@ else
     nginx-config-sites-enabled
     psnap
     pwgen
+    rad
     randomword
     rsync-tools
     setproxy
