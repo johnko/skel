@@ -26,6 +26,7 @@ py27-libtorrent-rasterbar libtorrent-rasterbar GeoIP boost-libs icu
   python27 libffi indexinfo gettext-runtime py27-setuptools27
   boost-python-libs
 py27-sh python27 libffi indexinfo gettext-runtime py27-setuptools27
+fusefs-libs
 # py27-fusefs fusefs-libs python27 libffi indexinfo gettext-runtime
 #   py27-setuptools27
 
