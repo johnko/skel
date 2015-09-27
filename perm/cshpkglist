@@ -1,32 +1,33 @@
-cmdwatch
-curl ca_root_nss
-ezjail
-git expat python27 libffi indexinfo gettext-runtime p5-Error perl5
-  cvsps p5-Authen-SASL p5-Digest-HMAC p5-GSSAPI curl ca_root_nss
-  p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Net-SSLeay p5-IO-Socket-IP
-  p5-Socket p5-Mozilla-CA
-gnupg1 indexinfo curl ca_root_nss gettext-runtime
-iftop
-nginx pcre
-openntpd
-openssl
-pkg
-rsync
-tmux libevent2
-transmission-cli miniupnpc dht curl ca_root_nss libevent2
-  bittorrent-libutp libnatpmp
-ucarp
-w3m boehm-gc perl5
-wget indexinfo libidn gettext-runtime
-zsync
+  cmdwatch
+  curl ca_root_nss
+  ezjail
+  git expat python27 libffi indexinfo gettext-runtime p5-Error perl5
+    cvsps p5-Authen-SASL p5-Digest-HMAC p5-GSSAPI curl ca_root_nss
+    p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Net-SSLeay p5-IO-Socket-IP
+    p5-Socket p5-Mozilla-CA
+  gnupg1 indexinfo curl ca_root_nss gettext-runtime
+  iftop
+  nginx pcre
+  openntpd
+  openssl
+  pkg
+  rsync
+  tmux libevent2
+  transmission-cli miniupnpc dht curl ca_root_nss libevent2
+    bittorrent-libutp libnatpmp
+  ucarp
+  w3m boehm-gc perl5
+  wget indexinfo libidn gettext-runtime
+  zsync
 
-py27-pybonjour mDNSResponder python27 libffi indexinfo
-  gettext-runtime py27-setuptools27
-py27-libtorrent-rasterbar libtorrent-rasterbar GeoIP boost-libs icu
-  python27 libffi indexinfo gettext-runtime py27-setuptools27
-  boost-python-libs
-py27-sh python27 libffi indexinfo gettext-runtime py27-setuptools27
-fusefs-libs
+########## delugefs-dev
+# py27-pybonjour mDNSResponder python27 libffi indexinfo
+#   gettext-runtime py27-setuptools27
+# py27-libtorrent-rasterbar libtorrent-rasterbar GeoIP boost-libs icu
+#   python27 libffi indexinfo gettext-runtime py27-setuptools27
+#   boost-python-libs
+# py27-sh python27 libffi indexinfo gettext-runtime py27-setuptools27
+# fusefs-libs
 
 ########## libaacplus-build
 #   fftw3 fftw3-float indexinfo
