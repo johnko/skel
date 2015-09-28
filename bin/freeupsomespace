@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150927-222916
+SCRIPTVERSION=150928-045528
 
 if [ -f /bootpool/mfsroot_old ]; then
     rm /bootpool/mfsroot_old
@@ -37,6 +37,10 @@ fi
 
 if [ -d /boot/packages_old ]; then
     rm -r /boot/packages_old
+fi
+
+if [ -d /boot/packages_cache ]; then
+    rm  /boot/packages_cache/*.txz
 fi
 
 if [ -d /var/cache/pkg ]; then
