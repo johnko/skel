@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150904-022553
+SCRIPTVERSION=150928-051253
 
 MYUID=`id -u`
 
@@ -159,8 +159,8 @@ pkg_initial_install() {
         PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     fi
     if [ -e /boot/packages/ffmpeg-custom.txz ]; then
-        tmp="${PKGLIST}"
-        PKGLIST="`echo ${PKGLIST} | sed 's;ffmpeg;;'`"
+        tmppkglist="${PKGLIST}"
+        PKGLIST="`echo ${tmppkglist} | sed 's;ffmpeg;;'`"
     fi
     if [ "update" = "$1" ]; then
         if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
@@ -199,6 +199,10 @@ pkg_initial_install() {
             fi
         fi
     else
+        if [ -e /boot/packages/ffmpeg-custom.txz ]; then
+            tmppkglist="${PKGLIST}"
+            PKGLIST="`echo ${tmppkglist} | sed 's;minidlna;;'`"
+        fi
         if [ "x" != "x$PKGLIST" ]; then
             pkg-static install -y $PKGLIST
         fi
@@ -213,6 +217,9 @@ pkg_initial_install() {
             fi
             if [ -e /boot/packages/ffmpeg-custom.txz ]; then
                 pkg-static add -f /boot/packages/ffmpeg-custom.txz
+                if echo "${tmppkglist}" | grep minidlna > /dev/null 2> /dev/null ; then
+                    pkg-static install -y minidlna
+                fi
             fi
         fi
     fi
