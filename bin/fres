@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150928-051253
+SCRIPTVERSION=151001-012218
 
 MYUID=`id -u`
 
@@ -128,7 +128,7 @@ git_deploy() {
     prefix=$2
     [ -z "$prefix" ] && prefix=$HOME
     if [ ! -d ~/git/${repo} ]; then
-        git clone ${REPOSRC}johnko/${repo}.git ~/git/${repo}
+        git clone --depth 1 ${REPOSRC}johnko/${repo}.git ~/git/${repo}
     else
         cd ~/git/${repo}
         git pull | grep -v 'Already up-to-date.'
