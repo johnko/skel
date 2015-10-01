@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=151001-012218
+SCRIPTVERSION=151001-012510
 
 MYUID=`id -u`
 
@@ -498,7 +498,7 @@ fi
 
 
 if [ "0" = "`id -u`" ]; then
-    if [ -e /boot/packages_cache ]; then
+    if [ -d /boot/packages_cache ] && [ -d /var/cache/pkg ]; then
         rm -r /var/cache/pkg
     fi
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
