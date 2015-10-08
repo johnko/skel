@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=151001-012510
+SCRIPTVERSION=151008-083934
 
 MYUID=`id -u`
 
@@ -95,14 +95,8 @@ install_hosts_append() {
 }
 
 setup_tmux_conf() {
-    cat <<EOF >~/.tmux.conf
-set-window-option -g monitor-activity on
-#bind -n escape detach
-EOF
-    chmod 600 ~/.tmux.conf
-
     if [ ! -e ~/local/tmux.conf.status ]; then
-        cat <<EOF >~/local/tmux.conf.status
+        cat >~/local/tmux.conf.status <<EOF
 set-window-option -g monitor-activity on
 # new window
 #new -s 0 -n status top
