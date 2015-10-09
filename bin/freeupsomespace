@@ -29,7 +29,7 @@
 ######################################################################
 # Script version is yymmdd-HHMMSS in UTC, date -u +%y%m%d-%H%M%S
 ######################################################################
-SCRIPTVERSION=150928-045528
+SCRIPTVERSION=151009-091638
 
 if [ -f /bootpool/mfsroot_old ]; then
     rm /bootpool/mfsroot_old
@@ -40,15 +40,15 @@ if [ -d /boot/packages_old ]; then
 fi
 
 if [ -d /boot/packages_cache ]; then
-    rm  /boot/packages_cache/*.txz
+   find /boot/packages_cache -name "*.txz" -delete
 fi
 
 if [ -d /var/cache/pkg ]; then
-    rm  /var/cache/pkg/*.txz
+   find /var/cache/pkg -name "*.txz" -delete
 fi
 
 if [ -d /var/db/freebsd-update/files ]; then
-    rm  /var/db/freebsd-update/files/*
+   find /var/db/freebsd-update/files -type f -delete
 fi
 
 zsnapple -f short -l 1 -r -v bootpool -q
