@@ -63,28 +63,6 @@ install_hosts_append() {
     fi
 }
 
-setup_tmux_conf() {
-    if [ ! -e ~/local/tmux.conf.status ]; then
-        cat >~/local/tmux.conf.status <<EOF
-set-window-option -g monitor-activity on
-# new window
-#new -s 0 -n status top
-neww -n status top
-# split pane 0 becomes pane 1
-splitw -v -p 50 -t 0 'ifconfig lagg0 && iftop -i lagg0 || iftop'
-# split pane 1 becomes pane 2
-splitw -v -p 50 -t 1 'tail -f /var/log/auth.log'
-# split pane 0 becomes pane 3
-splitw -v -p 50 -t 0 'cmdwatch -n 30 zss bootpool'
-# split pane 3 becomes pane 4
-splitw -h -p 70 -t 3 'cmdwatch -n 30 zss pool'
-# split pane 4 becomes pane 5
-splitw -h -p 50 -t 4 'cmdwatch -n 30 zss tank'
-EOF
-        chmod 600 ~/local/tmux.conf.status
-    fi
-}
-
 git_deploy() {
     repo=$1
     [ -z "$repo" ] && exit 1
@@ -242,18 +220,7 @@ fzg_data_unlock() {
     fzg -u -d ada0p5 -d ada1p5
 }
 
-ezjail_setup() {
-    if [ -d /usr/local/etc ]; then
-        cat >/usr/local/etc/ezjail.conf <<EOF
-ezjail_jaildir=/usr/jails
-ezjail_use_zfs="YES"
-ezjail_use_zfs_for_jails="YES"
-ezjail_jailzfs="tank/ezjail"
-ezjail_fdescfs_enable="NO"
-ezjail_procfs_enable="NO"
-ezjail_default_flavour="example"
-EOF
-    fi
+ezjail_help() {
     # eza install -h file:///boot/../10.1-RELEASE
     # eza-update
     # eza create [-f flavour] testjail 'em0|192.168.0.211'
@@ -390,7 +357,6 @@ if [ "0" == "${MYUID}" ]; then
     install_hosts_append
     add_urep_user
     test -e /etc/mail/aliases.db || newaliases
-    setup_tmux_conf
     if ! which git > /dev/null ; then
         pkg-static install -y git
     fi
@@ -413,6 +379,9 @@ else
         fi
     fi
     git_deploy skel
+    if [ ! -e ~/local/tmux.conf.status ]; then
+        install -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
+    fi
     if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
         for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
             install -m 644 ~/git/skel/${i} ${HOME}/
@@ -452,6 +421,7 @@ else
     ssh-multi
     ssh-tools
     vmrc
+    zfs-tools
     zsnapple
 " # end of REPOS
     for i in ${REPOS} ; do
@@ -465,7 +435,7 @@ if [ "0" = "`id -u`" ]; then
         rm -r /var/cache/pkg
     fi
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        ezjail_setup
+        eza-setup
         which pf-sshinvaliduserip
         if service pf status | grep Enabled >/dev/null 2>&1; then
             which pf-table && pf-table save all
