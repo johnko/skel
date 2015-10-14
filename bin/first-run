@@ -6,17 +6,18 @@ fi
 
 fres
 
-cat <<EOF
+if [ "x-q" != "x${1}" ]; then
+    cat <<EOF
 Run these commands:
     fzg-random-key
     fzg -i
     fzg-unlock-on-boot
     exit
 EOF
-csh
-
-eza install -h file:///boot/../10.1-RELEASE
-eza-update
+    csh
+    eza install -h file:///boot/../10.1-RELEASE
+    eza-update
+fi
 
 ssh-makeprivkey-ed25519
 
