@@ -419,6 +419,7 @@ if [ "0" = "`id -u`" ]; then
     fi
     # run always
     which newsyslog-conf-setup && newsyslog-conf-setup
+    which periodic-config && periodic-config
 
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         # run last because may disconnect

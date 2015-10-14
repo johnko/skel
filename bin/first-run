@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ "x" != "x${SQUID}" ]; then
+    env SQUID=${SQUID} setproxy
+fi
+
+fres
+
+fzg-random-key
+fzg -i
+fzg-unlock-on-boot
+
+eza install -h file:///boot/../10.1-RELEASE
+eza-update
+
+ssh-makeprivkey-ed25519
