@@ -406,18 +406,21 @@ if [ "0" = "`id -u`" ]; then
         rm -r /var/cache/pkg
     fi
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        # only run when NOT in jail
         eza-conf-setup
         which pf-sshinvaliduserip
         if service pf status | grep Enabled >/dev/null 2>&1; then
             which pf-table && pf-table save all
         fi
-        which gdf && gdf
     else
-        for i in \
-            nginx-config-sites-enabled \
-            newsyslog-conf-setup ; do
-                which $i \
-                    && $i
-        done
+        # only run in jail
+        which nginx-config-sites-enabled && nginx-config-sites-enabled
+    fi
+    # run always
+    which newsyslog-conf-setup && newsyslog-conf-setup
+
+    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        # run last because may disconnect
+        which gdf && gdf
     fi
 fi
