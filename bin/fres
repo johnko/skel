@@ -191,7 +191,8 @@ fzg_single() {
 }
 
 fzg_usb() {
-    fzg -d da0          -z 2g              -H usb.local -p usb        -n -q
+    fzg -d da0          -z 2g -m           -H usb.local -p usb        -n -q
+    fzg -d da0          -z 2g              -H usb.local -p usb        -n
 }
 
 fzg_attach_disk() {
