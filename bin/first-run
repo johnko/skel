@@ -6,9 +6,14 @@ fi
 
 fres
 
-fzg-random-key
-fzg -i
-fzg-unlock-on-boot
+cat <<EOF
+Run these commands:
+    fzg-random-key
+    fzg -i
+    fzg-unlock-on-boot
+    exit
+EOF
+csh
 
 eza install -h file:///boot/../10.1-RELEASE
 eza-update
