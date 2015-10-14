@@ -1,12 +1,20 @@
 #!/bin/sh
 
+gdf
+
 if [ "x" != "x${SQUID}" ]; then
     env SQUID=${SQUID} setproxy
 fi
 
 fres
 
+if [ ! -e /root/.ssh/id_ed25519 ]; then
+    ssh-makeprivkey-ed25519
+fi
+
 if [ "x-q" != "x${1}" ]; then
+    rm -r ~/bin/
+    sh ~/git/skel/bin/fres
     cat <<EOF
 Run these commands:
     fzg-random-key
@@ -17,9 +25,5 @@ EOF
     csh
     eza install -h file:///boot/../10.1-RELEASE
     eza-update
+else
 fi
-
-ssh-makeprivkey-ed25519
-
-rm -r ~/bin/
-sh ~/git/skel/bin/fres
