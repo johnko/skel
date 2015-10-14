@@ -381,6 +381,7 @@ else
     hddid
     mount_iso
     netconn
+    newsyslog.conf.d
     nginx-config-sites-enabled
     psnap
     pwgen
