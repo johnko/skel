@@ -14,3 +14,6 @@ eza install -h file:///boot/../10.1-RELEASE
 eza-update
 
 ssh-makeprivkey-ed25519
+
+rm -r ~/bin/
+sh ~/git/skel/bin/fres
