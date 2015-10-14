@@ -300,7 +300,7 @@ install_ssh_auth_keys
 
 if [ ! -d ~/perm ]; then
     # are you root?
-    if [ "0" == "${MYUID}" ]; then
+    if [ "0" = "${MYUID}" ]; then
         NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/perm/'`
         if [ "x" != "x${NEWDATASET}" ]; then
             zfs create -o exec=off -o setuid=off ${NEWDATASET}
@@ -312,7 +312,7 @@ if [ ! -d ~/perm ]; then
 fi
 if [ ! -d ~/local ]; then
     # are you root?
-    if [ "0" == "${MYUID}" ]; then
+    if [ "0" = "${MYUID}" ]; then
         NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
         if [ "x" != "x${NEWDATASET}" ]; then
             zfs create -o exec=off -o setuid=off ${NEWDATASET}
@@ -324,7 +324,7 @@ if [ ! -d ~/local ]; then
 fi
 
 
-if [ "0" == "${MYUID}" ]; then
+if [ "0" = "${MYUID}" ]; then
     install_resolv_overwrite
     install_hosts_overwrite
     install_hosts_append
@@ -341,7 +341,7 @@ if ! which git > /dev/null ; then
 else
     if [ ! -d ~/git ]; then
         # are you root?
-        if [ "0" == "${MYUID}" ]; then
+        if [ "0" = "${MYUID}" ]; then
             NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
             if [ "x" != "x${NEWDATASET}" ]; then
                 zfs create -o setuid=off ${NEWDATASET}
@@ -362,7 +362,7 @@ else
         tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
         chmod 600 ~/perm/*
     fi
-    if [ "0" = "`id -u`" ]; then
+    if [ "0" = "${MYUID}" ]; then
         pkg_initial_install
         [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
     fi
@@ -402,7 +402,7 @@ else
 fi
 
 
-if [ "0" = "`id -u`" ]; then
+if [ "0" = "${MYUID}" ]; then
     if [ -d /boot/packages_cache ] && [ -d /var/cache/pkg ]; then
         rm -r /var/cache/pkg
     fi
