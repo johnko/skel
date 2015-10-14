@@ -413,6 +413,11 @@ if [ "0" = "`id -u`" ]; then
         fi
         which gdf && gdf
     else
-        which nginx-config-sites-enabled && nginx-config-sites-enabled
+        for i in \
+            nginx-config-sites-enabled \
+            newsyslog-conf-setup ; do
+                which $i \
+                    && $i
+        done
     fi
 fi
