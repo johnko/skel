@@ -1,10 +1,10 @@
 #!/bin/sh
 
-if [ -f /bootpool/mfsroot_old ]; then
-    rm /bootpool/mfsroot_old
+if [ -f /boot/../mfsroot_old ]; then
+    rm  /boot/../mfsroot_old
 fi
 
-if [ -d /boot/packages_old ]; then
+if [ -d   /boot/packages_old ]; then
     rm -r /boot/packages_old
 fi
 
