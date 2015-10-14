@@ -46,7 +46,7 @@ EOF
 
 install_hosts_overwrite() {
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        if [ ! -e /boot/hosts.overwrite ]; then
+        if [ ! -e /boot/hosts.overwrite ] && [ -e /boot/../mfsroot ]; then
             cat >/boot/hosts.overwrite <<EOF
 ::1 localhost localhost.my.domain
 127.0.0.1 localhost localhost.my.domain
@@ -57,7 +57,7 @@ EOF
 
 install_hosts_append() {
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        if [ ! -e /boot/hosts.append ]; then
+        if [ ! -e /boot/hosts.append ] && [ -e /boot/../mfsroot ]; then
             echo >/boot/hosts.append
         fi
     fi
@@ -99,11 +99,11 @@ pkg_initial_install() {
     elif [ -e $HOME/perm/cshpkglist ]; then
         PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     fi
-    if [ -e /boot/packages/ffmpeg-custom.txz ]; then
+    if [ -e ${FFMPEGPKG} ] || [ -e /boot/packages/ffmpeg-custom.txz ]; then
         tmppkglist="${PKGLIST}"
         PKGLIST="`echo ${tmppkglist} | sed 's;ffmpeg;;'`"
     fi
-    if [ "update" = "$1" ]; then
+    if [ "update" = "$1" ] && [ -e /boot/../mfsroot ]; then
         if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
             if [ -d /boot/packages ]; then
                 if [ -d /boot/packages_old ]; then
@@ -140,28 +140,22 @@ pkg_initial_install() {
             fi
         fi
     else
-        if [ -e /boot/packages/ffmpeg-custom.txz ]; then
-            tmppkglist="${PKGLIST}"
-            PKGLIST="`echo ${tmppkglist} | sed 's;minidlna;;'`"
-        fi
         if [ "x" != "x$PKGLIST" ]; then
             pkg-static install -y $PKGLIST
         fi
         if hostname | grep squid >/dev/null ;then
             pkg-static remove -y openssl
         else
-            if [ -e /boot/packages/${LAMEPKG##*/} ]; then
-                pkg-static add -f /boot/packages/${LAMEPKG##*/}
+            if [ -e /boot/../mfsroot ]; then
+                forcepkg="-f"
+            else
+                unset forcepkg
             fi
-            if [ -e /boot/packages/${LIBAACPLUSPKG##*/} ]; then
-                pkg-static add -f /boot/packages/${LIBAACPLUSPKG##*/}
-            fi
-            if [ -e /boot/packages/ffmpeg-custom.txz ]; then
-                pkg-static add -f /boot/packages/ffmpeg-custom.txz
-                if echo "${tmppkglist}" | grep minidlna > /dev/null 2> /dev/null ; then
-                    pkg-static install -y minidlna
+            for i in ${LAMEPKG} ${LIBAACPLUSPKG} ${FFMPEGPKG} ; do
+                if [ -e ${i} ]; then
+                    pkg-static add ${forcepkg} ${i}
                 fi
-            fi
+            done
         fi
     fi
 }
@@ -188,16 +182,16 @@ mfsbsd_install() {
 
 fzg_mirror() {
     fzg -d ada0 -d ada1 -z 2g -m -r mirror -H `hostname-by-etc-hosts` -D
-    fzg -d ada0 -d ada1 -z 2g -m -r mirror -H `hostname-by-ptr-dns`
+    fzg -d ada0 -d ada1 -z 2g    -r mirror -H `hostname-by-ptr-dns`
 }
 
 fzg_single() {
     fzg -d ada0         -z 2g -m           -H `hostname-by-etc-hosts` -D
-    fzg -d ada0         -z 2g -m           -H `hostname-by-ptr-dns`
+    fzg -d ada0         -z 2g              -H `hostname-by-ptr-dns`
 }
 
 fzg_usb() {
-    fzg -d da0          -z 2g -m           -H usb.local -p usb        -n -q
+    fzg -d da0          -z 2g              -H usb.local -p usb        -n -q
 }
 
 fzg_attach_disk() {
@@ -243,28 +237,6 @@ add_urep_user() {
         fi
         echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
     fi
-}
-
-gitcluster_init() {
-    first=$1
-    repo=$2
-    ssh    urep@$first   gtfc init  $first     $repo
-}
-
-gitcluster_add() {
-    first=$1
-    second=$2
-    repo=$3
-    ssh -A urep@$second  gtfc clone $first     $repo
-    ssh    urep@$first   sh $repo/gitpullall.sh -f
-}
-
-btcluster_init() {
-    ########## for testing bittorrent-for-clusters
-    git clone https://github.com/jk-bt/bittorrent-for-clusters.git btcluster
-    btcluster/setup.sh
-    mkdir -p /mnt/tank/sync
-    btcluster/bin/btinit.sh /mnt/tank/sync
 }
 
 things_to_sync() {
@@ -395,7 +367,6 @@ else
     fi
     REPOS="
     apache-config-freebsd
-    btfc2
     btfs
     crontabbed
     delugefs
@@ -407,7 +378,6 @@ else
     freebsd-sortconf
     freebsd-system-info
     github-backup
-    gtfc
     hddid
     mount_iso
     netconn
@@ -435,7 +405,7 @@ if [ "0" = "`id -u`" ]; then
         rm -r /var/cache/pkg
     fi
     if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        eza-setup
+        eza-conf-setup
         which pf-sshinvaliduserip
         if service pf status | grep Enabled >/dev/null 2>&1; then
             which pf-table && pf-table save all
