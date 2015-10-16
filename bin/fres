@@ -215,6 +215,10 @@ fzg_data_unlock() {
     fzg -u -d ada0p5 -d ada1p5
 }
 
+fzg_priv_mirror() {
+    fzg -i -t 6 -d ada0 -d ada1 -p priv
+}
+
 ezjail_help() {
     # eza install -h file:///boot/../10.1-RELEASE
     # eza-update
