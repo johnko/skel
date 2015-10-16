@@ -25,5 +25,4 @@ EOF
     csh
     eza install -h file:///boot/../10.1-RELEASE
     eza-update
-else
 fi
