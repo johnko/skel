@@ -384,6 +384,7 @@ else
     freebsd-system-info
     github-backup
     hddid
+    iocage-tools
     mount_iso
     netconn
     newsyslog.conf.d
