@@ -425,8 +425,12 @@ if [ "0" = "${MYUID}" ]; then
         # only run when NOT in jail
         eza-conf-setup
         which pf-sshinvaliduserip
-        if service pf status | grep Enabled >/dev/null 2>&1; then
+        # test if not an iocage jail chroot
+        if [ -e /boot/kernel/kernel ] && service pf status | grep Enabled >/dev/null 2>&1; then
             which pf-table && pf-table save all
+        elif [ ! -e /boot/kernel/kernel ]; then
+            # only run in iocage jail
+            which nginx-config-sites-enabled && nginx-config-sites-enabled
         fi
     else
         # only run in jail
@@ -436,7 +440,8 @@ if [ "0" = "${MYUID}" ]; then
     which newsyslog-conf-setup && newsyslog-conf-setup
     which periodic-config && periodic-config
 
-    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+    # test if not an iocage jail chroot
+    if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         # run last because may disconnect
         which gdf && gdf
     fi
