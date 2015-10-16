@@ -85,7 +85,7 @@ git_deploy() {
 
 pkg_bootstrap() {
     if [ ! -f /sbin/pkg-static ]; then
-        [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
+        [ -e /usr/local/sbin/pkg-static ] || env ASSUME_ALWAYS_YES=YES pkg bootstrap
         [ -e /usr/local/sbin/pkg-static ] \
             && install -m 755 -o root -g wheel \
             /usr/local/sbin/pkg-static /sbin/pkg-static
