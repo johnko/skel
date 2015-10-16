@@ -83,7 +83,7 @@ git_deploy() {
     fi
 }
 
-pkg_initial_install() {
+pkg_bootstrap() {
     if [ ! -f /sbin/pkg-static ]; then
         [ -e /usr/local/sbin/pkg-static ] || pkg bootstrap
         [ -e /usr/local/sbin/pkg-static ] \
@@ -94,6 +94,9 @@ pkg_initial_install() {
             || install -m 755 -o root -g wheel \
             /usr/local/sbin/pkg-static /sbin/pkg-static
     fi
+}
+
+pkg_initial_install() {
     if [ -e $HOME/local/cshpkglist ]; then
         PKGLIST="`cat $HOME/local/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     elif [ -e $HOME/perm/cshpkglist ]; then
@@ -334,6 +337,7 @@ if [ "0" = "${MYUID}" ]; then
     install_hosts_append
     add_urep_user
     test -e /etc/mail/aliases.db || newaliases
+    pkg_bootstrap
     if ! which git > /dev/null ; then
         pkg-static install -y git
     fi
