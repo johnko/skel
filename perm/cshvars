@@ -12,4 +12,7 @@ setenv  ZABBIXIPALIAS      0
 
 setenv  IPNET   10.7.7.
 
-setenv  SQUIDPKG    /var/ports/packages/All/squid-3.5.10.txz
+setenv  SQUIDPKG        /var/ports/packages/All/squid-3.5.10.txz
+setenv  LAMEPKG         /var/ports/packages/All/lame-3.99.5_2.txz
+setenv  LIBAACPLUSPKG   /var/ports/packages/All/libaacplus-2.0.2_8.txz
+setenv  FFMPEGPKG       /var/ports/packages/All/ffmpeg-2.8_1,1.txz
