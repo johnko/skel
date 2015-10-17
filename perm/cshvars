@@ -11,3 +11,5 @@ setenv  MONITIPALIAS       0
 setenv  ZABBIXIPALIAS      0
 
 setenv  IPNET   10.7.7.
+
+setenv  SQUIDPKG    /var/ports/packages/All/squid-3.5.10.txz
