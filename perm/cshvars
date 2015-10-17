@@ -1,0 +1,13 @@
+setenv  FQDN    localhost.localdomain
+setenv  SQUID   10.7.7.1:3128
+
+setenv  SQUIDIPALIAS       0
+setenv  WEBIPALIAS         0
+setenv  POSTFIXIPALIAS     0
+setenv  DOVECOTIPALIAS     0
+setenv  XMPPIPALIAS        0
+setenv  MURMURIPALIAS      0
+setenv  MONITIPALIAS       0
+setenv  ZABBIXIPALIAS      0
+
+setenv  IPNET   10.7.7.
