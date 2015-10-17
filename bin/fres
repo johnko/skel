@@ -103,10 +103,10 @@ pkg_bootstrap() {
 }
 
 pkg_initial_install() {
-    if [ -e $HOME/local/cshpkglist ]; then
-        PKGLIST="`cat $HOME/local/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
-    elif [ -e $HOME/perm/cshpkglist ]; then
-        PKGLIST="`cat $HOME/perm/cshpkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
+    if [ -e $HOME/local/pkglist ]; then
+        PKGLIST="`cat $HOME/local/pkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
+    elif [ -e $HOME/perm/pkglist ]; then
+        PKGLIST="`cat $HOME/perm/pkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     fi
     if [ -e ${FFMPEGPKG} ] || [ -e /boot/packages/ffmpeg-custom.txz ]; then
         tmppkglist="${PKGLIST}"
