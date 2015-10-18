@@ -23,6 +23,5 @@ Run these commands:
     exit
 EOF
     csh
-    eza install -h file:///boot/../10.1-RELEASE
-    eza-update
+    ioc-setup
 fi

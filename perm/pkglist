@@ -8,6 +8,7 @@ git expat python27 libffi indexinfo gettext-runtime p5-Error perl5
   p5-Socket p5-Mozilla-CA
 gnupg1 indexinfo curl ca_root_nss gettext-runtime
 iftop
+iocage
 nginx pcre
 openntpd
 openssl
