@@ -8,7 +8,12 @@ fi
 
 fres
 
-if [ ! -e /root/.ssh/id_ed25519 ]; then
+if [ ! -e ~/local/cshvars ] && [ -e ~/perm/cshvars ]; then
+    install -m 600 ~/perm/cshvars ~/local/cshvars
+    vi ~/local/cshvars
+fi
+
+if [ ! -e ~/.ssh/id_ed25519 ]; then
     ssh-makeprivkey-ed25519
 fi
 
