@@ -107,6 +107,11 @@ pkg_initial_install() {
         tmppkglist="${PKGLIST}"
         PKGLIST="`echo ${tmppkglist} | sed 's;ffmpeg;;'`"
     fi
+    if [ ! -e /boot/kernel/kernel ] || sysctl security.jail.jailed | grep 1 >/dev/null 2>&1; then
+        ## we are going to omit beadm and iocage from installing in jails
+        tmppkglist="${PKGLIST}"
+        PKGLIST="`echo ${tmppkglist} | sed 's;beadm;;' | sed 's;iocage;;' | sed 's;openntpd;;' | sed 's;ucarp;;'`"
+    fi
     if [ "update" = "$1" ] && [ -e /boot/../mfsroot ]; then
         if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
             if [ -d /boot/packages ]; then
