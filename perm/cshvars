@@ -16,3 +16,40 @@ setenv  SQUIDPKG        /var/ports/packages/All/squid-3.5.10.txz
 setenv  LAMEPKG         /var/ports/packages/All/lame-3.99.5_2.txz
 setenv  LIBAACPLUSPKG   /var/ports/packages/All/libaacplus-2.0.2_8.txz
 setenv  FFMPEGPKG       /var/ports/packages/All/ffmpeg-2.8_1,1.txz
+
+setenv  JAILSGOOD '\
+1   squid \
+254 builder \
+2   nginx \
+3   postfix \
+4   dovecot \
+5   couch \
+6   dtfc \
+7   piwik \
+8   owncloud \
+13  klaus \
+10  ejabberd \
+11  murmur \
+12  vnc \
+'
+
+setenv  JAILSDEV '\
+14  monit \
+16  zabbix \
+22  echoplexus \
+24  gitannex \
+9   gitlab \
+26  gogs \
+28  phabricator \
+30  pydio \
+'
+
+# minidlna and firefly have trouble getting multicast from jails
+
+setenv  JAILSBAD '\
+36  baikal \
+38  couchdtfc \
+40  horde \
+18  minidlna \
+20  firefly \
+'
