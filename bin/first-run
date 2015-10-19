@@ -23,7 +23,7 @@ if [ "x-q" != "x${1}" ]; then
     cat <<EOF
 Run these commands:
     fzg-random-key
-    fzg -i
+    fzg -i -z 925 -p tank -d ada0 -d ada1 -d ada2
     fzg-unlock-on-boot
     exit
 EOF
