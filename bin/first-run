@@ -1,10 +1,10 @@
 #!/bin/sh
 
-gdf
-
 if [ "x" != "x${SQUID}" ]; then
     env SQUID=${SQUID} setproxy
 fi
+
+gdf
 
 fres
 
