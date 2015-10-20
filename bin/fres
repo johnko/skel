@@ -169,81 +169,6 @@ pkg_initial_install() {
     fi
 }
 
-upgrade_to_ten_one() {
-    freebsd-update upgrade -r 10.1-RELEASE
-}
-
-update_to_latest_patch() {
-    freebsd-update fetch
-    freebsd-update install
-}
-
-zfs_no_setuid() {
-    ########## prevents a periodic job from searching for suid in large dataset
-    zfs set setuid=off tank/largebackupdataset
-}
-
-mfsbsd_install() {
-    ########## if using mfsbsd special edition
-    mount_cd9660 /dev/cd0 /cdrom || mount -o ro /dev/da0a /cdrom
-    zfsinstall -d $DISK -u /cdrom/10.1-RELEASE-amd64 -p $POOLNAME -s 2G -z 2G -c
-}
-
-fzg_mirror() {
-    fzg -d ada0 -d ada1 -z 2g -m -r mirror -H `hostname-by-etc-hosts` -D
-    fzg -d ada0 -d ada1 -z 2g    -r mirror -H `hostname-by-ptr-dns`
-}
-
-fzg_single() {
-    fzg -d ada0         -z 2g -m           -H `hostname-by-etc-hosts` -D
-    fzg -d ada0         -z 2g              -H `hostname-by-ptr-dns`
-}
-
-fzg_usb() {
-    fzg -d da0          -z 2g -m           -H usb.local -p usb        -n -q
-    fzg -d da0          -z 2g              -H usb.local -p usb        -n
-}
-
-fzg_attach_disk() {
-    fzg -e ada0 -z 2g -p $POOLNAME -d ada1
-}
-
-fzg_update() {
-    fzg -f -p $POOLNAME
-}
-
-fzg_data_mirror() {
-    fzg -i -d ada0 -d ada1 -r mirror -p tank
-}
-
-fzg_data_lock() {
-    fzg -l -p tank
-}
-
-fzg_data_unlock() {
-    fzg -u -d ada0p5 -d ada1p5
-}
-
-fzg_priv_mirror() {
-    fzg -i -t 6 -d ada0 -d ada1 -p priv
-}
-
-ezjail_help() {
-    # eza install -h file:///boot/../10.1-RELEASE
-    # eza-update
-    # eza create [-f flavour] testjail 'em0|192.168.0.211'
-    # eza config -r norun testjail
-    # eza start testjail
-    # eza stop testjail
-    # eza delete -w testjail
-    ########## force archive
-    # eza archive -f ripp
-    ########## create based on archive
-    # eza create -a /usr/jails/ezjail_archives/ripp-201412061053.13.tar.gz ripp 'bge0|192.168.0.248'
-    ########## deploy
-    # env FQDN=my.localdomain deploy as_jails good
-}
-
 add_urep_user() {
     if [ ! -d /usr/home/urep ]; then
         if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
@@ -251,50 +176,6 @@ add_urep_user() {
         fi
         echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
     fi
-}
-
-things_to_sync() {
-    cat <<EOF
-########## Things that are similar globally
-    /boot/loader.conf
-    /etc/ssh/sshd_config
-    /root/.ssh/authorized_keys
-    /root/bin/
-    /root/git/
-    /root/perm/
-    /usr/home/urep/
-########## Things that are similar per DC across mfs types
-    /boot/packages/
-    /boot/resolv.conf.append
-    /boot/resolv.conf.overwrite
-    /boot/periodic.conf.append
-    /boot/periodic.conf.overwrite
-    /boot/sysctl.conf.append
-    /boot/sysctl.conf.overwrite
-    /boot/hosts.append
-    /boot/hosts.overwrite
-    /etc/hosts
-########## Things that are unique per system/jail
-    /boot/../mfsroot    #because of /boot is symlink to POOLNAME/boot
-    /boot/*eli
-    /boot/*key
-    /boot/fstab.append
-    /boot/loader.conf.local
-    /boot/zfs/
-    /etc/*db
-    /etc/*passwd
-    /etc/fstab
-    /etc/group
-    /etc/hostid
-    /etc/mail
-    /etc/pf/
-    /etc/rc.conf.d/
-    /etc/shells
-    /etc/ssh/
-    /root/.ssh/authorized_keys2
-    /root/crontabbed/
-    /root/local/
-EOF
 }
 
 ######################################################################
