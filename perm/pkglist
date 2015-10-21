@@ -12,6 +12,7 @@ nginx pcre
 openntpd
 openssl
 pkg
+pv
 rsync
 tmux libevent2
 ucarp
