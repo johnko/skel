@@ -21,22 +21,22 @@ mfsbsd_install() {
 }
 
 fzg_mirror() {
-    fzg -d ada0 -d ada1 -z 3g -m -r mirror -H `hostname-by-etc-hosts` -D
-    fzg -d ada0 -d ada1 -z 3g    -r mirror -H `hostname-by-ptr-dns`
+    fzg -d ada0 -d ada1 -z 5g -m -r mirror -H `hostname-by-etc-hosts` -D
+    fzg -d ada0 -d ada1 -z 5g    -r mirror -H `hostname-by-ptr-dns`
 }
 
 fzg_single() {
-    fzg -d ada0         -z 3g -m           -H `hostname-by-etc-hosts` -D
-    fzg -d ada0         -z 3g              -H `hostname-by-ptr-dns`
+    fzg -d ada0         -z 5g -m           -H `hostname-by-etc-hosts` -D
+    fzg -d ada0         -z 5g              -H `hostname-by-ptr-dns`
 }
 
 fzg_usb() {
-    fzg -d da0          -z 3g -m           -H usb.local -p usb        -n -q
-    fzg -d da0          -z 3g              -H usb.local -p usb        -n
+    fzg -d da0          -z 5g -m           -H usb.local -p usb        -n -q
+    fzg -d da0          -z 5g              -H usb.local -p usb        -n
 }
 
 fzg_attach_disk() {
-    fzg -e ada0 -z 3g -p $POOLNAME -d ada1
+    fzg -e ada0 -z 5g -p $POOLNAME -d ada1
 }
 
 fzg_mfsroot_update() {
