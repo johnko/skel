@@ -1,7 +1,6 @@
 beadm
 cmdwatch
 curl ca_root_nss
-ezjail
 git expat python27 libffi indexinfo gettext-runtime p5-Error perl5
   cvsps p5-Authen-SASL p5-Digest-HMAC p5-GSSAPI curl ca_root_nss
   p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Net-SSLeay p5-IO-Socket-IP
@@ -15,8 +14,6 @@ openssl
 pkg
 rsync
 tmux libevent2
-transmission-cli miniupnpc dht curl ca_root_nss libevent2
-  bittorrent-libutp libnatpmp
 ucarp
 w3m boehm-gc perl5
 wget indexinfo libidn gettext-runtime
@@ -90,8 +87,9 @@ zsync
 #   libtasn1 gettext-runtime p11-kit libffi trousers-tddl libidn libx264
 #   opencv-core
 
+########## ezjail
+########## transmission-cli miniupnpc dht curl ca_root_nss libevent2
+##########   bittorrent-libutp libnatpmp
 ########## radmind
-
 ########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
-
 ########## yes '' | pkg install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0}'
