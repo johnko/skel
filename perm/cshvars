@@ -12,7 +12,7 @@ setenv  ZABBIXIPALIAS      0
 
 setenv  IPNET           10.7.7.
 setenv  IOCPOOLNAME     tank
-setenv  IOCRELEASE      10.1-RELEASE
+setenv  IOCRELEASE      10.2-RELEASE
 
 setenv  SQUIDPKG        /var/ports/packages/All/squid-3.5.10.txz
 setenv  LAMEPKG         /var/ports/packages/All/lame-3.99.5_2.txz
