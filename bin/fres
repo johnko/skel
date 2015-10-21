@@ -98,6 +98,12 @@ pkg_bootstrap() {
 }
 
 pkg_initial_install() {
+    if grep "quarterly" /etc/pkg/FreeBSD.conf >/dev/null 2>&1 ; then
+        cp /etc/pkg/FreeBSD.conf /tmp/FreeBSD.conf
+        cat /tmp/FreeBSD.conf \
+            | sed 's;quarterly;latest;' \
+            > /etc/pkg/FreeBSD.conf
+    fi
     if [ -e $HOME/local/pkglist ]; then
         PKGLIST="`cat $HOME/local/pkglist | grep -v '^#' | tr ' ' '\n' | sort -u | grep -v '^\$'`"
     elif [ -e $HOME/perm/pkglist ]; then
