@@ -1,0 +1,13 @@
+#!/bin/sh
+
+fres
+
+if which fres >/dev/null 2>&1 ; then
+    rm -r ~/git
+    fres
+fi
+
+if [ -e ~/git/skel/bin/fres ]; then
+    rm -r ~/bin
+    sh  ~/git/skel/bin/fres
+fi
