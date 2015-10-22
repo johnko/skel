@@ -64,7 +64,7 @@ git_deploy() {
     prefix=$2
     [ -z "$prefix" ] && prefix=$HOME
     if [ ! -d ~/git/${repo} ]; then
-        git clone --depth 1 ${REPOSRC}johnko/${repo}.git ~/git/${repo}
+        git clone --depth 1 ${REPOSRC}/${repo} ~/git/${repo}
     else
         cd ~/git/${repo}
         git pull | grep -v 'Already up-to-date.'
