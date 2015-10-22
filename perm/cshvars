@@ -34,8 +34,8 @@ setenv  JAILSGOOD '\
 12  vnc \
 14  monit \
 16  zabbix \
-15  uploadsh
-17  transfersh
+15  uploadsh \
+17  transfersh \
 254 builder \
 '
 
