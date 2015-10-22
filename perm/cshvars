@@ -21,23 +21,25 @@ setenv  FFMPEGPKG       /var/ports/packages/All/ffmpeg-2.8_1,1.txz
 
 setenv  JAILSGOOD '\
 1   squid \
-254 builder \
 2   nginx \
+13  klaus \
 3   postfix \
 4   dovecot \
 5   couch \
 6   dtfc \
 7   piwik \
 8   owncloud \
-13  klaus \
 10  ejabberd \
 11  murmur \
 12  vnc \
+14  monit \
+16  zabbix \
+15  uploadsh
+17  transfersh
+254 builder \
 '
 
 setenv  JAILSDEV '\
-14  monit \
-16  zabbix \
 22  echoplexus \
 24  gitannex \
 9   gitlab \
