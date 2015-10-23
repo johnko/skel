@@ -20,8 +20,6 @@ w3m boehm-gc perl5
 wget indexinfo libidn gettext-runtime
 zsync
 
-########## ori boost-libs icu fusefs-libs
-
 ########## delugefs-dev
 # py27-pybonjour mDNSResponder python27 libffi indexinfo
 #   gettext-runtime py27-setuptools27
@@ -91,6 +89,7 @@ zsync
 #   opencv-core
 
 ########## ezjail
+########## ori boost-libs icu fusefs-libs
 ########## transmission-cli miniupnpc dht curl ca_root_nss libevent2
 ##########   bittorrent-libutp libnatpmp
 ########## radmind
