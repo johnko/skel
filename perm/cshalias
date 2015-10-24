@@ -21,6 +21,8 @@ alias stat-heat stat-temperature
 alias ta        'tmux attach || tmux'
 alias tas       tmux source-file ~/local/tmux.conf.status
 alias tn        tmux new-window
+alias toff      tmux source-file ~/local/tmux.conf.simpleline
+alias ton       tmux source-file ~/local/tmux.conf.prettyline
 alias top       top -CazHits1
 alias zi        zpool import
 alias zio       zpool iostat

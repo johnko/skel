@@ -1,7 +1,3 @@
-set-window-option -g monitor-activity on
-#bind -n escape detach
-set-option -g status-interval 1
-
 set-option -g status-right \
 '#[bg=colour26] \
 #{pane_start_command} \
