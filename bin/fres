@@ -309,19 +309,6 @@ if [ "0" = "${MYUID}" ]; then
     if [ -d /boot/packages_cache ] && [ -d /var/cache/pkg ]; then
         rm -r /var/cache/pkg
     fi
-    if sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        which pf-sshinvaliduserip
-        # test if not an iocage jail chroot
-        if [ -e /boot/kernel/kernel ] && service pf status 2>&1 | grep Enabled >/dev/null 2>&1 ; then
-            which pf-table >/dev/null 2>&1 && pf-table save all >/dev/null 2>&1
-        elif [ ! -e /boot/kernel/kernel ]; then
-            # only run in iocage jail
-            which nginx-config-sites-enabled >/dev/null 2>&1 && nginx-config-sites-enabled
-        fi
-    else
-        # only run in jail
-        which nginx-config-sites-enabled >/dev/null 2>&1 && nginx-config-sites-enabled
-    fi
     # run always
     which newsyslog-conf-setup >/dev/null 2>&1 && newsyslog-conf-setup
     which periodic-config >/dev/null 2>&1 && periodic-config
@@ -329,7 +316,12 @@ if [ "0" = "${MYUID}" ]; then
 
     # test if not an iocage jail chroot
     if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        which pf-table >/dev/null 2>&1 && pf-table save all >/dev/null 2>&1
+        which pf-sshinvaliduserip
         # run last because may disconnect
         which gdf >/dev/null 2>&1 && gdf
+    else
+        # we are in a jail
+        which nginx-config-sites-enabled >/dev/null 2>&1 && nginx-config-sites-enabled
     fi
 fi
