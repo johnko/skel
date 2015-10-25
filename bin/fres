@@ -237,8 +237,23 @@ if [ "0" = "${MYUID}" ]; then
 fi
 
 if ! which git > /dev/null ; then
-    echo "ERROR: git not found"
-    exit 1
+    # Try unsetting PROXY temporarily and pkg update -f then reset proxy
+    cp /usr/local/etc/pkg.conf /usr/local/etc/pkg.conf.tmpmaybeproxy
+    noproxy
+    pkg-static update -f
+    mv /usr/local/etc/pkg.conf.tmpmaybeproxy /usr/local/etc/pkg.conf
+    pkg-static install -y git
+    if ! which git > /dev/null ; then
+        # Try unsetting PROXY forever
+        noproxy
+        pkg-static update -f
+        pkg-static install -y git
+        if ! which git > /dev/null ; then
+            # Just quit
+            echo "ERROR: git not found"
+            exit 1
+        fi
+    fi
 else
     if [ ! -d ~/git ]; then
         # are you root?
