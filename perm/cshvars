@@ -18,8 +18,11 @@ setenv  SQUIDPKG        /var/ports/packages/All/squid-3.5.10.txz
 setenv  LAMEPKG         /var/ports/packages/All/lame-3.99.5_2.txz
 setenv  LIBAACPLUSPKG   /var/ports/packages/All/libaacplus-2.0.2_8.txz
 setenv  FFMPEGPKG       /var/ports/packages/All/ffmpeg-2.8_1,1.txz
+setenv  GITLABPKG       /var/ports/packages/All/gitlab-7.14.1.txz
+setenv  COUCHBASEPKG    /var/ports/packages/All/placeholder
 
 setenv  JAILSGOOD '\
+254 buildersquid \
 1   squid \
 2   nginx \
 13  klaus \
@@ -36,7 +39,9 @@ setenv  JAILSGOOD '\
 16  zabbix \
 15  uploadsh \
 17  transfersh \
-254 builder \
+253 builderffmpeg \
+252 buildergitlab \
+251 buildercouchbase \
 '
 
 setenv  JAILSDEV '\
