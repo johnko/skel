@@ -178,6 +178,24 @@ add_urep_user() {
     fi
 }
 
+pkg_quart() {
+    if grep "latest" /etc/pkg/FreeBSD.conf >/dev/null 2>&1 ; then
+        cp /etc/pkg/FreeBSD.conf /tmp/FreeBSD.conf
+        cat /tmp/FreeBSD.conf \
+            | sed 's;latest;quarterly;' \
+            > /etc/pkg/FreeBSD.conf
+    fi
+}
+
+pkg_latest() {
+    if grep "quarterly" /etc/pkg/FreeBSD.conf >/dev/null 2>&1 ; then
+        cp /etc/pkg/FreeBSD.conf /tmp/FreeBSD.conf
+        cat /tmp/FreeBSD.conf \
+            | sed 's;quarterly;latest;' \
+            > /etc/pkg/FreeBSD.conf
+    fi
+}
+
 ######################################################################
 # Main
 ######################################################################
@@ -224,35 +242,23 @@ if [ "0" = "${MYUID}" ]; then
     install_hosts_append
     add_urep_user
     test -e /etc/mail/aliases.db || newaliases
-    if grep "quarterly" /etc/pkg/FreeBSD.conf >/dev/null 2>&1 ; then
-        cp /etc/pkg/FreeBSD.conf /tmp/FreeBSD.conf
-        cat /tmp/FreeBSD.conf \
-            | sed 's;quarterly;latest;' \
-            > /etc/pkg/FreeBSD.conf
-    fi
+    pkg_latest
     pkg_bootstrap
     if ! which git > /dev/null ; then
+        pkg_quart
         pkg-static install -y git
     fi
 fi
 
 if ! which git > /dev/null ; then
-    # Try unsetting PROXY temporarily and pkg update -f then reset proxy
-    cp /usr/local/etc/pkg.conf /usr/local/etc/pkg.conf.tmpmaybeproxy
+    # Try unsetting PROXY and pkg update -f then reset proxy
     noproxy
     pkg-static update -f
-    mv /usr/local/etc/pkg.conf.tmpmaybeproxy /usr/local/etc/pkg.conf
     pkg-static install -y git
     if ! which git > /dev/null ; then
-        # Try unsetting PROXY forever
-        noproxy
-        pkg-static update -f
-        pkg-static install -y git
-        if ! which git > /dev/null ; then
-            # Just quit
-            echo "ERROR: git not found"
-            exit 1
-        fi
+        # Just quit
+        echo "ERROR: git not found"
+        exit 1
     fi
 fi
 
