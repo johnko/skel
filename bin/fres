@@ -254,70 +254,70 @@ if ! which git > /dev/null ; then
             exit 1
         fi
     fi
-else
-    if [ ! -d ~/git ]; then
-        # are you root?
-        if [ "0" = "${MYUID}" ]; then
-            NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
-            if [ "x" != "x${NEWDATASET}" ]; then
-                zfs create -o setuid=off ${NEWDATASET}
-            fi
-        fi
-        if [ ! -d ~/git ]; then
-            install -d -m 700 ~/git
-        fi
-    fi
-    git_deploy skel
-    if [ ! -e ~/local/tmux.conf.status ]; then
-        install -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
-    fi
-    if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
-        for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
-            install -m 644 ~/git/skel/${i} ${HOME}/
-        done
-        tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
-        chmod 600 ~/perm/*
-    fi
-    if [ "0" = "${MYUID}" ]; then
-        pkg_initial_install
-        [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
-    fi
-    REPOS="
-    apache-config-freebsd
-    btfs
-    crontabbed
-    delugefs
-    deploy
-    eza
-    ffmpeg-tools
-    freebsd-install-script
-    freebsd-pf-script
-    freebsd-sortconf
-    freebsd-system-info
-    github-backup
-    hddid
-    iocage-tools
-    mount_iso
-    netconn
-    newsyslog.conf.d
-    nginx-config-sites-enabled
-    ori-tools
-    psnap
-    pwgen
-    rad
-    randomword
-    rsync-tools
-    setproxy
-    ssh-multi
-    ssh-tools
-    vmrc
-    zfs-tools
-    zsnapple
-" # end of REPOS
-    for i in ${REPOS} ; do
-        git_deploy ${i}
-    done
 fi
+
+if [ ! -d ~/git ]; then
+    # are you root?
+    if [ "0" = "${MYUID}" ]; then
+        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
+        if [ "x" != "x${NEWDATASET}" ]; then
+            zfs create -o setuid=off ${NEWDATASET}
+        fi
+    fi
+    if [ ! -d ~/git ]; then
+        install -d -m 700 ~/git
+    fi
+fi
+git_deploy skel
+if [ ! -e ~/local/tmux.conf.status ]; then
+    install -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
+fi
+if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
+    for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
+        install -m 644 ~/git/skel/${i} ${HOME}/
+    done
+    tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
+    chmod 600 ~/perm/*
+fi
+if [ "0" = "${MYUID}" ]; then
+    pkg_initial_install
+    [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
+fi
+REPOS="
+apache-config-freebsd
+btfs
+crontabbed
+delugefs
+deploy
+eza
+ffmpeg-tools
+freebsd-install-script
+freebsd-pf-script
+freebsd-sortconf
+freebsd-system-info
+github-backup
+hddid
+iocage-tools
+mount_iso
+netconn
+newsyslog.conf.d
+nginx-config-sites-enabled
+ori-tools
+psnap
+pwgen
+rad
+randomword
+rsync-tools
+setproxy
+ssh-multi
+ssh-tools
+vmrc
+zfs-tools
+zsnapple
+" # end of REPOS
+for i in ${REPOS} ; do
+    git_deploy ${i}
+done
 
 
 if [ "0" = "${MYUID}" ]; then
