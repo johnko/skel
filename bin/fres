@@ -73,7 +73,7 @@ git_deploy() {
     install -d -m 700 ${prefix}/bin
     if [ -d ~/git/${repo}/bin ]; then
         for i in ~/git/${repo}/bin/* ; do
-            install -m 700 ${i} ${prefix}/bin/
+            install -C -m 700 ${i} ${prefix}/bin/
         done
     fi
 }
@@ -85,13 +85,13 @@ pkg_bootstrap() {
         fi
         # test again after bootstrap
         if [ -e /usr/local/sbin/pkg-static ]; then
-            install -m 755 -o root -g wheel \
+            install -C -m 755 -o root -g wheel \
                 /usr/local/sbin/pkg-static /sbin/pkg-static
         fi
     else
         if [ -e /usr/local/sbin/pkg-static ] && \
             ! diff /usr/local/sbin/pkg-static /sbin/pkg-static ; then
-                install -m 755 -o root -g wheel \
+                install -C -m 755 -o root -g wheel \
                     /usr/local/sbin/pkg-static /sbin/pkg-static
         fi
     fi
@@ -280,7 +280,7 @@ if [ ! -e ~/local/tmux.conf.status ]; then
 fi
 if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
     for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
-        install -m 644 ~/git/skel/${i} ${HOME}/
+        install -C -m 644 ~/git/skel/${i} ${HOME}/
     done
     tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
     chmod 600 ~/perm/*
