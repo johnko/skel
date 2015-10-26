@@ -31,5 +31,6 @@ alias zl        zfs list -o name,used,available,refer,usedbychildren,usedbysnaps
 alias zll       zfs list -o name,dedup,compressratio,compression,checksum,atime,exec,setuid,readonly,jailed,canmount,mounted,mountpoint
 alias zls       zfs list -t snapshot -o name,used,refer,creation -s creation
 alias zlss      zfs list -t snapshot -o name -s creation
+alias zlt       'zpool list -o name,alloc,cap,dedup,health tank ; zfs list -o used,refer,usedchild,usedsnap,name -r tank'
 alias zlv       zfs list -t volume -o name,volsize,used,available,refer,usedbysnapshots,creation
 alias zs        zpool status -v
