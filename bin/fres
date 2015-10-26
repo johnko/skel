@@ -276,7 +276,7 @@ if [ ! -d ~/git ]; then
 fi
 git_deploy skel
 if [ ! -e ~/local/tmux.conf.status ]; then
-    install -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
+    install -C -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
 fi
 if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
     for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
