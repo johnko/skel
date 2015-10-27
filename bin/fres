@@ -302,6 +302,7 @@ freebsd-pf-script
 freebsd-sortconf
 freebsd-system-info
 github-backup
+gtfc
 hddid
 iocage-tools
 mount_iso
