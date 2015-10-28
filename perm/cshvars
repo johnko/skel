@@ -22,7 +22,7 @@ setenv  GITLABPKG       /var/ports/packages/All/gitlab-7.14.1.txz
 setenv  COUCHBASEPKG    /var/ports/packages/All/placeholder
 
 setenv  JAILSGOOD '\
-254 buildersquid \
+254 buildersquidpkg \
 1   squid \
 2   nginx \
 13  klaus \
@@ -39,9 +39,9 @@ setenv  JAILSGOOD '\
 16  zabbix \
 15  uploadsh \
 17  transfersh \
-253 builderffmpeg \
-252 buildergitlab \
-251 buildercouchbase \
+253 builderffmpegpkg \
+252 buildergitlabpkg \
+251 buildercouchbasepkg \
 '
 
 setenv  JAILSDEV '\

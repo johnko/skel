@@ -11,6 +11,9 @@ endif
 if (-e ~/local/cshvars) then
     source ~/local/cshvars
 endif
+if (-e ~/gitcluster/working/cshvars) then
+    source ~/gitcluster/working/cshvars
+endif
 
 if (-e ~/perm/cshalias) then
     source ~/perm/cshalias
