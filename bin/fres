@@ -170,11 +170,14 @@ pkg_initial_install() {
 }
 
 add_urep_user() {
-    if [ ! -d /usr/home/urep ]; then
-        if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
-            rmuser -yv urep
+    # dont do it in jail
+    if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        if [ ! -d /usr/home/urep ]; then
+            if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
+                rmuser -yv urep
+            fi
+            echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
         fi
-        echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
     fi
 }
 
