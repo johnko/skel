@@ -73,7 +73,7 @@ jail_help() {
     ########## deploy
     # vi local/cshvars
     # source local/cshvars
-    # deploy as_jails good
+    # _deploy_jails good
 }
 
 things_to_sync() {
