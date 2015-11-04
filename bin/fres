@@ -301,10 +301,10 @@ fi
 REPOS="
 apache-config-freebsd
 btfs
+ccasfs
 crontabbed
 delugefs
 deploy
-eza
 ffmpeg-tools
 freebsd-install-script
 freebsd-pf-script
@@ -314,11 +314,12 @@ github-backup
 gtfc
 hddid
 iocage-tools
+md2html
+md5sha256
 mount_iso
 netconn
 newsyslog.conf.d
 nginx-config-sites-enabled
-ori-tools
 psnap
 pwgen
 rad
@@ -331,6 +332,8 @@ vmrc
 zfs-tools
 zsnapple
 " # end of REPOS
+# eza
+# ori-tools
 for i in ${REPOS} ; do
     git_deploy ${i}
 done
