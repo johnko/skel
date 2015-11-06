@@ -14,7 +14,7 @@ setenv  COUCHBASEPKG    /var/ports/packages/All/placeholder
 
 # name public_ip public_port real_port ucarp=u_or_dot=off
 
-setenv JAILIPFWD '\
+setenv JAILSIPFWD '\
 squid     0    3127    3127  u \
 squid     0    3128    3128  . \
 nginx     0      80      80  u \
