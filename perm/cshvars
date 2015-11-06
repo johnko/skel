@@ -1,15 +1,6 @@
 setenv  FQDN    localhost.localdomain
 setenv  SQUID   10.7.7.1:3128
 
-setenv  SQUIDIPALIAS       0
-setenv  WEBIPALIAS         0
-setenv  POSTFIXIPALIAS     0
-setenv  DOVECOTIPALIAS     0
-setenv  XMPPIPALIAS        0
-setenv  MURMURIPALIAS      0
-setenv  MONITIPALIAS       0
-setenv  ZABBIXIPALIAS      0
-
 setenv  IPNET           10.7.7.
 setenv  IOCPOOLNAME     tank
 setenv  IOCRELEASE      10.2-RELEASE
@@ -21,7 +12,8 @@ setenv  FFMPEGPKG       /var/ports/packages/All/ffmpeg-2.8_1,1.txz
 setenv  GITLABPKG       /var/ports/packages/All/gitlab-7.14.1.txz
 setenv  COUCHBASEPKG    /var/ports/packages/All/placeholder
 
-# name alias pubport realport ucarp
+# name public_ip public_port real_port ucarp=u_or_dot=off
+
 setenv JAILIPFWD '\
 squid     0    3127    3127  u \
 squid     0    3128    3128  . \
@@ -36,6 +28,8 @@ monit     0    2812    2812  u \
 zabbix    0   10050   10050  u \
 zabbix    0   10051   10051  . \
 '
+
+# IP_net_suffix name boot=on_or_off
 
 setenv  JAILSGOOD '\
 254 buildersquidpkg     off \
@@ -69,8 +63,6 @@ setenv  JAILSDEV '\
 30  pydio       off \
 '
 
-# minidlna and firefly have trouble getting multicast from jails
-
 setenv  JAILSBAD '\
 36  baikal    off \
 38  couchdtfc off \
@@ -78,3 +70,5 @@ setenv  JAILSBAD '\
 18  minidlna  off \
 20  firefly   off \
 '
+
+# minidlna and firefly have trouble getting multicast from jails
