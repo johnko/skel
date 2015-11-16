@@ -5,6 +5,8 @@ setenv  IPNET           10.7.7.
 setenv  IOCPOOLNAME     tank
 setenv  IOCRELEASE      10.2-RELEASE
 
+setenv  PERSONALMNT     /vault/data
+
 setenv  SQUIDPKG        /var/ports/packages/All/squid-3.5.10.txz
 setenv  LAMEPKG         /var/ports/packages/All/lame-3.99.5_2.txz
 setenv  LIBAACPLUSPKG   /var/ports/packages/All/libaacplus-2.0.2_8.txz
