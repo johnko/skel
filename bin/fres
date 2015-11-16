@@ -70,10 +70,10 @@ git_deploy() {
         git pull | grep -v 'Already up-to-date.'
         cd -
     fi
-    install -d -m 700 ${prefix}/bin
+    install -d -m 755 ${prefix}/bin
     if [ -d ~/git/${repo}/bin ]; then
         for i in ~/git/${repo}/bin/* ; do
-            install -C -m 700 ${i} ${prefix}/bin/
+            install -C -m 755 ${i} ${prefix}/bin/
         done
     fi
 }
@@ -283,7 +283,7 @@ if [ ! -d ~/git ]; then
         install -d -m 700 ~/git
     fi
 fi
-git_deploy skel
+git_deploy skel  /usr/local
 if [ ! -e ~/local/tmux.conf.status ]; then
     install -C -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
 fi
@@ -335,7 +335,7 @@ zsnapple
 # eza
 # ori-tools
 for i in ${REPOS} ; do
-    git_deploy ${i}
+    git_deploy ${i}  /usr/local
 done
 
 
