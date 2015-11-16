@@ -6,6 +6,11 @@ if [ "x" == "x${REPOSRC}" ]; then
     REPOSRC=https://github.com/johnko
 fi
 
+MYPREFIX=$1
+if [ "x" = "x$MYPREFIX" ]; then
+    MYPREFIX=/usr/local
+fi
+
 ######################################################################
 # Functions
 ######################################################################
@@ -61,7 +66,7 @@ install_hosts_append() {
 git_deploy() {
     repo=$1
     [ -z "$repo" ] && exit 1
-    prefix=$2
+    prefix=$MYPREFIX
     [ -z "$prefix" ] && prefix=$HOME
     if [ ! -d ~/git/${repo} ]; then
         git clone --depth 1 ${REPOSRC}/${repo} ~/git/${repo}
@@ -283,7 +288,7 @@ if [ ! -d ~/git ]; then
         install -d -m 700 ~/git
     fi
 fi
-git_deploy skel  /usr/local
+git_deploy skel
 if [ ! -e ~/local/tmux.conf.status ]; then
     install -C -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
 fi
@@ -335,7 +340,7 @@ zsnapple
 # eza
 # ori-tools
 for i in ${REPOS} ; do
-    git_deploy ${i}  /usr/local
+    git_deploy ${i}
 done
 
 
