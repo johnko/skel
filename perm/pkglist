@@ -8,7 +8,7 @@ git expat python27 libffi indexinfo gettext-runtime p5-Error perl5
 gnupg1 indexinfo curl ca_root_nss gettext-runtime
 iftop
 iocage
-mDNSResponder_nss
+mDNSResponder_nss mDNSResponder
 nginx pcre
 openntpd
 openssl
