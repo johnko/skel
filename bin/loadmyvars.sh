@@ -12,6 +12,7 @@ for i in \
     iocnet.conf \
     iocpool.conf \
     iocrelease.conf \
+    pkgpath.ampache.conf \
     pkgpath.couchbase.conf \
     pkgpath.ffmpeg.conf \
     pkgpath.gitlab.conf \
