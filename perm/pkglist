@@ -5,7 +5,9 @@ git expat python27 libffi indexinfo gettext-runtime p5-Error perl5
   cvsps p5-Authen-SASL p5-Digest-HMAC p5-GSSAPI curl ca_root_nss
   p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Net-SSLeay p5-IO-Socket-IP
   p5-Socket p5-Mozilla-CA
-gnupg1 indexinfo curl ca_root_nss gettext-runtime
+gnupg indexinfo gettext-runtime libassuan libgpg-error npth libksba
+  gnutls nettle gmp ca_root_nss libtasn1 p11-kit libffi trousers-tddl
+  libidn pinentry pinentry-tty libgcrypt
 iftop
 iocage
 mDNSResponder_nss mDNSResponder
