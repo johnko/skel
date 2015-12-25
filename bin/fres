@@ -338,6 +338,7 @@ mount_iso
 netconn
 newsyslog.conf.d
 nginx-config-sites-enabled
+pefs-tools
 psnap
 pwgen
 rad
