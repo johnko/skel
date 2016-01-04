@@ -14,6 +14,7 @@ echo GITLABPKG      $GITLABPKG
 echo LAMEPKG        $LAMEPKG
 echo LIBAACPLUSPKG  $LIBAACPLUSPKG
 echo SQUIDPKG       $SQUIDPKG
+echo VLCPKG         $VLCPKG
 echo REPOSRC        $REPOSRC
 echo SQUID          $SQUID
 

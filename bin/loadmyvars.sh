@@ -19,6 +19,7 @@ for i in \
     pkgpath.lame.conf \
     pkgpath.libaacplus.conf \
     pkgpath.squid.conf \
+    pkgpath.vlc.conf \
     reposrc.conf \
     squid.conf \
     ; do
