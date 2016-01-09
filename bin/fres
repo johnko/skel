@@ -379,3 +379,7 @@ if [ "0" = "${MYUID}" ]; then
         which nginx-config-sites-enabled >/dev/null 2>&1 && nginx-config-sites-enabled
     fi
 fi
+
+if [ -e /usr/local/bin/suspectip ]; then
+     rm /usr/local/bin/suspectip
+fi
