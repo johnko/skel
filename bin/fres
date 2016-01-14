@@ -219,6 +219,49 @@ pkg_install_git() {
     pkg-static install -y git
 }
 
+mkdirperm() {
+    if [ ! -d ~/perm ]; then
+        # are you root?
+        if [ "0" = "${MYUID}" ]; then
+            NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/perm/'`
+            if [ "x" != "x${NEWDATASET}" ]; then
+                zfs create -o exec=off -o setuid=off ${NEWDATASET}
+            fi
+        fi
+        if [ ! -d ~/perm ]; then
+            install -d -m 700 ~/perm
+        fi
+    fi
+}
+mkdirlocal() {
+    if [ ! -d ~/local ]; then
+        # are you root?
+        if [ "0" = "${MYUID}" ]; then
+            NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
+            if [ "x" != "x${NEWDATASET}" ]; then
+                zfs create -o exec=off -o setuid=off ${NEWDATASET}
+            fi
+        fi
+        if [ ! -d ~/local ]; then
+            install -d -m 700 ~/local
+        fi
+    fi
+}
+mkdirgit() {
+    if [ ! -d ~/git ]; then
+        # are you root?
+        if [ "0" = "${MYUID}" ]; then
+            NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
+            if [ "x" != "x${NEWDATASET}" ]; then
+                zfs create -o setuid=off ${NEWDATASET}
+            fi
+        fi
+        if [ ! -d ~/git ]; then
+            install -d -m 700 ~/git
+        fi
+    fi
+}
+
 ######################################################################
 # Main
 ######################################################################
@@ -232,32 +275,9 @@ done
 
 install_ssh_auth_keys
 
+mkdirperm
 
-if [ ! -d ~/perm ]; then
-    # are you root?
-    if [ "0" = "${MYUID}" ]; then
-        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/perm/'`
-        if [ "x" != "x${NEWDATASET}" ]; then
-            zfs create -o exec=off -o setuid=off ${NEWDATASET}
-        fi
-    fi
-    if [ ! -d ~/perm ]; then
-        install -d -m 700 ~/perm
-    fi
-fi
-if [ ! -d ~/local ]; then
-    # are you root?
-    if [ "0" = "${MYUID}" ]; then
-        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/local/'`
-        if [ "x" != "x${NEWDATASET}" ]; then
-            zfs create -o exec=off -o setuid=off ${NEWDATASET}
-        fi
-    fi
-    if [ ! -d ~/local ]; then
-        install -d -m 700 ~/local
-    fi
-fi
-
+mkdirlocal
 
 if [ "0" = "${MYUID}" ]; then
     install_resolv_overwrite
@@ -290,22 +310,14 @@ if [ "0" = "${MYUID}" ]; then
     fi
 fi
 
-if [ ! -d ~/git ]; then
-    # are you root?
-    if [ "0" = "${MYUID}" ]; then
-        NEWDATASET=`zfs list | grep -o '^[[:alnum:]]*/root/bin' | sed 's/bin/git/'`
-        if [ "x" != "x${NEWDATASET}" ]; then
-            zfs create -o setuid=off ${NEWDATASET}
-        fi
-    fi
-    if [ ! -d ~/git ]; then
-        install -d -m 700 ~/git
-    fi
-fi
+mkdirgit
+
 git_deploy skel
+
 if [ ! -e ~/local/tmux.conf.status ]; then
     install -C -m 600 ~/git/skel/local/tmux.conf.status ~/local/tmux.conf.status
 fi
+
 if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
     for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
         install -C -m 644 ~/git/skel/${i} ${HOME}/
@@ -313,6 +325,7 @@ if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
     tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
     chmod 600 ~/perm/*
 fi
+
 if [ "0" = "${MYUID}" ]; then
     pkg_initial_install
     [ "$UPDATEBOOKTPKG" ] && pkg_initial_install update
@@ -380,6 +393,11 @@ if [ "0" = "${MYUID}" ]; then
     fi
 fi
 
+#########################################
+### Remove stuff if exists
+#########################################
+
 if [ -e /usr/local/bin/suspectip ]; then
      rm /usr/local/bin/suspectip
 fi
+pkg info gnupg1 >/dev/null 2>&1 && pkg remove -y gnupg1
