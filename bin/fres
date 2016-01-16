@@ -397,7 +397,15 @@ fi
 ### Remove stuff if exists
 #########################################
 
-if [ -e /usr/local/bin/suspectip ]; then
-     rm /usr/local/bin/suspectip
-fi
+removefiles="
+/usr/local/bin/suspectip
+/usr/local/bin/squidlog
+/usr/local/bin/nginxlog
+"
+
+for i in $removefiles ; do
+    if [ "x" != "x$i" ] && [ -e $i ]; then
+        rm $i
+    fi
+done
 pkg info gnupg1 >/dev/null 2>&1 && pkg remove -y gnupg1
