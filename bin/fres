@@ -179,19 +179,25 @@ pkg_initial_install() {
 }
 
 add_users() {
+    # do this no matter what
+    if [ ! -d /usr/home/urep ]; then
+        if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
+            rmuser -yv urep
+        fi
+        ### Add urep user
+        echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
+    fi
     # dont do it in jail
     if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
-        if [ ! -d /usr/home/urep ]; then
-            if cat /etc/passwd | grep urep >/dev/null 2>&1 ; then
-                rmuser -yv urep
+        if [ ! -d /usr/home/_sshtunl ]; then
+            if cat /etc/passwd | grep _sshtunl >/dev/null 2>&1 ; then
+                rmuser -yv _sshtunl
             fi
-            ### Add urep user
-            echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
+            ### Add _sshtunl user
+            echo "_sshtunl:1022::::::/usr/home/_sshtunl:/usr/sbin/nologin:" | adduser -w no -f -
             ### Add btfs user
             #echo "btfs:1002::::::/usr/home/btfs:/bin/csh:" | adduser -w no -f -
             #pw groupmod operator -m btfs
-            ### Add _sshtunl user
-            echo "_sshtunl:1022::::::/usr/home/_sshtunl:/usr/sbin/nologin:" | adduser -w no -f -
         fi
     fi
 }
