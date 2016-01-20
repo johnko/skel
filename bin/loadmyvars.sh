@@ -16,6 +16,7 @@ for i in \
     pkgpath.couchbase.conf \
     pkgpath.ffmpeg.conf \
     pkgpath.gitlab.conf \
+    pkgpath.i2p.conf \
     pkgpath.lame.conf \
     pkgpath.libaacplus.conf \
     pkgpath.squid.conf \
