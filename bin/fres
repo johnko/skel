@@ -408,6 +408,8 @@ removefiles="
 /usr/local/bin/suspectip
 /usr/local/bin/squidlog
 /usr/local/bin/nginxlog
+/usr/local/bin/nginx-cycle
+/usr/local/bin/squid-cycle
 "
 
 for i in $removefiles ; do
