@@ -4,6 +4,7 @@
 
 echo PERSONALMNT    $PERSONALMNT
 echo FQDN           $FQDN
+echo EMAIL          $EMAIL
 echo IPNET          $IPNET
 echo IOCPOOLNAME    $IOCPOOLNAME
 echo IOCRELEASE     $IOCRELEASE

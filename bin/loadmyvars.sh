@@ -9,6 +9,7 @@ LOCALDIR=/root/local
 for i in \
     datamnt.conf \
     fqdn.conf \
+    email.conf \
     iocnet.conf \
     iocpool.conf \
     iocrelease.conf \
