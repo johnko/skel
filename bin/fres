@@ -314,6 +314,7 @@ if [ "0" = "${MYUID}" ]; then
         echo "ERROR: git not found"
         exit 1
     fi
+    git config --global transfer.fsckObjects true
 fi
 
 mkdirgit
