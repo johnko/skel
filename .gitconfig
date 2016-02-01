@@ -76,3 +76,5 @@
 
 [push]
 	default = matching
+[transfer]
+	fsckObjects = true
