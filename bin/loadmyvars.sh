@@ -6,7 +6,7 @@
 DEFAULTDIR=/root/perm
 LOCALDIR=/root/local
 
-PKGPATHFILES=$( ls -1 ${DEFAULTDIR}/pkgpath.*.conf ${LOCALDIR}/pkgpath.*.conf | sed "s;${DEFAULTDIR}/;;" | sed "s;${LOCALDIR}/;;" | sort -u )
+PKGPATHFILES=$( ls -1 ${DEFAULTDIR}/pkgpath.*.conf ${LOCALDIR}/pkgpath.*.conf 2>/dev/null | sed "s;${DEFAULTDIR}/;;" | sed "s;${LOCALDIR}/;;" | sort -u )
 
 for i in \
     datamnt.conf \
