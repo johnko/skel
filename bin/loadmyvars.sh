@@ -6,6 +6,8 @@
 DEFAULTDIR=/root/perm
 LOCALDIR=/root/local
 
+PKGPATHFILES=$( ls -1 ${DEFAULTDIR}/pkgpath.*.conf ${LOCALDIR}/pkgpath.*.conf | sed "s;${DEFAULTDIR}/;;" | sed "s;${LOCALDIR}/;;" | sort -u )
+
 for i in \
     datamnt.conf \
     fqdn.conf \
@@ -13,15 +15,7 @@ for i in \
     iocnet.conf \
     iocpool.conf \
     iocrelease.conf \
-    pkgpath.ampache.conf \
-    pkgpath.couchbase.conf \
-    pkgpath.ffmpeg.conf \
-    pkgpath.gitlab.conf \
-    pkgpath.i2p.conf \
-    pkgpath.lame.conf \
-    pkgpath.libaacplus.conf \
-    pkgpath.squid.conf \
-    pkgpath.vlc.conf \
+    ${PKGPATHFILES} \
     reposrc.conf \
     squid.conf \
     ; do
