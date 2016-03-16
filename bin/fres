@@ -419,3 +419,5 @@ for i in $removefiles ; do
     fi
 done
 pkg info gnupg1 >/dev/null 2>&1 && pkg remove -y gnupg1
+pkg info openssl >/dev/null 2>&1 && pkg remove -y openssl
+

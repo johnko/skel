@@ -13,7 +13,6 @@ iocage
 mDNSResponder_nss mDNSResponder
 nginx pcre
 openntpd
-openssl
 pkg
 pv
 rsync
@@ -22,6 +21,8 @@ ucarp
 w3m boehm-gc perl5
 wget indexinfo libidn gettext-runtime
 zsync
+
+# openssl
 
 ########## delugefs-dev
 # py27-pybonjour mDNSResponder python27 libffi indexinfo
