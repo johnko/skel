@@ -188,6 +188,9 @@ add_users() {
         ### Add urep user
         echo "urep:1001::::::/usr/home/urep:/bin/csh:" | adduser -w no -f -
     fi
+    if [ -d /usr/home/urep ]; then
+        chmod 700 /usr/home/urep
+    fi
     # dont do it in jail
     if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         if [ ! -d /usr/home/_sshtunl ]; then
@@ -239,7 +242,9 @@ mkdirperm() {
             install -d -m 700 ~/perm
         fi
     fi
-    chmod 700 ~/perm
+    if [ -d ~/perm ]; then
+        chmod 700 ~/perm
+    fi
 }
 mkdirlocal() {
     if [ ! -d ~/local ]; then
@@ -254,7 +259,9 @@ mkdirlocal() {
             install -d -m 700 ~/local
         fi
     fi
-    chmod 700 ~/local
+    if [ -d ~/local ]; then
+        chmod 700 ~/local
+    fi
 }
 mkdirgit() {
     if [ ! -d ~/git ]; then
@@ -268,6 +275,9 @@ mkdirgit() {
         if [ ! -d ~/git ]; then
             install -d -m 700 ~/git
         fi
+    fi
+    if [ -d ~/git ]; then
+        chmod 700 ~/git
     fi
 }
 
