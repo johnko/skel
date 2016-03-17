@@ -239,6 +239,7 @@ mkdirperm() {
             install -d -m 700 ~/perm
         fi
     fi
+    chmod 700 ~/perm
 }
 mkdirlocal() {
     if [ ! -d ~/local ]; then
@@ -253,6 +254,7 @@ mkdirlocal() {
             install -d -m 700 ~/local
         fi
     fi
+    chmod 700 ~/local
 }
 mkdirgit() {
     if [ ! -d ~/git ]; then
