@@ -472,6 +472,8 @@ fi
 #########################################
 
 if [ -e /etc/keypkg ]; then
+    hostname=$( hostname -s )
+    domainname=$( hostname -f | sed "s;$hostname\.;;" )
     cat <<EOF
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! keypkg has been renamed to keygeli !!!
@@ -484,6 +486,11 @@ To update:
         zpool import -d /root/dev key
     mv /key/keypkg... /key/keygeli...
     rm /etc/rc.d/keypkg
+
+    mv /root/gitcluster/working/${domainname}/etc/keypkg /root/gitcluster/working/${domainname}/etc/keygeli
+    sed -i '' 's;keypkg;keygeli;g' /root/gitcluster/working/${domainname}/etc/keygeli/ssh_config
+    mv /root/gitcluster/working/${hostname}/etc/rc.conf.d/keypkg /root/gitcluster/working/${hostname}/etc/rc.conf.d/keygeli
+    sed -i '' 's;keypkg;keygeli;g' /root/gitcluster/working/${hostname}/etc/rc.conf.d/keygeli
 EOF
 fi
 
