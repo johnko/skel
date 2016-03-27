@@ -444,6 +444,11 @@ removefiles="
 /usr/local/bin/keypkg-part2
 /usr/local/bin/keypkg-setup
 /usr/local/bin/keypkg-shell
+/usr/local/bin/deploy_keypkg
+/usr/local/etc/deployjails.conf.d/080_keypkg
+/usr/local/etc/deploypfucarp.conf.d/keypkg
+/root/gitcluster/working/_jail-keypkg/usr/local/etc/deploypfucarp.conf.d/keypkg
+/root/gitcluster/working/_jail-keypkg/usr/local/etc/deployjails.conf.d/080_keypkg
 "
 
 for i in $removefiles ; do
