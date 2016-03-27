@@ -11,8 +11,7 @@ gnupg indexinfo gettext-runtime libassuan libgpg-error npth libksba
 iftop
 iocage
 mDNSResponder_nss mDNSResponder
-nginx pcre
-openntpd
+openntpd libressl ca_root_nss
 pkg
 pv
 rsync
@@ -22,6 +21,7 @@ w3m boehm-gc perl5
 wget indexinfo libidn gettext-runtime
 zsync
 
+# nginx pcre
 # openssl
 
 ########## delugefs-dev
