@@ -392,6 +392,11 @@ fi
 
 
 if [ "0" = "${MYUID}" ]; then
+    # install /etc/rc.d/keygeli
+    if [ =e /root/git/freebsd-install-script/etc/rc.d/keygeli ]; then
+        install -C -m 755 /root/git/freebsd-install-script/etc/rc.d/keygeli /etc/rc.d/keygeli
+    fi
+
     if [ -d /boot/packages_cache ] && [ -d /var/cache/pkg ]; then
         rm -r /var/cache/pkg
     fi
@@ -432,4 +437,24 @@ for i in $removefiles ; do
 done
 pkg info gnupg1 >/dev/null 2>&1 && pkg remove -y gnupg1
 pkg info openssl >/dev/null 2>&1 && pkg remove -y openssl
+
+#########################################
+### Alert of major changes
+#########################################
+
+if [ -e /etc/keypkg ]; then
+    cat <<EOF
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! keypkg has been renamed to keygeli !!!
+To update:
+    mv /etc/keypkg /etc/keygeli
+    sed -i '' 's;keypkg;keygeli;g' /etc/keygeli/ssh_config
+    mv /etc/rc.conf.d/keypkg /etc/rc.conf.d/keygeli
+    sed -i '' 's;keypkg;keygeli;g' /etc/rc.conf.d/keygeli
+    zpool import key
+        zpool import -d /root/dev key
+    mv /key/keypkg... /key/keygeli...
+    rm /etc/rc.d/keypkg
+EOF
+fi
 
