@@ -393,7 +393,7 @@ fi
 
 if [ "0" = "${MYUID}" ]; then
     # install /etc/rc.d/keygeli
-    if [ =e /root/git/freebsd-install-script/etc/rc.d/keygeli ]; then
+    if [ -e /root/git/freebsd-install-script/etc/rc.d/keygeli ]; then
         install -C -m 755 /root/git/freebsd-install-script/etc/rc.d/keygeli /etc/rc.d/keygeli
     fi
 
