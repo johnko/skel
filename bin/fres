@@ -410,8 +410,6 @@ if [ "0" = "${MYUID}" ]; then
         which ioc-tankports >/dev/null 2>&1 && ioc-tankports
         which pf-table >/dev/null 2>&1 && pf-table save all >/dev/null 2>&1
         which pf-sshinvaliduserip
-        # run last because may disconnect
-        which gdf >/dev/null 2>&1 && gdf
     else
         # we are in a jail
         which nginx-config-sites-enabled >/dev/null 2>&1 && nginx-config-sites-enabled
@@ -428,6 +426,14 @@ removefiles="
 /usr/local/bin/nginxlog
 /usr/local/bin/nginx-cycle
 /usr/local/bin/squid-cycle
+/usr/local/bin/keypkg-auth
+/usr/local/bin/keypkg-desktop
+/usr/local/bin/keypkg-functions
+/usr/local/bin/keypkg-migrate-pull
+/usr/local/bin/keypkg-part1
+/usr/local/bin/keypkg-part2
+/usr/local/bin/keypkg-setup
+/usr/local/bin/keypkg-shell
 "
 
 for i in $removefiles ; do
@@ -435,8 +441,16 @@ for i in $removefiles ; do
         rm $i
     fi
 done
+
 pkg info gnupg1 >/dev/null 2>&1 && pkg remove -y gnupg1
 pkg info openssl >/dev/null 2>&1 && pkg remove -y openssl
+if [ "0" = "${MYUID}" ]; then
+    # test if not an iocage jail chroot
+    if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        pkg info pcre >/dev/null 2>&1 && pkg remove -y pcre
+        pkg info nginx >/dev/null 2>&1 && pkg remove -y nginx
+    fi
+fi
 
 #########################################
 ### Alert of major changes
@@ -456,5 +470,16 @@ To update:
     mv /key/keypkg... /key/keygeli...
     rm /etc/rc.d/keypkg
 EOF
+fi
+
+
+#########################################
+### run last because may disconnect
+#########################################
+if [ "0" = "${MYUID}" ]; then
+    # test if not an iocage jail chroot
+    if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
+        which gdf >/dev/null 2>&1 && gdf
+    fi
 fi
 
