@@ -486,12 +486,28 @@ To update:
         zpool import -d /root/dev key
     mv /key/keypkg... /key/keygeli...
     rm /etc/rc.d/keypkg
+EOF
+    if [ -e /root/gitcluster/working/${domainname}/etc/keypkg ]; then
+        cat <<EOF
 
     mv /root/gitcluster/working/${domainname}/etc/keypkg /root/gitcluster/working/${domainname}/etc/keygeli
     sed -i '' 's;keypkg;keygeli;g' /root/gitcluster/working/${domainname}/etc/keygeli/ssh_config
+EOF
+    fi
+    if [ -e /root/gitcluster/working/${hostname}/etc/keypkg ]; then
+        cat <<EOF
+
+    mv /root/gitcluster/working/${hostname}/etc/keypkg /root/gitcluster/working/${hostname}/etc/keygeli
+    sed -i '' 's;keypkg;keygeli;g' /root/gitcluster/working/${hostname}/etc/keygeli/ssh_config
+EOF
+    fi
+    if [ -e /root/gitcluster/working/${hostname}/etc/rc.conf.d/keypkg ]; then
+        cat <<EOF
+
     mv /root/gitcluster/working/${hostname}/etc/rc.conf.d/keypkg /root/gitcluster/working/${hostname}/etc/rc.conf.d/keygeli
     sed -i '' 's;keypkg;keygeli;g' /root/gitcluster/working/${hostname}/etc/rc.conf.d/keygeli
 EOF
+    fi
 fi
 
 
