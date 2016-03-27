@@ -410,6 +410,16 @@ if [ "0" = "${MYUID}" ]; then
         which ioc-tankports >/dev/null 2>&1 && ioc-tankports
         which pf-table >/dev/null 2>&1 && pf-table save all >/dev/null 2>&1
         which pf-sshinvaliduserip
+
+        # use update4.freebsd.org so we can cache with squid
+        if [ -e /etc/freebsd-update.conf ]; then
+            sed -i '' 's;update.FreeBSD.org;update4.freebsd.org;' /etc/freebsd-update.conf
+        fi
+        myrelease=$( uname -r | grep -o ".*RELEASE" )
+        if [ -e /iocage/releases/${myrelease}/root/etc/freebsd-update.conf ]; then
+            sed -i '' 's;update.FreeBSD.org;update4.freebsd.org;' /iocage/releases/${myrelease}/root/etc/freebsd-update.conf
+        fi
+
     else
         # we are in a jail
         which nginx-config-sites-enabled >/dev/null 2>&1 && nginx-config-sites-enabled
