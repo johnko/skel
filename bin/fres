@@ -339,7 +339,7 @@ fi
 
 if ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.' >/dev/null 2>&1 ; then
     for i in $(ls -A1 ~/git/skel/ | egrep -v '^\.git$' | grep '^\.') ; do
-        install -C -m 644 ~/git/skel/${i} ${HOME}/
+        install -C -m 600 ~/git/skel/${i} ${HOME}/
     done
     tar -c -f - -C ~/git/skel perm | tar -C ~/ -x -f -
     chmod 600 ~/perm/*
