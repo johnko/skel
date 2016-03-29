@@ -455,6 +455,10 @@ removefiles="
 /usr/local/bin/deploy_riak
 /root/gitcluster/working/_jail-riak/usr/local/etc/deployjails.conf.d/110_riak
 /usr/local/bin/deploy_letsencrypt
+/usr/local/bin/dlna-link-mp3-to-music
+/usr/local/bin/kgt
+/usr/local/bin/zvg
+/usr/local/bin/zvg-random-key
 "
 
 for i in $removefiles ; do
