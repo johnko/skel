@@ -449,9 +449,9 @@ removefiles="
 /usr/local/etc/deploypfucarp.conf.d/keypkg
 /root/gitcluster/working/_jail-keypkg/usr/local/etc/deploypfucarp.conf.d/keypkg
 /root/gitcluster/working/_jail-keypkg/usr/local/etc/deployjails.conf.d/080_keypkg
-/root/gitcluster/working/_jail-skylable/usr/local/etc/deployjails.conf.d/105_skylable
 /usr/local/bin/deploy_skylable
 /root/gitcluster/working/_jail-skylable/usr/local/etc/deployjails.conf.d/105_skylable
+/usr/local/etc/deployjails.conf.d/105_skylable
 /usr/local/bin/deploy_riak
 /root/gitcluster/working/_jail-riak/usr/local/etc/deployjails.conf.d/110_riak
 "
