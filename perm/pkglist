@@ -1,27 +1,23 @@
 beadm
 cmdwatch
-curl ca_root_nss
-git expat python27 libffi indexinfo gettext-runtime p5-Error perl5
-  cvsps p5-Authen-SASL p5-Digest-HMAC p5-GSSAPI curl ca_root_nss
-  p5-Net-SMTP-SSL p5-IO-Socket-SSL p5-Net-SSLeay p5-IO-Socket-IP
-  p5-Socket p5-Mozilla-CA
-gnupg indexinfo gettext-runtime libassuan libgpg-error npth libksba
-  gnutls nettle gmp ca_root_nss libtasn1 p11-kit libffi trousers-tddl
-  libidn pinentry pinentry-tty libgcrypt
+curl
+git
+gnupg
 iftop
 iocage
-mDNSResponder_nss mDNSResponder
-openntpd libressl ca_root_nss
+mDNSResponder
+mDNSResponder_nss 
+openntpd
 pkg
 pv
 rsync
-tmux libevent2
+tmux
 ucarp
-w3m boehm-gc perl5
-wget indexinfo libidn gettext-runtime
+w3m
+wget
 zsync
 
-# nginx pcre
+# nginx
 # openssl
 
 ########## delugefs-dev
@@ -61,7 +57,7 @@ zsync
 #   vorbis-tools libao libvorbis libogg flac speex speexdsp libkate png
 #   curl ca_root_nss libid3tag sqlite3
 
-# youtube_dl rtmpdump librtmp python27 libffi indexinfo gettext-runtime
+# youtube_dl
 
 # beets py27-musicbrainzngs python27 libffi indexinfo gettext-runtime
 #   py27-setuptools27 py27-enum34 py27-yaml py27-sqlite3 sqlite3
@@ -85,9 +81,8 @@ zsync
 #   opencv-core
 
 ########## ezjail
-########## ori boost-libs icu fusefs-libs
-########## transmission-cli miniupnpc dht curl ca_root_nss libevent2
-##########   bittorrent-libutp libnatpmp
+########## ori
+########## transmission-cli
 ########## radmind
-########## subversion serf apr expat gdbm indexinfo gettext-runtime db5 sqlite3
+########## subversion
 ########## yes '' | pkg install xfce | grep ': ' | grep -v 'Proceed' | awk -F: '{print $1}' | awk '{print $1}' | tr '\n' ' ' | fold -sw 70 | awk '{print "#   "$0}'
