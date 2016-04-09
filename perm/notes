@@ -64,8 +64,8 @@ fzg_priv_unlock() {
 
 jail_help() {
     ioc-setup
-    ioc-newtemplate common 'lo1|10.7.7.253/32'
-    ioc-newjail common jailname 'lo1|10.7.7.253/32'
+    ioc-newtemplate common 'lo2|10.7.7.253/32'
+    ioc-newjail common jailname 'lo2|10.7.7.253/32'
     iocage set boot=off jailname
     iocage start jailname
     iocage stop jailname
