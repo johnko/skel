@@ -161,7 +161,7 @@ pkg_initial_install() {
     else
         if [ "x" != "x$PKGLIST" ]; then
             for i in $PKGLIST ; do
-                pkg-static install -y $i
+                pkg-static install -y $i || exit 1
             done
             ### fails to install in pkg 1.7.1
             # pkg-static install -y $PKGLIST
