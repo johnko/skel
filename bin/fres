@@ -472,12 +472,13 @@ for i in $removefiles ; do
 done
 
 pkg info gnupg1 >/dev/null 2>&1 && pkg remove -y gnupg1
-pkg info openssl >/dev/null 2>&1 && pkg remove -y openssl
+
 if [ "0" = "${MYUID}" ]; then
     # test if not an iocage jail chroot
     if [ -e /boot/kernel/kernel ] && sysctl security.jail.jailed | grep 0 >/dev/null 2>&1; then
         pkg info pcre >/dev/null 2>&1 && pkg remove -y pcre
         pkg info nginx >/dev/null 2>&1 && pkg remove -y nginx
+        pkg info openssl >/dev/null 2>&1 && pkg remove -y openssl
     fi
 fi
 
