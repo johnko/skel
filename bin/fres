@@ -2,7 +2,7 @@
 
 # exit if running already
 THISSCRIPT=${0##*/}
-if pgrep -lf ${THISSCRIPT} | grep -v fresh | grep ${THISSCRIPT} > /dev/null 2> /dev/null ; then
+if pgrep -lf ${THISSCRIPT} | grep -v fresh > /dev/null 2> /dev/null ; then
     exit 1
 fi
 
