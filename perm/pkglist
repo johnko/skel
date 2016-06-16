@@ -13,10 +13,10 @@ pv
 rsync
 tmux
 ucarp
-w3m
 wget
 zsync
 
+#w3m
 # nginx
 # openssl
 
